@@ -1,0 +1,19 @@
+.portfolio-header {
+  display: block;
+}
+
+.portfolio-header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.portfolio-header-nav-list {
+  display: flex;
+  list-style: none;
+}
+
+.portfolio-header-nav-item {
+  display: block;
+}
+
