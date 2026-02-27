@@ -8,9 +8,32 @@
   justify-content: space-between;
 }
 
+.portfolio-header-brand {
+  display: flex;
+  align-items: center;
+}
+
+.portfolio-header-logo-link {
+  display: block;
+}
+
+.portfolio-header-logo {
+  display: block;
+}
+
+.portfolio-header-theme {
+  display: flex;
+  align-items: center;
+}
+
+.portfolio-header-theme-btn {
+  display: block;
+}
+
 .portfolio-header-nav-list {
   display: flex;
   list-style: none;
+  gap: 1rem;
 }
 
 .portfolio-header-nav-item {

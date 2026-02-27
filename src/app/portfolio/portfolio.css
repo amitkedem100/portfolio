@@ -1,0 +1,16 @@
+.portfolio-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.portfolio-page-section {
+  display: block;
+}
+
+.portfolio-page-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+

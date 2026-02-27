@@ -1,0 +1,30 @@
+.home-page {
+  display: block;
+}
+
+.home-page-section {
+  display: block;
+}
+
+.home-page-heading {
+  display: block;
+}
+
+.home-page-project-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.home-page-project-item {
+  display: block;
+}
+
+.home-page-project-title {
+  display: block;
+}
+
+.home-page-project-summary {
+  display: block;
+}
+
