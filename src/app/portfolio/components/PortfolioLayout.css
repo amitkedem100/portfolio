@@ -1,8 +1,17 @@
 .portfolio-layout {
-  display: block;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
+}
+
+.portfolio-layout .portfolio-header {
+  grid-column: 1 / -1;
 }
 
 .portfolio-layout-main {
-  display: block;
+  grid-column: 1 / -1;
+}
+
+.portfolio-layout .portfolio-footer {
+  grid-column: 1 / -1;
 }
 

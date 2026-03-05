@@ -21,6 +21,19 @@
   --text-secondary: var(--text-secondary-light);
 }
 
+/* Grid Layout: 8 columns, 32px gutter, 64px margin */
+.layout-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 32px;
+  margin-left: 64px;
+  margin-right: 64px;
+  width: auto;
+  /* Optional: stretch to fill width, important for columns that are set to stretch */
+  /* You can uncomment if needed */
+  /* width: calc(100% - 128px); */
+}
+
 /* Dark theme only when user toggles (data-theme set by PortfolioContext) */
 html[data-theme="dark"] {
   --background: var(--background-dark);
@@ -58,4 +71,3 @@ a {
   color: inherit;
   text-decoration: none;
 }
-

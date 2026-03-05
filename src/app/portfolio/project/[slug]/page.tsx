@@ -18,11 +18,11 @@ export default function ProjectPage({ params }: ProjectPageProps) {
   }
 
   return (
-    <div className="project-page">
-      <section className="project-page-section">
+    <div className="project-page layout-grid">
+      <section className="project-page-section project-page-hero">
         <ProjectHero title={project.title} summary={project.summary} />
       </section>
-      <section className="project-page-section">
+      <section className="project-page-section project-page-content-area">
         <h2 className="project-page-heading">Project content</h2>
         <div className="project-page-content">
           <p>{project.content}</p>

@@ -9,7 +9,7 @@ type PortfolioLayoutProps = {
 
 export function PortfolioLayout({ children }: PortfolioLayoutProps) {
   return (
-    <div className="portfolio-layout">
+    <div className="portfolio-layout layout-grid">
       <PortfolioHeader />
       <main className="portfolio-layout-main" role="main">
         {children}

@@ -6,6 +6,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  height: 80px;
 }
 
 .portfolio-header-brand {
@@ -15,6 +16,7 @@
 
 .portfolio-header-logo-link {
   display: block;
+  color: var(--text-primary);
 }
 
 .portfolio-header-logo {

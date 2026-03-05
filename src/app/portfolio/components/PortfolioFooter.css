@@ -1,5 +1,6 @@
 .portfolio-footer {
   display: block;
+  height: 40px;
 }
 
 .portfolio-footer-inner {
@@ -8,5 +9,7 @@
 
 .portfolio-footer-text {
   display: block;
+  text-align: center;
 }
+
 
