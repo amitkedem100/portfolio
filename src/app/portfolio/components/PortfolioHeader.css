@@ -25,7 +25,7 @@
 .portfolio-header-logo-link {
   display: block;
   color: var(--text-primary);
-  transition: color 0.45s ease;
+  transition: color 0.3s ease;
 }
 
 .portfolio-header-logo-link:hover {
