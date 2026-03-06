@@ -25,6 +25,11 @@
 .portfolio-header-logo-link {
   display: block;
   color: var(--text-primary);
+  transition: color 0.45s ease;
+}
+
+.portfolio-header-logo-link:hover {
+  color: var(--accent);
 }
 
 .portfolio-header-logo {
@@ -46,6 +51,25 @@
 
 .portfolio-header-nav-item {
   display: block;
+}
+
+.portfolio-header-nav-item a {
+  position: relative;
+}
+
+.portfolio-header-nav-item a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 1px;
+  background: currentColor;
+  transition: width 0.45s ease;
+}
+
+.portfolio-header-nav-item a:hover::after {
+  width: 100%;
 }
 
 /* Menu button: hidden on desktop/tablet, shown only on mobile */
