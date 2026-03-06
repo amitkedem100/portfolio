@@ -4,16 +4,11 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import "./PortfolioHeader.css";
 import { usePortfolioContext } from "../context/PortfolioContext";
+import { CursorZone } from "./CursorZone";
+import { ThemeToggle } from "./ThemeToggle";
 
 export function PortfolioHeader() {
-  const ctx = usePortfolioContext();
-  const theme = ctx?.theme ?? "light";
-  const setTheme = ctx?.setTheme ?? (() => {});
   const [menuOpen, setMenuOpen] = useState(false);
-
-  const toggleTheme = () => {
-    setTheme(theme === "light" ? "dark" : "light");
-  };
 
   const openMenu = () => setMenuOpen(true);
   const closeMenu = () => setMenuOpen(false);
@@ -30,16 +25,24 @@ export function PortfolioHeader() {
   const navLinks = (
     <>
       <li className="portfolio-header-nav-item">
-        <Link href="/portfolio/home" onClick={closeMenu}>Work</Link>
+        <CursorZone variant="large">
+          <Link href="/portfolio/home" onClick={closeMenu}>Work</Link>
+        </CursorZone>
       </li>
       <li className="portfolio-header-nav-item">
-        <Link href="#about" onClick={closeMenu}>About</Link>
+        <CursorZone variant="large">
+          <Link href="#about" onClick={closeMenu}>About</Link>
+        </CursorZone>
       </li>
       <li className="portfolio-header-nav-item">
-        <Link href="#contact" onClick={closeMenu}>Contact</Link>
+        <CursorZone variant="large">
+          <Link href="#contact" onClick={closeMenu}>Contact</Link>
+        </CursorZone>
       </li>
       <li className="portfolio-header-nav-item">
-        <Link href="#cv" onClick={closeMenu}>CV</Link>
+        <CursorZone variant="large">
+          <Link href="#cv" onClick={closeMenu}>CV</Link>
+        </CursorZone>
       </li>
     </>
   );
@@ -66,14 +69,7 @@ export function PortfolioHeader() {
           </Link>
         </div>
         <div className="portfolio-header-theme">
-          <button
-            type="button"
-            className="portfolio-header-theme-btn"
-            onClick={toggleTheme}
-            aria-label={theme === "light" ? "Switch to dark mode" : "Switch to light mode"}
-          >
-            {theme === "light" ? "Dark" : "Light"}
-          </button>
+          <ThemeToggle />
         </div>
         <nav
           className="portfolio-header-nav"

@@ -44,7 +44,7 @@
   --accent-soft-light: #FDF2F0;
   --accent-soft-dark: #5C2E26;
   --accent-soft: var(--accent-soft-light);
-  --accent-contrast-light: #FFFFFF;
+  --accent-contrast-light: #000000;
   --accent-contrast-dark: #FFFFFF;
   --accent-contrast: var(--accent-contrast-light);
 
@@ -60,6 +60,13 @@
   --text-secondary-dark: #bdbdbd;
   --text-primary: var(--text-primary-light);
   --text-secondary: var(--text-secondary-light);
+
+  /* Radii */
+  --radius-8: 8px;
+
+  /* Theme toggle (sun = light mode, moon = dark mode) */
+  --theme-toggle-sun-bg: #F6C945;
+  --theme-toggle-moon-bg: #4C6FFF;
 }
 
 /* ---------------------------------------------------------
