@@ -45,6 +45,24 @@
   display: block;
 }
 
+/* Menu button: hidden on desktop/tablet, shown only on mobile */
+.portfolio-header-menu-btn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+/* Mobile menu overlay and panel: hidden on desktop */
+.portfolio-header-menu-overlay,
+.portfolio-header-menu-panel {
+  display: none;
+}
+
 /* Tablet / narrow desktop */
 @media (max-width: 1024px) {
   .portfolio-header-inner {
@@ -57,7 +75,7 @@
   }
 }
 
-/* Mobile: compact header, vertical space for nav */
+/* Mobile: show menu button instead of nav list; show panel when open */
 @media (max-width: 768px) {
   .portfolio-header-inner {
     height: 56px;
@@ -71,8 +89,82 @@
   }
 
   .portfolio-header-nav-list {
+    display: none;
+  }
+
+  .portfolio-header-menu-btn {
+    display: flex;
+  }
+
+  /* Overlay: full viewport, behind panel, closes menu on click */
+  .portfolio-header-menu-overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .portfolio-header-menu-overlay[aria-hidden="false"] {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Panel: fixed right, slides in from right */
+  .portfolio-header-menu-panel {
+    display: block;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 280px;
+    max-width: 85%;
+    height: 100vh;
+    z-index: 101;
+    background: var(--background);
+    color: var(--text-primary);
+    transform: translateX(100%);
+    transition: transform 0.25s ease;
+    overflow: auto;
+  }
+
+  .portfolio-header-menu-panel[data-open="true"] {
+    transform: translateX(0);
+  }
+
+  .portfolio-header-menu-panel-inner {
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    gap: 24px;
+  }
+
+  .portfolio-header-menu-close {
+    align-self: flex-start;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    border: none;
+    background: none;
+    color: var(--text-primary);
+    cursor: pointer;
+  }
+
+  .portfolio-header-menu-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
     gap: 16px;
-    font: var(--portfolio-text-b3);
+    font: var(--portfolio-text-b1);
+  }
+
+  .portfolio-header-menu-list .portfolio-header-nav-item {
+    display: block;
   }
 }
 

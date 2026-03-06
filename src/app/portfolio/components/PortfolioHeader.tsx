@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import "./PortfolioHeader.css";
 import { usePortfolioContext } from "../context/PortfolioContext";
@@ -8,10 +9,40 @@ export function PortfolioHeader() {
   const ctx = usePortfolioContext();
   const theme = ctx?.theme ?? "light";
   const setTheme = ctx?.setTheme ?? (() => {});
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const toggleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");
   };
+
+  const openMenu = () => setMenuOpen(true);
+  const closeMenu = () => setMenuOpen(false);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeMenu();
+    };
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, [menuOpen]);
+
+  const navLinks = (
+    <>
+      <li className="portfolio-header-nav-item">
+        <Link href="/portfolio/home" onClick={closeMenu}>Work</Link>
+      </li>
+      <li className="portfolio-header-nav-item">
+        <Link href="#about" onClick={closeMenu}>About</Link>
+      </li>
+      <li className="portfolio-header-nav-item">
+        <Link href="#contact" onClick={closeMenu}>Contact</Link>
+      </li>
+      <li className="portfolio-header-nav-item">
+        <Link href="#cv" onClick={closeMenu}>CV</Link>
+      </li>
+    </>
+  );
 
   return (
     <header className="portfolio-header">
@@ -49,20 +80,72 @@ export function PortfolioHeader() {
           aria-label="Portfolio navigation"
         >
           <ul className="portfolio-header-nav-list">
-            <li className="portfolio-header-nav-item">
-              <Link href="/portfolio/home">Work</Link>
-            </li>
-            <li className="portfolio-header-nav-item">
-              <Link href="#about">About</Link>
-            </li>
-            <li className="portfolio-header-nav-item">
-              <Link href="#contact">Contact</Link>
-            </li>
-            <li className="portfolio-header-nav-item">
-              <Link href="#cv">CV</Link>
-            </li>
+            {navLinks}
           </ul>
+          <button
+            type="button"
+            className="portfolio-header-menu-btn"
+            onClick={openMenu}
+            aria-label="Open menu"
+            aria-expanded={menuOpen}
+          >
+            <svg
+              width={24}
+              height={24}
+              viewBox="0 0 16 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden
+            >
+              <path
+                fillRule="evenodd"
+                fill="currentColor"
+                d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"
+              />
+            </svg>
+          </button>
         </nav>
+      </div>
+
+      {/* Mobile menu overlay and panel */}
+      <div
+        className="portfolio-header-menu-overlay"
+        aria-hidden={!menuOpen}
+        onClick={closeMenu}
+      />
+      <div
+        className="portfolio-header-menu-panel"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Menu"
+        aria-hidden={!menuOpen}
+        data-open={menuOpen}
+      >
+        <div className="portfolio-header-menu-panel-inner">
+          <button
+            type="button"
+            className="portfolio-header-menu-close"
+            onClick={closeMenu}
+            aria-label="Close menu"
+          >
+            <svg
+              width={24}
+              height={24}
+              viewBox="0 0 16 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden
+            >
+              <path
+                fill="currentColor"
+                d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"
+              />
+            </svg>
+          </button>
+          <ul className="portfolio-header-menu-list">
+            {navLinks}
+          </ul>
+        </div>
       </div>
     </header>
   );
