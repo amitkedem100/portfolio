@@ -21,6 +21,33 @@
   --background: var(--background-light);
   --foreground: #171717;
 
+  /* Surface tokens */
+  --surface-light: #EEEEEE;
+  --surface-dark: #4E4E4E;
+  --surface: var(--surface-light);
+  --surface-subtle-light: #F7F7F7;
+  --surface-subtle-dark: #3D3D3D;
+  --surface-subtle: var(--surface-subtle-light);
+
+  /* Border tokens */
+  --border-light: #D8D8D8;
+  --border-dark: #5C5C5C;
+  --border: var(--border-light);
+  --border-subtle-light: #E8E8E8;
+  --border-subtle-dark: #4A4A4A;
+  --border-subtle: var(--border-subtle-light);
+
+  /* Accent tokens (main accent same in both modes) */
+  --accent-light: #E76F51;
+  --accent-dark: #E76F51;
+  --accent: var(--accent-light);
+  --accent-soft-light: #FDF2F0;
+  --accent-soft-dark: #5C2E26;
+  --accent-soft: var(--accent-soft-light);
+  --accent-contrast-light: #FFFFFF;
+  --accent-contrast-dark: #FFFFFF;
+  --accent-contrast: var(--accent-contrast-light);
+
   /* Icon tokens */
   --icon-light: #757575;
   --icon-dark: #ededed;
@@ -76,6 +103,13 @@
 html[data-theme="dark"] {
   --background: var(--background-dark);
   --foreground: #ededed;
+  --surface: var(--surface-dark);
+  --surface-subtle: var(--surface-subtle-dark);
+  --border: var(--border-dark);
+  --border-subtle: var(--border-subtle-dark);
+  --accent: var(--accent-dark);
+  --accent-soft: var(--accent-soft-dark);
+  --accent-contrast: var(--accent-contrast-dark);
   --icon: var(--icon-dark);
   --text-primary: var(--text-primary-dark);
   --text-secondary: var(--text-secondary-dark);
