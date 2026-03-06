@@ -5,7 +5,7 @@ export function PortfolioFooter() {
     <footer className="portfolio-footer">
       <div className="portfolio-footer-inner">
         <p className="portfolio-footer-text">
-          © {new Date().getFullYear()} Portfolio
+          © {new Date().getFullYear()} Designed & built by Amit Kedem
         </p>
       </div>
     </footer>

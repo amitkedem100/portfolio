@@ -10,6 +10,7 @@
 .portfolio-footer-text {
   display: block;
   text-align: center;
+  font: var(--portfolio-text-b3);
 }
 
 

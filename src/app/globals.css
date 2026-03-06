@@ -1,9 +1,23 @@
 :root {
-  /* Tokens for backgrounds */
+  /* ---------------------------------------------------------
+     PORTFOLIO DESIGN SYSTEM
+     --------------------------------------------------------- */
+
+  /* Typography – font families (loaded via next/font in root layout) */
+  --portfolio-font-heading: var(--font-gabarito), sans-serif;
+  --portfolio-font-body: var(--font-figtree), sans-serif;
+
+  /* Typography – text styles (font-style font-weight font-size/line-height font-family) */
+  --portfolio-text-h1: 400 32px/1.2 var(--portfolio-font-heading);
+  --portfolio-text-h2: 400 24px/1.3 var(--portfolio-font-heading);
+  --portfolio-text-h3: 400 20px/1.35 var(--portfolio-font-heading);
+  --portfolio-text-b1: 300 18px/1.5 var(--portfolio-font-body);
+  --portfolio-text-b2: 300 16px/1.5 var(--portfolio-font-body);
+  --portfolio-text-b3: 300 14px/1.5 var(--portfolio-font-body);
+
+  /* Colors – backgrounds */
   --background-light: #F3F3F3;
   --background-dark: #424242;
-
-  /* Default: light */
   --background: var(--background-light);
   --foreground: #171717;
 
@@ -12,7 +26,7 @@
   --icon-dark: #ededed;
   --icon: var(--icon-light);
 
-  /* Text tokens */
+  /* Text colors */
   --text-primary-light: #171717;
   --text-primary-dark: #ededed;
   --text-secondary-light: #565656;
@@ -56,9 +70,22 @@ body {
 body {
   color: var(--text-primary);
   background: var(--background);
-  font-family: var(--font-inter), sans-serif;
+  font: var(--portfolio-text-b2);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--portfolio-font-heading);
+}
+
+h1 { font: var(--portfolio-text-h1); }
+h2 { font: var(--portfolio-text-h2); }
+h3 { font: var(--portfolio-text-h3); }
+h4, h5, h6 { font: var(--portfolio-text-h3); }
+
+p {
+  font: var(--portfolio-text-b2);
 }
 
 * {
