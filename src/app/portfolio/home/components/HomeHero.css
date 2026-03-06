@@ -14,3 +14,25 @@
   display: block;
 }
 
+/* Tablet: reduce spacing */
+@media (max-width: 1024px) {
+  .home-hero-inner {
+    padding-block-end: 24px;
+  }
+}
+
+/* Mobile: compact hero, vertical rhythm */
+@media (max-width: 768px) {
+  .home-hero-inner {
+    padding-block-end: 20px;
+  }
+
+  .home-hero-title {
+    font: var(--portfolio-text-h2);
+  }
+
+  .home-hero-subtitle {
+    font: var(--portfolio-text-b2);
+  }
+}
+

@@ -15,3 +15,25 @@
   display: block;
 }
 
+/* Tablet */
+@media (max-width: 1024px) {
+  .project-page {
+    gap: 24px;
+  }
+}
+
+/* Mobile: vertical flow, section spacing */
+@media (max-width: 768px) {
+  .project-page {
+    gap: 32px;
+  }
+
+  .project-page-heading {
+    margin-bottom: 12px;
+  }
+
+  .project-page-content {
+    margin-top: 0;
+  }
+}
+

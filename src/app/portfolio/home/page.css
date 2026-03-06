@@ -1,5 +1,6 @@
 .home-page {
   grid-auto-rows: auto;
+  margin-inline: 0px;
 }
 
 .home-page-section {
@@ -27,5 +28,36 @@
 
 .home-page-project-summary {
   display: block;
+}
+
+/* Tablet: use grid margin */
+@media (max-width: 1024px) {
+  .home-page {
+    margin-inline: 0;
+  }
+
+  .home-page-section {
+    margin-bottom: 0;
+  }
+}
+
+/* Mobile: vertical flow, section spacing; use grid margin */
+@media (max-width: 768px) {
+  .home-page {
+    margin-inline: unset;
+    gap: 32px;
+  }
+
+  .home-page-heading {
+    margin-bottom: 16px;
+  }
+
+  .home-page-project-item {
+    margin-bottom: 20px;
+  }
+
+  .home-page-project-item:last-child {
+    margin-bottom: 0;
+  }
 }
 

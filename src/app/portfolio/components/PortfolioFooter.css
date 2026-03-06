@@ -13,4 +13,18 @@
   font: var(--portfolio-text-b3);
 }
 
+/* Tablet */
+@media (max-width: 1024px) {
+  .portfolio-footer {
+    height: 36px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .portfolio-footer {
+    height: 32px;
+  }
+}
+
 

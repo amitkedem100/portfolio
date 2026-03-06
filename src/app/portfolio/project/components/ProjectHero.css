@@ -14,3 +14,25 @@
   display: block;
 }
 
+/* Tablet */
+@media (max-width: 1024px) {
+  .project-hero-inner {
+    padding-block-end: 24px;
+  }
+}
+
+/* Mobile: compact hero, typography scale */
+@media (max-width: 768px) {
+  .project-hero-inner {
+    padding-block-end: 20px;
+  }
+
+  .project-hero-title {
+    font: var(--portfolio-text-h2);
+  }
+
+  .project-hero-summary {
+    font: var(--portfolio-text-b2);
+  }
+}
+

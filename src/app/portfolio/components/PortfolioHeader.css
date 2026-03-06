@@ -21,6 +21,8 @@
 
 .portfolio-header-logo {
   display: block;
+  width: 48px;
+  height: 48px;
 }
 
 .portfolio-header-theme {
@@ -35,10 +37,42 @@
 .portfolio-header-nav-list {
   display: flex;
   list-style: none;
-  gap: 1rem;
+  gap: 48px;
+  font: var(--portfolio-text-b1);
 }
 
 .portfolio-header-nav-item {
   display: block;
+}
+
+/* Tablet / narrow desktop */
+@media (max-width: 1024px) {
+  .portfolio-header-inner {
+    height: 64px;
+  }
+
+  .portfolio-header-nav-list {
+    gap: 24px;
+    font: var(--portfolio-text-b2);
+  }
+}
+
+/* Mobile: compact header, vertical space for nav */
+@media (max-width: 768px) {
+  .portfolio-header-inner {
+    height: 56px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .portfolio-header-logo {
+    width: 40px;
+    height: 40px;
+  }
+
+  .portfolio-header-nav-list {
+    gap: 16px;
+    font: var(--portfolio-text-b3);
+  }
 }
 
