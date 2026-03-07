@@ -30,6 +30,12 @@
   display: block;
 }
 
+/* Temporary: placeholder for Selected Work area (layout / scroll testing only) */
+.home-page-selected-work-placeholder {
+  min-height: 120vh;
+  background-color: var(--background-dark); /* temporary background color, delete in first prompt */
+}
+
 /* Tablet: use grid margin */
 @media (max-width: 1024px) {
   .home-page {
