@@ -6,14 +6,17 @@ import "./PortfolioCursor.css";
 
 const DESKTOP_MEDIA = "(min-width: 769px)";
 const REDUCED_MOTION_MEDIA = "(prefers-reduced-motion: reduce)";
+/* Lerp factor: lower = more lag, higher = snappier. ~0.15–0.2 gives a mild trailing feel */
+const LERP_FACTOR = 0.18;
 
 export function PortfolioCursor() {
   const { variant } = useCursorContext();
   const [isDesktop, setIsDesktop] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
-  const positionRef = useRef({ x: 0, y: 0 });
-  const rafIdRef = useRef<number | null>(null);
+  const targetRef = useRef({ x: 0, y: 0 });
+  const displayRef = useRef({ x: 0, y: 0 });
+  const hasInitialPositionRef = useRef(false);
 
   /* Desktop only: match portfolio breakpoint */
   useEffect(() => {
@@ -33,28 +36,40 @@ export function PortfolioCursor() {
     return () => mq.removeEventListener("change", handler);
   }, []);
 
-  /* Pointer position: update via requestAnimationFrame to limit re-renders */
+  /* Target position from pointer */
   useEffect(() => {
     if (!isDesktop) return;
 
     const onMove = (e: PointerEvent) => {
-      positionRef.current = { x: e.clientX, y: e.clientY };
-      if (rafIdRef.current === null) {
-        rafIdRef.current = requestAnimationFrame(() => {
-          setPosition({ ...positionRef.current });
-          rafIdRef.current = null;
-        });
+      targetRef.current = { x: e.clientX, y: e.clientY };
+      if (!hasInitialPositionRef.current) {
+        hasInitialPositionRef.current = true;
+        displayRef.current = { x: e.clientX, y: e.clientY };
+        setPosition(displayRef.current);
       }
     };
 
     window.addEventListener("pointermove", onMove, { passive: true });
-    return () => {
-      window.removeEventListener("pointermove", onMove);
-      if (rafIdRef.current !== null) {
-        cancelAnimationFrame(rafIdRef.current);
-        rafIdRef.current = null;
-      }
+    return () => window.removeEventListener("pointermove", onMove);
+  }, [isDesktop]);
+
+  /* Animation loop: lerp display position toward target for a slight trailing effect */
+  useEffect(() => {
+    if (!isDesktop) return;
+
+    let rafId: number;
+
+    const tick = () => {
+      const target = targetRef.current;
+      const display = displayRef.current;
+      display.x += (target.x - display.x) * LERP_FACTOR;
+      display.y += (target.y - display.y) * LERP_FACTOR;
+      setPosition({ x: display.x, y: display.y });
+      rafId = requestAnimationFrame(tick);
     };
+
+    rafId = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafId);
   }, [isDesktop]);
 
   if (!isDesktop || prefersReducedMotion) return null;
