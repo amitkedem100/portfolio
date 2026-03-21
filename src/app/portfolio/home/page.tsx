@@ -35,11 +35,11 @@ export default function PortfolioHomePage() {
         </CursorZone>
         <CursorZone variant="viewProject">
           <ProjectCard
-            title="Third project placeholder"
-            description="A third card to complete the alternating pattern. Same component, different content and image position."
-            keywords="Research · Strategy · Prototype"
-            imageAlt="Third project cover"
-            href="/portfolio/project/placeholder-3"
+            title="Basilar"
+            description="A mobile product for multi-day festival logistics — entry, transport, food, navigation, and real-time updates."
+            keywords="Mobile UX · Festival Experience · Product"
+            imageAlt="Basilar project"
+            href="/portfolio/basilar"
             imagePosition="right"
           />
         </CursorZone>

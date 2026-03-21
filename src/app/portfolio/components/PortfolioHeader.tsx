@@ -22,6 +22,21 @@ export function PortfolioHeader() {
     return () => document.removeEventListener("keydown", handleEscape);
   }, [menuOpen]);
 
+  /* Keep global accent for custom cursor while pointer is in header (project --cursor-accent applies below) */
+  useEffect(() => {
+    return () => {
+      document.documentElement.removeAttribute("data-cursor-global-accent");
+    };
+  }, []);
+
+  const handleHeaderPointerEnter = () => {
+    document.documentElement.setAttribute("data-cursor-global-accent", "");
+  };
+
+  const handleHeaderPointerLeave = () => {
+    document.documentElement.removeAttribute("data-cursor-global-accent");
+  };
+
   const navLinks = (
     <>
       <li className="portfolio-header-nav-item">
@@ -48,7 +63,11 @@ export function PortfolioHeader() {
   );
 
   return (
-    <header className="portfolio-header">
+    <header
+      className="portfolio-header"
+      onPointerEnter={handleHeaderPointerEnter}
+      onPointerLeave={handleHeaderPointerLeave}
+    >
       <div className="portfolio-header-inner">
         <div className="portfolio-header-brand">
           <CursorZone variant="large">

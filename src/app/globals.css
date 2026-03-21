@@ -107,6 +107,11 @@
   }
 }
 
+/* Basilar: project cursor accent; overridden to global --accent in header via [data-cursor-global-accent] */
+html.basilar-project {
+  --cursor-accent: #00ff0a;
+}
+
 /* Dark theme only when user toggles (data-theme set by PortfolioContext) */
 html[data-theme="dark"] {
   --background: var(--background-dark);

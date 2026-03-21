@@ -1,0 +1,15 @@
+.basilar-page {
+  grid-auto-rows: auto;
+}
+
+.basilar-page-section {
+  display: block;
+  grid-column: 1 / -1;
+}
+
+/* Full-bleed hero relative to viewport (background video edge-to-edge) */
+.basilar-page-hero {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  max-width: 100vw;
+}

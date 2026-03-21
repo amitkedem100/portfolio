@@ -69,4 +69,9 @@
   color: white;
 }
 
+/* Project-scoped cursor accent (Basilar); header area forces global accent via html[data-cursor-global-accent] */
+html.basilar-project:not([data-cursor-global-accent]) .portfolio-cursor {
+  background: var(--cursor-accent, var(--accent));
+}
+
 

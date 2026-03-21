@@ -1,0 +1,127 @@
+/* Reusable project hero: bg video + device video + text. Layering: bg < device < text */
+
+.project-video-hero {
+  position: relative;
+  min-height: 92vh;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.project-video-hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.project-video-hero-bg-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Optional fallback layer (hidden unless used for future error / reduced-data cases) */
+.project-video-hero-bg-fallback {
+  display: none;
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    165deg,
+    var(--surface-dark) 0%,
+    var(--background-dark) 45%,
+    var(--surface) 100%
+  );
+}
+
+.project-video-hero-bg-scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.35) 0%,
+    rgba(0, 0, 0, 0.2) 40%,
+    rgba(0, 0, 0, 0.45) 100%
+  );
+}
+
+.project-video-hero-stack {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  min-height: 92vh;
+  padding: 16px 24px 48px;
+  box-sizing: border-box;
+}
+
+.project-video-hero-text {
+  position: relative;
+  z-index: 3;
+  max-width: 720px;
+  text-align: center;
+}
+
+.project-video-hero-title {
+  margin: 0 0 16px;
+  font-family: var(--portfolio-font-heading);
+  font-weight: 400;
+  font-size: clamp(2rem, 5vw, 3rem);
+  line-height: 1.15;
+  color: var(--text-primary-dark);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
+}
+
+.project-video-hero-description {
+  margin: 0 0 16px;
+  font: var(--portfolio-text-b1);
+  font-size: clamp(1.0625rem, 2vw, 1.25rem);
+  line-height: 1.45;
+  color: var(--text-primary-dark);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.project-video-hero-meta {
+  margin: 0;
+  font: var(--portfolio-text-b3);
+  color: var(--text-secondary-dark);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+
+.project-video-hero-device-wrap {
+  position: relative;
+  z-index: 2;
+  width: min(280px, 78vw);
+  margin-top: -8px;
+}
+
+.project-video-hero-device {
+  aspect-ratio: 9 / 19;
+  width: 100%;
+  border-radius: var(--radius-32);
+  overflow: hidden;
+  box-shadow:
+    0 24px 48px rgba(0, 0, 0, 0.35),
+    0 8px 16px rgba(0, 0, 0, 0.2);
+  background: var(--surface-dark);
+}
+
+.project-video-hero-device-video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (max-width: 768px) {
+  .project-video-hero-stack {
+    padding: 12px 20px 40px;
+    gap: 24px;
+  }
+
+  .project-video-hero-device-wrap {
+    width: min(240px, 82vw);
+  }
+}
