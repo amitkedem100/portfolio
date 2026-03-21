@@ -29,3 +29,44 @@
   opacity: 0;
   visibility: hidden;
 }
+
+/* viewProject: filled circle with label + icon, CTA-style */
+.portfolio-cursor[data-variant="viewProject"] {
+  width: 105px;
+  height: 105px;
+  margin-left: -52.5px;
+  margin-top: -52.5px;
+  background: var(--accent);
+  opacity: 0.9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    width 0.16s ease,
+    height 0.16s ease,
+    margin 0.16s ease,
+    opacity 0.16s ease;
+}
+
+.portfolio-cursor-view-inner {
+  display: flex;
+  flex-direction: column;
+  margin-top: 8px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: white;
+}
+
+.portfolio-cursor-view-label {
+  font: 600 10px/1.2 var(--portfolio-font-body);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.portfolio-cursor-view-icon {
+  flex-shrink: 0;
+  color: white;
+}
+
+

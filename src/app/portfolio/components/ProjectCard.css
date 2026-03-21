@@ -1,0 +1,109 @@
+.project-card {
+  display: block;
+  width: 100%;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-32);
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.project-card-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Default: text left, image right (row-reverse so DOM order image|text becomes text|image visually) */
+.project-card-inner {
+  display: flex;
+  flex-direction: row-reverse;
+  min-height: 360px;
+}
+
+/* imagePosition="left" → image left, text right */
+.project-card--image-left .project-card-inner {
+  flex-direction: row;
+}
+
+.project-card-image-wrap {
+  position: relative;
+  flex: 0 0 58%;
+  min-height: 360px;
+  background: var(--surface-subtle);
+}
+
+.project-card-image {
+  object-fit: cover;
+}
+
+.project-card-image-placeholder {
+  position: absolute;
+  inset: 0;
+  background: var(--surface-subtle);
+}
+
+.project-card-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 48px 40px;
+  gap: 12px;
+}
+
+.project-card-keywords {
+  margin: 0;
+  font: var(--portfolio-text-b3);
+  color: var(--text-secondary);
+  text-transform: none;
+  letter-spacing: 0.02em;
+}
+
+.project-card-title {
+  margin: 0;
+  font: var(--portfolio-text-h2);
+  color: var(--text-primary);
+}
+
+.project-card-description {
+  margin: 0;
+  font: var(--portfolio-text-b2);
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+@media (max-width: 1024px) {
+  .project-card-inner {
+    min-height: 320px;
+  }
+
+  .project-card-image-wrap {
+    min-height: 320px;
+    flex: 0 0 55%;
+  }
+
+  .project-card-text {
+    padding: 40px 32px;
+  }
+}
+
+/* Mobile: always stack image on top, text below; ignore imagePosition */
+@media (max-width: 768px) {
+  .project-card-inner,
+  .project-card--image-left .project-card-inner {
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .project-card-image-wrap {
+    flex: none;
+    aspect-ratio: 16 / 10;
+    min-height: 0;
+  }
+
+  .project-card-text {
+    padding: 32px 24px;
+    gap: 8px;
+  }
+}

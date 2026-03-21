@@ -30,10 +30,10 @@
   display: block;
 }
 
-/* Temporary: placeholder for Selected Work area (layout / scroll testing only) */
-.home-page-selected-work-placeholder {
-  min-height: 120vh;
-  background-color: var(--background-dark); /* temporary background color, delete in first prompt */
+.home-page-selected-work {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
 }
 
 /* Tablet: use grid margin */

@@ -10,5 +10,5 @@ export type Project = ProjectMeta & {
 };
 
 /** Custom cursor variant (desktop-only). Extensible for future e.g. "button". */
-export type CursorVariant = "default" | "large" | "hidden";
+export type CursorVariant = "default" | "large" | "hidden" | "viewProject";
 
