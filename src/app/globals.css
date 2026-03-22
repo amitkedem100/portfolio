@@ -53,6 +53,10 @@
   --icon-dark: #ededed;
   --icon: var(--icon-light);
 
+  /* IA interaction hint — raster-in-SVG assets; swap path with theme (see html[data-theme="dark"]) */
+  --ia-interaction-hint-icon-desktop: url("/hover-click.svg");
+  --ia-interaction-hint-icon-mobile: url("/swipe.svg");
+
   /* Text colors */
   --text-primary-light: #171717;
   --text-primary-dark: #ededed;
@@ -113,7 +117,9 @@
 /* Basilar: project-scoped tokens (accent + band backgrounds; do not alter global DS tokens) */
 html.basilar-project {
   --cursor-accent: #00ff0a;
-  --basilar-background-light: #EEEEEE;
+  /* IA diagram active stroke / focus: Basilar green, not portfolio --accent */
+  --ia-active-stroke: var(--cursor-accent);
+  --basilar-background-light: #eeeeee;
   --basilar-background-dark: #3b443b;
   --basilar-background: var(--basilar-background-light);
 }
@@ -135,6 +141,8 @@ html[data-theme="dark"] {
   --accent-soft: var(--accent-soft-dark);
   --accent-contrast: var(--accent-contrast-dark);
   --icon: var(--icon-dark);
+  --ia-interaction-hint-icon-desktop: url("/hover-click%20inverted.svg");
+  --ia-interaction-hint-icon-mobile: url("/swipe%20inverted.svg");
   --text-primary: var(--text-primary-dark);
   --text-secondary: var(--text-secondary-dark);
 }

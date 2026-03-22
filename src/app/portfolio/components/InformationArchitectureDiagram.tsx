@@ -1,107 +1,328 @@
-/* Inline IA diagram — SVG classes styled in InformationArchitectureSection.css (line opacity, node hierarchy) */
+"use client";
+
+import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
+import { useCursorContext } from "@/app/portfolio/context/CursorContext";
+import type { IATreeNode } from "@/data/informationArchitectureDiagram";
+import {
+  IA_DIAGRAM_BRANCHES,
+  IA_DIAGRAM_HUB,
+  IA_SUBTREE_PANEL,
+  IA_VIEWBOX,
+  getShuttlePairRowPaddingStart,
+  getSubtreeForeignObjectBounds,
+  isSubtreeSingleLeafOnly,
+} from "@/data/informationArchitectureDiagram";
+
+/* Interactive IA: collapsed by default; hover (desktop) or tap (mobile) reveals one subtree at a time. */
+
+function usePrefersHoverInteraction() {
+  const [prefersHover, setPrefersHover] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(hover: hover) and (pointer: fine)");
+    const update = () => setPrefersHover(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+
+  return prefersHover;
+}
+
+function primaryLabelY(rect: { y: number; height: number }) {
+  return rect.y + rect.height / 2 + 6;
+}
+
+/* Siblings at the same depth share one row (columns); nested levels stack under each branch */
+
+export function IATreeBlock({
+  node,
+  depth = 0,
+  branchId,
+  shuttleRootRowStyle,
+}: {
+  node: IATreeNode;
+  depth?: number;
+  branchId?: string;
+  shuttleRootRowStyle?: CSSProperties;
+}) {
+  const hasChildren = Boolean(node.children?.length);
+  const showLabel = node.label.trim().length > 0;
+
+  if (!hasChildren) {
+    if (!showLabel) return null;
+    const isTopScreen = depth === 0;
+    return (
+      <div
+        className={
+          isTopScreen
+            ? "ia-diagram__node ia-diagram__node--html ia-diagram__node--primary"
+            : "ia-diagram__node ia-diagram__node--html ia-diagram__node--leaf"
+        }
+      >
+        {node.label}
+      </div>
+    );
+  }
+
+  if (!showLabel && node.children) {
+    if (
+      node.layout === "shuttle-choose-scan" &&
+      node.children.length === 2
+    ) {
+      const [chooseNode, scanNode] = node.children;
+      const pay = chooseNode.children?.[0];
+      const chooseOk =
+        pay &&
+        chooseNode.children?.length === 1 &&
+        !pay.children?.length &&
+        !scanNode.children?.length;
+      if (chooseOk) {
+        return (
+          <div className="ia-shuttle-choose-scan-row">
+            <div className="ia-shuttle-choose-scan-col ia-shuttle-choose-scan-col--choose">
+              <div className="ia-diagram__node ia-diagram__node--html ia-diagram__node--primary">
+                {chooseNode.label}
+              </div>
+              <div className="ia-diagram__node ia-diagram__node--html ia-diagram__node--leaf">
+                {pay.label}
+              </div>
+            </div>
+            <div className="ia-shuttle-choose-scan-col ia-shuttle-choose-scan-col--scan">
+              <div className="ia-diagram__node ia-diagram__node--html ia-diagram__node--primary">
+                {scanNode.label}
+              </div>
+            </div>
+          </div>
+        );
+      }
+    }
+
+    if (node.layout === "leaf-row" && node.children) {
+      return (
+        <div className="ia-tree-block ia-tree-block--root">
+          <div className="ia-tree-row ia-tree-row--leaf-row">
+            {node.children.map((child) => (
+              <div key={child.id} className="ia-tree-col ia-tree-col--leaf-row">
+                <IATreeBlock node={child} depth={depth + 1} branchId={branchId} />
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    const isShuttlePairRoot =
+      branchId === "shuttle" &&
+      node.children.length === 2 &&
+      node.id === "shuttle-root";
+
+    return (
+      <div
+        className={`ia-tree-block ia-tree-block--root${isShuttlePairRoot ? " ia-tree-block--shuttle-two-col" : ""}`}
+      >
+        <div
+          className={`ia-tree-row${isShuttlePairRoot ? " ia-tree-row--shuttle-pair" : ""}`}
+          style={isShuttlePairRoot ? shuttleRootRowStyle : undefined}
+        >
+          {node.children.map((child) => (
+            <div key={child.id} className="ia-tree-col">
+              <IATreeBlock node={child} depth={depth} branchId={branchId} />
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="ia-tree-block ia-tree-block--labeled">
+      <div className="ia-diagram__node ia-diagram__node--html ia-diagram__node--primary">
+        {node.label}
+      </div>
+      <div
+        className={`ia-tree-row${node.children!.length === 1 ? " ia-tree-row--single" : ""}`}
+      >
+        {node.children!.map((child) => (
+          <div key={child.id} className="ia-tree-col">
+            <IATreeBlock node={child} depth={depth + 1} branchId={branchId} />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export function InformationArchitectureDiagram() {
+  const { setVariant: setCursorVariant } = useCursorContext();
+  const prefersHover = usePrefersHoverInteraction();
+  const [activeBranchId, setActiveBranchId] = useState<string | null>(null);
+  const leaveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const svgRef = useRef<SVGSVGElement | null>(null);
+
+  const clearLeaveTimer = useCallback(() => {
+    if (leaveTimerRef.current !== null) {
+      clearTimeout(leaveTimerRef.current);
+      leaveTimerRef.current = null;
+    }
+  }, []);
+
+  const handleBranchEnter = useCallback(
+    (id: string) => {
+      if (prefersHover !== true) return;
+      clearLeaveTimer();
+      setActiveBranchId(id);
+    },
+    [prefersHover, clearLeaveTimer],
+  );
+
+  const handleBranchLeave = useCallback(() => {
+    if (prefersHover !== true) return;
+    clearLeaveTimer();
+    leaveTimerRef.current = setTimeout(() => {
+      setActiveBranchId(null);
+      leaveTimerRef.current = null;
+    }, 150);
+  }, [prefersHover, clearLeaveTimer]);
+
+  const handleBranchTap = useCallback(
+    (id: string) => {
+      if (prefersHover === true) return;
+      setActiveBranchId((prev) => (prev === id ? null : id));
+    },
+    [prefersHover],
+  );
+
+  useEffect(() => {
+    if (activeBranchId === null || prefersHover === true) return;
+
+    const onPointerDown = (e: PointerEvent) => {
+      const root = svgRef.current;
+      if (!root || root.contains(e.target as Node)) return;
+      setActiveBranchId(null);
+    };
+
+    document.addEventListener("pointerdown", onPointerDown, true);
+    return () => document.removeEventListener("pointerdown", onPointerDown, true);
+  }, [activeBranchId, prefersHover]);
+
+  const hub = IA_DIAGRAM_HUB;
+  const showCoarsePointer = prefersHover === false;
+  const vb = IA_VIEWBOX;
+
   return (
     <svg
-      className="ia-diagram"
-      viewBox="0 0 960 300"
+      ref={svgRef}
+      className={`ia-diagram${showCoarsePointer ? " ia-diagram--coarse-pointer" : ""}`}
+      viewBox={`0 0 ${vb.width} ${vb.height}`}
       role="img"
-      aria-label="App information architecture: six primary areas with secondary items"
+      aria-label="App information architecture: Home connects to six primary areas. Hover or tap a primary area to reveal its child screens."
       xmlns="http://www.w3.org/2000/svg"
     >
       <title>Information architecture overview</title>
+      <desc>
+        Six primary areas branch from Home. Details for each area appear on hover (desktop) or tap
+        (touch).
+      </desc>
 
-      <g className="ia-diagram__connectors" fill="none">
-        <path
-          className="ia-diagram__line ia-diagram__line--main"
-          d="M 480 52 L 480 88"
+      <g className="ia-diagram__nodes-primary ia-diagram__nodes-primary--hub">
+        <rect
+          className="ia-diagram__node ia-diagram__node--hub"
+          x={hub.rect.x}
+          y={hub.rect.y}
+          width={hub.rect.width}
+          height={hub.rect.height}
+          rx={hub.rect.rx}
         />
-        <path
-          className="ia-diagram__line ia-diagram__line--main"
-          d="M 80 88 L 880 88"
-        />
-        <path className="ia-diagram__line ia-diagram__line--branch" d="M 80 88 L 80 128" />
-        <path className="ia-diagram__line ia-diagram__line--branch" d="M 248 88 L 248 128" />
-        <path className="ia-diagram__line ia-diagram__line--branch" d="M 416 88 L 416 128" />
-        <path className="ia-diagram__line ia-diagram__line--branch" d="M 584 88 L 584 128" />
-        <path className="ia-diagram__line ia-diagram__line--branch" d="M 752 88 L 752 128" />
-        <path className="ia-diagram__line ia-diagram__line--branch" d="M 920 88 L 920 128" />
-        <path className="ia-diagram__line ia-diagram__line--sub" d="M 80 168 L 80 200" />
-        <path className="ia-diagram__line ia-diagram__line--sub" d="M 248 168 L 248 200" />
-        <path className="ia-diagram__line ia-diagram__line--sub" d="M 416 168 L 416 200" />
-        <path className="ia-diagram__line ia-diagram__line--sub" d="M 584 168 L 584 200" />
-        <path className="ia-diagram__line ia-diagram__line--sub" d="M 752 168 L 752 200" />
-        <path className="ia-diagram__line ia-diagram__line--sub" d="M 920 168 L 920 200" />
-      </g>
-
-      <g className="ia-diagram__nodes-primary">
-        <rect className="ia-diagram__node ia-diagram__node--hub" x="400" y="12" width="160" height="40" rx="8" />
-        <text className="ia-diagram__label ia-diagram__label--hub" x="480" y="38" textAnchor="middle">
-          Home
-        </text>
-
-        <rect className="ia-diagram__node ia-diagram__node--primary" x="8" y="128" width="144" height="40" rx="8" />
-        <text className="ia-diagram__label ia-diagram__label--primary" x="80" y="154" textAnchor="middle">
-          Ticket
-        </text>
-
-        <rect className="ia-diagram__node ia-diagram__node--primary" x="176" y="128" width="144" height="40" rx="8" />
-        <text className="ia-diagram__label ia-diagram__label--primary" x="248" y="154" textAnchor="middle">
-          Shuttle
-        </text>
-
-        <rect className="ia-diagram__node ia-diagram__node--primary" x="344" y="128" width="144" height="40" rx="8" />
-        <text className="ia-diagram__label ia-diagram__label--primary" x="416" y="154" textAnchor="middle">
-          Food Area
-        </text>
-
-        <rect className="ia-diagram__node ia-diagram__node--primary" x="512" y="128" width="144" height="40" rx="8" />
-        <text className="ia-diagram__label ia-diagram__label--primary" x="584" y="154" textAnchor="middle">
-          Line Up
-        </text>
-
-        <rect className="ia-diagram__node ia-diagram__node--primary" x="680" y="128" width="144" height="40" rx="8" />
-        <text className="ia-diagram__label ia-diagram__label--primary" x="752" y="154" textAnchor="middle">
-          Tokens
-        </text>
-
-        <rect className="ia-diagram__node ia-diagram__node--primary" x="848" y="128" width="104" height="40" rx="8" />
-        <text className="ia-diagram__label ia-diagram__label--primary" x="900" y="154" textAnchor="middle">
-          Map
+        <text
+          className="ia-diagram__label ia-diagram__label--hub"
+          x={hub.centerX}
+          y={primaryLabelY(hub.rect)}
+          textAnchor="middle"
+        >
+          {hub.label}
         </text>
       </g>
 
-      <g className="ia-diagram__nodes-secondary">
-        <rect className="ia-diagram__node ia-diagram__node--secondary" x="20" y="200" width="120" height="32" rx="6" />
-        <text className="ia-diagram__label ia-diagram__label--secondary" x="80" y="220" textAnchor="middle">
-          Entry / QR
-        </text>
+      {IA_DIAGRAM_BRANCHES.map((branch) => {
+        const isActive = activeBranchId === branch.id;
+        const cx = branch.centerX;
+        const pr = branch.primaryRect;
+        const subtreeId = `ia-subtree-${branch.id}`;
+        const fo = getSubtreeForeignObjectBounds(branch);
+        const foreignRootClassName = isSubtreeSingleLeafOnly(branch)
+          ? "ia-diagram__foreign-root ia-diagram__foreign-root--under-primary"
+          : "ia-diagram__foreign-root";
 
-        <rect className="ia-diagram__node ia-diagram__node--secondary" x="188" y="200" width="120" height="32" rx="6" />
-        <text className="ia-diagram__label ia-diagram__label--secondary" x="248" y="220" textAnchor="middle">
-          Schedules
-        </text>
+        const shuttlePad = getShuttlePairRowPaddingStart(branch);
+        const shuttleRootRowStyle: CSSProperties | undefined =
+          shuttlePad != null
+            ? {
+                paddingLeft: `${(shuttlePad / IA_SUBTREE_PANEL.width) * 100}%`,
+              }
+            : undefined;
 
-        <rect className="ia-diagram__node ia-diagram__node--secondary" x="356" y="200" width="120" height="32" rx="6" />
-        <text className="ia-diagram__label ia-diagram__label--secondary" x="416" y="220" textAnchor="middle">
-          Vendors
-        </text>
+        return (
+          <g
+            key={branch.id}
+            className={`ia-diagram__branch${isActive ? " ia-diagram__branch--active" : ""}`}
+            onMouseEnter={() => handleBranchEnter(branch.id)}
+            onMouseLeave={handleBranchLeave}
+          >
+            <rect
+              className="ia-diagram__node ia-diagram__node--primary"
+              x={pr.x}
+              y={pr.y}
+              width={pr.width}
+              height={pr.height}
+              rx={8}
+              role="button"
+              tabIndex={0}
+              aria-expanded={isActive}
+              aria-controls={subtreeId}
+              aria-label={branch.label}
+              onMouseEnter={() => setCursorVariant("hidden")}
+              onMouseLeave={() => setCursorVariant("default")}
+              onClick={(e) => {
+                if (prefersHover === true) return;
+                e.stopPropagation();
+                handleBranchTap(branch.id);
+              }}
+              onKeyDown={(e) => {
+                if (e.key !== "Enter" && e.key !== " ") return;
+                e.preventDefault();
+                setActiveBranchId((prev) => (prev === branch.id ? null : branch.id));
+              }}
+            />
+            <text
+              className="ia-diagram__label ia-diagram__label--primary"
+              x={cx}
+              y={primaryLabelY(pr)}
+              textAnchor="middle"
+              pointerEvents="none"
+            >
+              {branch.label}
+            </text>
 
-        <rect className="ia-diagram__node ia-diagram__node--secondary" x="524" y="200" width="120" height="32" rx="6" />
-        <text className="ia-diagram__label ia-diagram__label--secondary" x="584" y="220" textAnchor="middle">
-          Stages
-        </text>
-
-        <rect className="ia-diagram__node ia-diagram__node--secondary" x="692" y="200" width="120" height="32" rx="6" />
-        <text className="ia-diagram__label ia-diagram__label--secondary" x="752" y="220" textAnchor="middle">
-          Wallet
-        </text>
-
-        <rect className="ia-diagram__node ia-diagram__node--secondary" x="860" y="200" width="88" height="32" rx="6" />
-        <text className="ia-diagram__label ia-diagram__label--secondary" x="904" y="220" textAnchor="middle">
-          Venues
-        </text>
-      </g>
+            <g id={subtreeId} className="ia-diagram__subtree" aria-hidden={!isActive}>
+              <foreignObject x={fo.x} y={fo.y} width={fo.width} height={fo.height}>
+                {/* XHTML namespace required for foreignObject in some browsers */}
+                <div
+                  className={foreignRootClassName}
+                  data-ia-branch={branch.id}
+                  {...({ xmlns: "http://www.w3.org/1999/xhtml" } as Record<string, string>)}
+                >
+                  <IATreeBlock
+                    node={branch.tree}
+                    branchId={branch.id}
+                    shuttleRootRowStyle={shuttleRootRowStyle}
+                  />
+                </div>
+              </foreignObject>
+            </g>
+          </g>
+        );
+      })}
     </svg>
   );
 }

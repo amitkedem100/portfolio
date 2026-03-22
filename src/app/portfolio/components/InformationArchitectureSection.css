@@ -21,14 +21,280 @@
 }
 
 .ia-section-diagram-wrap {
-  margin: 0;
+  --ia-diagram-width: 100%;
+
+  margin: 0 auto;
   padding-block: 32px 40px;
+  width: 100%;
+  max-width: var(--ia-diagram-width);
+  box-sizing: border-box;
   overflow-x: auto;
   overflow-y: visible;
   -webkit-overflow-scrolling: touch;
 }
 
+/* Interaction hint: desktop “Hover…” / mobile “Click” + hand icon */
+.ia-interaction-hint {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 0 0 20px;
+  font: var(--portfolio-text-b2);
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+.ia-interaction-hint__text--mobile {
+  display: none;
+}
+
+.ia-interaction-hint__icon {
+  flex-shrink: 0;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.ia-interaction-hint__icon--desktop {
+  display: block;
+  width: 44px;
+  height: 44px;
+  background-image: var(--ia-interaction-hint-icon-desktop);
+}
+
+.ia-interaction-hint__icon--mobile {
+  display: none;
+  width: 32px;
+  height: 32px;
+  background-image: var(--ia-interaction-hint-icon-mobile);
+}
+
+.ia-section-diagram-mobile {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .ia-interaction-hint__text--desktop {
+    display: none;
+  }
+
+  .ia-interaction-hint__text--mobile {
+    display: inline;
+  }
+
+  .ia-interaction-hint__icon--desktop {
+    display: none;
+  }
+
+  .ia-interaction-hint__icon--mobile {
+    display: block;
+  }
+
+  .ia-section-diagram-desktop {
+    display: none;
+  }
+
+  .ia-section-diagram-mobile {
+    display: block;
+  }
+}
+
+/* Mobile IA: one slide per area (subtree only); stable viewport height */
+.ia-mobile-carousel {
+  --ia-carousel-slide-min-h: clamp(360px, 58vh, 560px);
+
+  --ia-node-primary-width: 144px;
+  --ia-step-gap: 20px;
+  --ia-vertical-rhythm: 20px;
+  --ia-shuttle-column-width: calc(
+    2 * var(--ia-node-primary-width) + var(--ia-step-gap)
+  );
+
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.ia-mobile-carousel__viewport {
+  touch-action: pan-y;
+  min-height: var(--ia-carousel-slide-min-h);
+}
+
+.ia-mobile-carousel__slide-slot {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  min-height: var(--ia-carousel-slide-min-h);
+  box-sizing: border-box;
+}
+
+.ia-mobile-carousel__branch-slide {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+  gap: var(--ia-vertical-rhythm);
+}
+
+/* Page name — same primary “pill” as diagram HTML nodes */
+.ia-mobile-carousel__page-title-wrap {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.ia-mobile-carousel__page-title-wrap .ia-diagram__node--html.ia-diagram__node--primary {
+  flex-shrink: 0;
+}
+
+/* Single-screen branches (Ticket, Food): leaf under title, centered */
+.ia-mobile-carousel__single-leaf {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.ia-mobile-carousel__panel {
+  width: 100%;
+  flex: 1 1 auto;
+  min-height: 0;
+  padding: var(--ia-vertical-rhythm) 0 calc(var(--ia-vertical-rhythm) + 2px);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.ia-mobile-carousel__panel[data-ia-branch="shuttle"] .ia-tree-row--shuttle-pair {
+  justify-content: center;
+  padding-inline-start: 0 !important;
+  gap: 10px;
+}
+
+/* Shuttle: tighter gap between labeled blocks (Arrival / Departure columns) */
+.ia-mobile-carousel__panel[data-ia-branch="shuttle"] .ia-tree-block--labeled {
+  gap: 10px;
+}
+
+.ia-mobile-carousel__panel[data-ia-branch="shuttle"] .ia-shuttle-choose-scan-col {
+  gap: 10px;
+}
+
+/* Tokens: keep Current Balance | Load a Package on one row; stack below matches tree */
+.ia-diagram__foreign-root.ia-mobile-carousel__panel[data-ia-branch="tokens"]
+  .ia-tree-block--root
+  > .ia-tree-row {
+  flex-direction: row !important;
+  align-items: flex-start;
+}
+
+/* Line Up: Listen | Share | Remind — horizontal row, compact width (overrides max-width 640px stack) */
+.ia-diagram__foreign-root.ia-mobile-carousel__panel[data-ia-branch="lineup"]
+  .ia-tree-block--labeled
+  .ia-tree-row:not(.ia-tree-row--single) {
+  flex-direction: row !important;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.ia-diagram__foreign-root.ia-mobile-carousel__panel[data-ia-branch="lineup"]
+  .ia-tree-block--labeled
+  .ia-tree-row:not(.ia-tree-row--single)
+  > .ia-tree-col {
+  flex: 0 0 auto;
+  min-width: 0;
+  max-width: 100px;
+  padding-inline: 0;
+}
+
+.ia-diagram__foreign-root.ia-mobile-carousel__panel[data-ia-branch="lineup"]
+  .ia-tree-block--labeled
+  .ia-tree-row:not(.ia-tree-row--single)
+  .ia-diagram__node--html.ia-diagram__node--leaf {
+  width: auto;
+  min-width: 0;
+  max-width: 92px;
+  padding: 8px 14px;
+  font-size: 11px;
+  line-height: 1.25;
+}
+
+/* Map: tiles stay in scrollable row under page title; slightly smaller type if needed */
+.ia-mobile-carousel__panel[data-ia-branch="map"] .ia-tree-row--leaf-row {
+  flex-wrap: nowrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.ia-mobile-carousel__panel[data-ia-branch="map"] .ia-tree-row--leaf-row .ia-diagram__node--html {
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 100px;
+  padding: 8px 14px;
+  font-size: 11px;
+  line-height: 1.25;
+}
+
+.ia-diagram__foreign-root.ia-mobile-carousel__panel[data-ia-branch="map"] {
+  overflow-x: auto;
+}
+
+.ia-mobile-carousel__footer {
+  flex-shrink: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.ia-mobile-carousel__page {
+  font: 500 13px/1.3 var(--portfolio-font-body), sans-serif;
+  color: var(--text-secondary);
+}
+
+.ia-mobile-carousel__nav {
+  display: flex;
+  gap: 8px;
+}
+
+.ia-mobile-carousel__btn {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 12px;
+  font: 600 20px/1 var(--portfolio-font-heading), sans-serif;
+  color: var(--text-primary);
+  background: var(--surface-subtle);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.ia-mobile-carousel__btn:hover {
+  border-color: var(--accent);
+}
+
 .ia-diagram {
+  --ia-node-primary-width: 144px;
+  /* Same step as SVG: horizontal gap between primaries = vertical gap primary → panel */
+  --ia-step-gap: 20px;
+  --ia-vertical-rhythm: 20px;
+  /* Choose | Scan row width per side; gap midpoint stacks under Arrival / Departure center */
+  --ia-shuttle-column-width: calc(
+    2 * var(--ia-node-primary-width) + var(--ia-step-gap)
+  );
+
   display: block;
   width: 100%;
   max-width: 100%;
@@ -36,23 +302,53 @@
   margin-inline: 0;
 }
 
-/* Connection lines: low contrast */
-.ia-diagram__line {
-  stroke: var(--border);
-  stroke-width: 1.5;
-  stroke-linecap: round;
+/* Progressive disclosure: one subtree visible at a time (see InformationArchitectureDiagram.tsx) */
+.ia-diagram__subtree {
+  opacity: 0;
+  transform: translateY(5px);
+  transition:
+    opacity 0.22s ease,
+    transform 0.22s ease;
+  pointer-events: none;
 }
 
-.ia-diagram__line--main {
-  stroke-opacity: 0.28;
+.ia-diagram__branch--active .ia-diagram__subtree {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
 }
 
-.ia-diagram__line--branch {
-  stroke-opacity: 0.22;
+.ia-diagram__branch--active .ia-diagram__node--primary {
+  stroke: var(--ia-active-stroke, var(--accent));
+  stroke-width: 1;
 }
 
-.ia-diagram__line--sub {
-  stroke-opacity: 0.16;
+.ia-diagram__node--primary {
+  cursor: default;
+}
+
+.ia-diagram--coarse-pointer .ia-diagram__node--primary {
+  cursor: pointer;
+}
+
+.ia-diagram__node--primary:focus {
+  outline: none;
+}
+
+.ia-diagram__node--primary:focus-visible {
+  outline: 1px solid var(--ia-active-stroke, var(--accent));
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ia-diagram__subtree {
+    transition: opacity 0.12s ease;
+    transform: none;
+  }
+
+  .ia-diagram__branch--active .ia-diagram__subtree {
+    transform: none;
+  }
 }
 
 /* Top-level categories: stronger */
@@ -78,7 +374,7 @@
   font: 600 13px var(--portfolio-font-heading), sans-serif;
 }
 
-/* Lower level: quieter */
+/* Lower level: quieter (SVG) */
 .ia-diagram__node--secondary {
   fill: var(--background);
   stroke: var(--border-subtle);
@@ -88,6 +384,266 @@
 .ia-diagram__label--secondary {
   fill: var(--text-secondary);
   font: 500 11px var(--portfolio-font-body), sans-serif;
+}
+
+/* HTML nodes inside foreignObject — match SVG primary / leaf hierarchy */
+.ia-diagram__node--html.ia-diagram__node--primary {
+  box-sizing: border-box;
+  width: var(--ia-node-primary-width);
+  max-width: 100%;
+  min-height: 40px;
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font: 600 13px/1.25 var(--portfolio-font-heading), sans-serif;
+  color: var(--text-primary);
+  background: var(--surface-subtle);
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+}
+
+.ia-diagram__node--html.ia-diagram__node--leaf {
+  box-sizing: border-box;
+  display: inline-flex;
+  width: var(--ia-node-primary-width);
+  max-width: 100%;
+  min-height: 34px;
+  padding: 6px 10px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font: 500 12px/1.3 var(--portfolio-font-body), sans-serif;
+  color: var(--text-secondary);
+  background: var(--background);
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  vertical-align: top;
+}
+
+/* HTML subtree: sibling levels = one row (columns); nested levels stack under each branch */
+.ia-tree-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  min-width: 0;
+}
+
+/* Title row + content row — same vertical step as Home → primaries in SVG */
+.ia-tree-block--labeled {
+  align-items: stretch;
+  gap: var(--ia-vertical-rhythm);
+}
+
+.ia-tree-block--root {
+  width: 100%;
+}
+
+/* Shuttle: Choose | Scan same row; Payment only under Choose — same inset as Arrival | Departure row */
+.ia-shuttle-choose-scan-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  gap: var(--ia-step-gap);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.ia-shuttle-choose-scan-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ia-vertical-rhythm);
+  min-width: 0;
+}
+
+.ia-shuttle-choose-scan-col--choose {
+  flex: 0 0 var(--ia-node-primary-width);
+  max-width: var(--ia-node-primary-width);
+}
+
+.ia-shuttle-choose-scan-col--scan {
+  flex: 0 0 var(--ia-node-primary-width);
+  max-width: var(--ia-node-primary-width);
+}
+
+.ia-tree-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--ia-step-gap);
+  width: 100%;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* Shuttle: Arrival | Departure row — fixed primary width; row offset inline so gap center sits under Shuttle */
+.ia-tree-row--shuttle-pair {
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: var(--ia-vertical-rhythm);
+}
+
+/* Arrival / Departure: column = full Choose+gap+Scan so gap center lines up with label center */
+.ia-tree-block--shuttle-two-col > .ia-tree-row > .ia-tree-col {
+  flex: 0 0 var(--ia-shuttle-column-width);
+  max-width: var(--ia-shuttle-column-width);
+  min-width: 0;
+  padding-inline: 0;
+}
+
+.ia-diagram__foreign-root[data-ia-branch="shuttle"]
+  .ia-tree-block--shuttle-two-col
+  .ia-tree-row--single
+  > .ia-tree-col {
+  max-width: 100%;
+  flex: 1 1 auto;
+}
+
+.ia-tree-row--single {
+  justify-content: center;
+}
+
+.ia-tree-row--single .ia-tree-col {
+  flex: 0 1 auto;
+  max-width: min(100%, 320px);
+}
+
+/* Tile rows: Listen | Share | Remind (Line Up) + Map — identical horizontal gap (--ia-step-gap = SVG primary gap) */
+.ia-diagram__foreign-root[data-ia-branch="lineup"] .ia-tree-block--labeled .ia-tree-row:not(.ia-tree-row--single),
+.ia-diagram__foreign-root[data-ia-branch="map"] .ia-tree-row--leaf-row {
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: var(--ia-step-gap);
+}
+
+.ia-diagram__foreign-root[data-ia-branch="lineup"] .ia-tree-block--labeled .ia-tree-row:not(.ia-tree-row--single) > .ia-tree-col,
+.ia-diagram__foreign-root[data-ia-branch="map"] .ia-tree-row--leaf-row > .ia-tree-col {
+  flex: 0 0 var(--ia-node-primary-width);
+  max-width: var(--ia-node-primary-width);
+  min-width: 0;
+  padding-inline: 0;
+}
+
+/* Tokens: Current Balance | Load a Package — gap center under Tokens; nested Payment stays under Load */
+.ia-diagram__foreign-root[data-ia-branch="tokens"] .ia-tree-block--root > .ia-tree-row {
+  flex-wrap: nowrap;
+  justify-content: center;
+  gap: var(--ia-step-gap);
+}
+
+.ia-diagram__foreign-root[data-ia-branch="tokens"] .ia-tree-block--root > .ia-tree-row > .ia-tree-col {
+  flex: 0 0 var(--ia-node-primary-width);
+  max-width: var(--ia-node-primary-width);
+  padding-inline: 0;
+}
+
+.ia-tree-col {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ia-vertical-rhythm);
+  padding-inline: 8px;
+}
+
+.ia-tree-col:first-child {
+  padding-inline-start: 0;
+}
+
+.ia-tree-col:last-child {
+  padding-inline-end: 0;
+}
+
+.ia-tree-block--root:not(.ia-tree-block--shuttle-two-col) > .ia-tree-row > .ia-tree-col {
+  flex: 1 1 0;
+}
+
+/* Match primary rect width (144px) for all HTML nodes in subtree columns — Line Up, Tokens, Map, etc. */
+.ia-tree-col .ia-diagram__node--html {
+  width: var(--ia-node-primary-width);
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Labeled branch title row: same fixed width as other primaries in the tree */
+.ia-tree-block--labeled > .ia-diagram__node--html.ia-diagram__node--primary {
+  width: var(--ia-node-primary-width);
+  max-width: 100%;
+  align-self: center;
+}
+
+/* HTML subtree inside foreignObject */
+.ia-diagram__foreign-root {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
+  padding: var(--ia-vertical-rhythm) 4px calc(var(--ia-vertical-rhythm) + 2px);
+  overflow-x: hidden;
+  overflow-y: auto;
+  text-align: start;
+  font: 500 12px/1.45 var(--portfolio-font-body), sans-serif;
+  color: var(--text-primary);
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Single-screen subtree: foreignObject matches SVG primary width — My Ticket under Ticket, Menu under Food */
+.ia-diagram__foreign-root--under-primary {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding-inline: 0;
+}
+
+.ia-diagram__foreign-root--under-primary .ia-diagram__node--html {
+  width: 100%;
+  max-width: none;
+  box-sizing: border-box;
+}
+
+@media (max-width: 640px) {
+  .ia-tree-row:not(.ia-tree-row--leaf-row) {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .ia-tree-row--leaf-row {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .ia-tree-col {
+    padding-inline: 0;
+    padding-block-start: 8px;
+  }
+
+  .ia-tree-col:first-child {
+    padding-block-start: 0;
+  }
+
+  .ia-tree-col--leaf-row {
+    padding-block-start: 0;
+  }
+
+  .ia-diagram__foreign-root[data-ia-branch="lineup"] .ia-tree-block--labeled .ia-tree-row:not(.ia-tree-row--single) {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .ia-diagram__foreign-root[data-ia-branch="tokens"] .ia-tree-block--root > .ia-tree-row {
+    flex-direction: column;
+    align-items: center;
+  }
 }
 
 .ia-section-decisions {
@@ -140,12 +696,6 @@
 
   .ia-section-diagram-wrap {
     padding-block: 24px 28px;
-  }
-
-  /* Allow horizontal scroll for diagram; min width keeps layout readable */
-  .ia-diagram {
-    width: 720px;
-    max-width: none;
   }
 
   .ia-section-decisions {

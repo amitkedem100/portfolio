@@ -1,6 +1,8 @@
 import "./ProjectTextSection.css";
 import "./InformationArchitectureSection.css";
 import { InformationArchitectureDiagram } from "./InformationArchitectureDiagram";
+import { InformationArchitectureInteractionHint } from "./InformationArchitectureInteractionHint";
+import { InformationArchitectureMobileCarousel } from "./InformationArchitectureMobileCarousel";
 
 export type InformationArchitectureSectionProps = {
   title: string;
@@ -33,7 +35,13 @@ export function InformationArchitectureSection({
         </header>
 
         <div className="ia-section-diagram-wrap">
-          <InformationArchitectureDiagram />
+          <InformationArchitectureInteractionHint />
+          <div className="ia-section-diagram-desktop">
+            <InformationArchitectureDiagram />
+          </div>
+          <div className="ia-section-diagram-mobile">
+            <InformationArchitectureMobileCarousel />
+          </div>
         </div>
 
         <div className="ia-section-decisions">
