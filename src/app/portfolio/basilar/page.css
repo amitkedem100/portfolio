@@ -1,6 +1,4 @@
-.basilar-page {
-  grid-auto-rows: auto;
-}
+/* Grid: .portfolio-page-inner-grid in portfolio.css (single horizontal inset from portfolio-layout padding) */
 
 .basilar-page-section {
   display: block;
@@ -52,29 +50,40 @@
   }
 }
 
-/* Pain Points: Basilar band — --basilar-background from globals (html.basilar-project + data-theme) */
+/*
+  Pain Points: full-bleed background only (pseudo) — section stays in normal grid flow like Personas
+  so .project-text-section-inner aligns exactly; no double padding / vw breakout on the box itself.
+*/
 .pain-points-section.basilar-painpoints-section {
-  background: var(--basilar-background);
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-  max-width: 100vw;
-  padding-block: clamp(80px, 11vw, 120px);
-  /* Match .layout-grid horizontal inset so text aligns with rest of page */
-  padding-inline: 64px;
+  position: relative;
+  isolation: isolate;
+  min-width: 0;
+  padding-block: 56px 72px;
   box-sizing: border-box;
+}
+
+.pain-points-section.basilar-painpoints-section::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  top: 0;
+  bottom: 0;
+  background: var(--basilar-background);
+  pointer-events: none;
 }
 
 @media (max-width: 1024px) {
   .pain-points-section.basilar-painpoints-section {
-    padding-block: clamp(72px, 10vw, 104px);
-    padding-inline: 48px;
+    padding-block: 48px 56px;
   }
 }
 
 @media (max-width: 768px) {
   .pain-points-section.basilar-painpoints-section {
-    padding-block: clamp(64px, 14vw, 88px);
-    padding-inline: 32px;
+    padding-block: 40px 48px;
   }
 }
 
@@ -84,7 +93,7 @@
 }
 
 .basilar-overview-inner {
-  max-width: min(760px, 100%);
+  max-width: min(var(--project-text-intro-max-width), 100%);
   margin-inline: 0 auto;
   text-align: start;
 }

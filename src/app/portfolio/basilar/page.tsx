@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import "@/app/portfolio/components/ProjectTextSection.css";
 import "./page.css";
 import { BasilarPainPointsSection } from "@/app/portfolio/basilar/BasilarPainPointsSection";
 import { BasilarPersonasSection } from "@/app/portfolio/basilar/BasilarPersonasSection";
@@ -18,7 +19,7 @@ const BASILAR_SHOWCASE_WALKTHROUGH = "/videos/basilar/walkthrough.mp4";
 
 export default function BasilarProjectPage() {
   return (
-    <div className="basilar-page basilar-project layout-grid">
+    <div className="basilar-page basilar-project portfolio-page-inner-grid">
       <section className="basilar-page-section basilar-page-hero" aria-label="Basilar project hero">
         <ProjectVideoHero
           title="Basilar"
@@ -30,7 +31,7 @@ export default function BasilarProjectPage() {
       </section>
 
       <section
-        className="basilar-page-section basilar-overview"
+        className="basilar-page-section basilar-overview project-text-section"
         aria-labelledby="basilar-overview-title"
       >
         <div className="basilar-overview-inner">
@@ -86,13 +87,9 @@ export default function BasilarProjectPage() {
         />
       </section>
 
-      <section className="basilar-page-section">
-        <BasilarPersonasSection />
-      </section>
+      <BasilarPersonasSection />
 
-      <section className="basilar-page-section">
-        <BasilarPainPointsSection />
-      </section>
+      <BasilarPainPointsSection />
     </div>
   );
 }

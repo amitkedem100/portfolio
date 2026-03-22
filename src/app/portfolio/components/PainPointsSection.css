@@ -1,16 +1,8 @@
-/* Editorial pain points: persona groups + story blocks, no cards */
-.pain-points-section {
-  width: 100%;
-}
-
-.pain-points-section-inner {
-  max-width: min(760px, 100%);
-  margin-inline: 0 auto;
-  text-align: start;
-}
+/* Editorial pain points: persona groups + story blocks, no cards (frame: ProjectTextSection.css) */
 
 .pain-points-section-header {
   margin-bottom: 48px;
+  text-align: start;
 }
 
 .pain-points-section-title {
@@ -23,6 +15,7 @@
 
 .pain-points-section-intro {
   margin: 0;
+  max-width: min(var(--project-text-intro-max-width), 100%);
   font: var(--portfolio-text-b1);
   color: var(--text-secondary);
 }

@@ -14,3 +14,30 @@
   margin: 0;
 }
 
+/* Inner page grid inside portfolio-layout-main: full width of main, no duplicate margin (shell uses padding) */
+.portfolio-page-inner-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 32px;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+  grid-auto-rows: auto;
+  box-sizing: border-box;
+}
+
+@media (max-width: 1024px) {
+  .portfolio-page-inner-grid {
+    gap: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .portfolio-page-inner-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+}
+

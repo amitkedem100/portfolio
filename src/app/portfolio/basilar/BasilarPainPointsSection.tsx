@@ -5,7 +5,7 @@ export function BasilarPainPointsSection() {
   return (
     <PainPointsSection
       {...basilarPainPointsSectionProps}
-      className="basilar-painpoints-section"
+      className="basilar-page-section basilar-painpoints-section"
     />
   );
 }

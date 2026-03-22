@@ -1,0 +1,17 @@
+/* Shared frame for portfolio project textual sections (Overview / Personas / Pain Points pattern).
+   Tokens: globals.css (--project-text-inner-max-width, --project-text-intro-max-width).
+   Outer section: optional background + vertical spacing (page-level).
+   Inner: consistent max-width + horizontal alignment with layout grid. */
+
+.project-text-section {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.project-text-section-inner {
+  width: 100%;
+  max-width: min(var(--project-text-inner-max-width), 100%);
+  margin-inline: 0 auto;
+  text-align: start;
+  box-sizing: border-box;
+}

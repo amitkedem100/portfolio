@@ -6,7 +6,7 @@ export function BasilarPersonasSection() {
   return (
     <PersonasSection
       {...basilarPersonasSectionProps}
-      className="basilar-page-personas"
+      className="basilar-page-section basilar-page-personas"
     />
   );
 }

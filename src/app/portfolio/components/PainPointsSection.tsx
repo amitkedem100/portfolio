@@ -1,3 +1,4 @@
+import "./ProjectTextSection.css";
 import "./PainPointsSection.css";
 
 export type PainPointBlock = {
@@ -30,10 +31,10 @@ export function PainPointsSection({
 
   return (
     <section
-      className={`pain-points-section ${className}`.trim()}
+      className={`pain-points-section project-text-section ${className}`.trim()}
       aria-labelledby={titleId}
     >
-      <div className="pain-points-section-inner">
+      <div className="project-text-section-inner">
         <header className="pain-points-section-header">
           <h2 id={titleId} className="pain-points-section-title">
             {title}

@@ -68,6 +68,10 @@
   /* Theme toggle (sun = light mode, moon = dark mode) */
   --theme-toggle-sun-bg: #F6C945;
   --theme-toggle-moon-bg: #4C6FFF;
+
+  /* Project page textual sections — shared frame (Personas / Pain Points / intro measure) */
+  --project-text-inner-max-width: 960px;
+  --project-text-intro-max-width: 760px;
 }
 
 /* ---------------------------------------------------------
@@ -82,8 +86,8 @@
   display: grid;
   grid-template-columns: repeat(8, 1fr);
   gap: 32px;
-  margin-left: 64px;
-  margin-right: 64px;
+  padding-left: 64px;
+  padding-right: 64px;
   width: auto;
 }
 

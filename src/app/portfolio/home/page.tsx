@@ -5,7 +5,7 @@ import { HomeHero } from "./components/HomeHero";
 
 export default function PortfolioHomePage() {
   return (
-    <div className="home-page layout-grid">
+    <div className="home-page portfolio-page-inner-grid">
       <section className="home-page-section home-page-hero">
         <HomeHero />
       </section>

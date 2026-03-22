@@ -1,6 +1,6 @@
+/* Grid: .portfolio-page-inner-grid (portfolio.css) */
 .home-page {
-  grid-auto-rows: auto;
-  margin-inline: 0px;
+  margin-inline: 0;
 }
 
 .home-page-section {

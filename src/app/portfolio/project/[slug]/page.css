@@ -1,6 +1,4 @@
-.project-page {
-  grid-auto-rows: auto;
-}
+/* Grid: .portfolio-page-inner-grid in portfolio.css */
 
 .project-page-section {
   display: block;

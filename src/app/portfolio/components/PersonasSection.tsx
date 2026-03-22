@@ -1,3 +1,4 @@
+import "./ProjectTextSection.css";
 import "./PersonasSection.css";
 
 export type PersonaContent = {
@@ -37,10 +38,10 @@ export function PersonasSection({
 
   return (
     <section
-      className={`personas-section ${className}`.trim()}
+      className={`personas-section project-text-section ${className}`.trim()}
       aria-labelledby={titleId}
     >
-      <div className="personas-section-inner">
+      <div className="project-text-section-inner">
         <header className="personas-section-header">
           <h2 id={titleId} className="personas-section-title">
             {title}

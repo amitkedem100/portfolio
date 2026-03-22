@@ -18,7 +18,7 @@ export default function ProjectPage({ params }: ProjectPageProps) {
   }
 
   return (
-    <div className="project-page layout-grid">
+    <div className="project-page portfolio-page-inner-grid">
       <section className="project-page-section project-page-hero">
         <ProjectHero title={project.title} summary={project.summary} />
       </section>
