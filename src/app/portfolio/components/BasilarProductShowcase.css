@@ -1,0 +1,54 @@
+/* Visual-only showcase: static bg + centered device (reuses project-video-hero device classes) */
+
+.basilar-product-showcase {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: clamp(22rem, 70vh, 52rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  box-sizing: border-box;
+}
+
+.basilar-product-showcase-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.basilar-product-showcase-bg-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Very subtle scrim for device separation from photo */
+.basilar-product-showcase-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.14) 0%,
+    rgba(0, 0, 0, 0.06) 45%,
+    rgba(0, 0, 0, 0.12) 100%
+  );
+}
+
+.basilar-product-showcase-device-layer {
+  position: relative;
+  z-index: 2;
+  /* Slight lift: matches hero device elevation via shared shadow on frame */
+  margin-top: -4px;
+}
+
+@media (max-width: 768px) {
+  .basilar-product-showcase {
+    min-height: clamp(20rem, 65vh, 44rem);
+    padding: 32px 20px;
+  }
+}

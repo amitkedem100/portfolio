@@ -36,7 +36,7 @@ export default function PortfolioHomePage() {
         <CursorZone variant="viewProject">
           <ProjectCard
             title="Basilar"
-            description="A mobile product for multi-day festival logistics — entry, transport, food, navigation, and real-time updates."
+            description="A mobile product for multi-day festival logistics. Entry, transport, food, navigation, and real-time updates."
             keywords="Mobile UX · Festival Experience · Product"
             imageAlt="Basilar project"
             href="/portfolio/basilar"
