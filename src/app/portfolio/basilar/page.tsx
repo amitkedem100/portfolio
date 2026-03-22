@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./page.css";
+import { BasilarPainPointsSection } from "@/app/portfolio/basilar/BasilarPainPointsSection";
 import { BasilarPersonasSection } from "@/app/portfolio/basilar/BasilarPersonasSection";
 import { BasilarProductShowcase } from "@/app/portfolio/components/BasilarProductShowcase";
 import { ProjectVideoHero } from "@/app/portfolio/components/ProjectVideoHero";
@@ -87,6 +88,10 @@ export default function BasilarProjectPage() {
 
       <section className="basilar-page-section">
         <BasilarPersonasSection />
+      </section>
+
+      <section className="basilar-page-section">
+        <BasilarPainPointsSection />
       </section>
     </div>
   );

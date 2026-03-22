@@ -107,9 +107,17 @@
   }
 }
 
-/* Basilar: project cursor accent; overridden to global --accent in header via [data-cursor-global-accent] */
+/* Basilar: project-scoped tokens (accent + band backgrounds; do not alter global DS tokens) */
 html.basilar-project {
   --cursor-accent: #00ff0a;
+  --basilar-background-light: #EEEEEE;
+  --basilar-background-dark: #3b443b;
+  --basilar-background: var(--basilar-background-light);
+}
+
+/* Basilar: pain-points / project bands — switch background when theme matches PortfolioContext */
+html[data-theme="dark"].basilar-project {
+  --basilar-background: var(--basilar-background-dark);
 }
 
 /* Dark theme only when user toggles (data-theme set by PortfolioContext) */
