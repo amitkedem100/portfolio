@@ -104,15 +104,9 @@
   }
 }
 
-/* Editorial overview: left-aligned, constrained measure */
-.basilar-overview {
+/* Overview: same frame as other textual sections (project-text-section + project-text-section-inner) */
+.basilar-page-overview {
   padding-block: 56px 72px;
-}
-
-.basilar-overview-inner {
-  max-width: min(var(--project-text-intro-max-width), 100%);
-  margin-inline: 0 auto;
-  text-align: start;
 }
 
 .basilar-overview-heading {
@@ -156,7 +150,7 @@
 }
 
 @media (max-width: 1024px) {
-  .basilar-overview {
+  .basilar-page-overview {
     padding-block: 48px 56px;
   }
 
@@ -170,7 +164,7 @@
 }
 
 @media (max-width: 768px) {
-  .basilar-overview {
+  .basilar-page-overview {
     padding-block: 40px 48px;
   }
 

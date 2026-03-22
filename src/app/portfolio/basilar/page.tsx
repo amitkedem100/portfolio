@@ -32,10 +32,10 @@ export default function BasilarProjectPage() {
       </section>
 
       <section
-        className="basilar-page-section basilar-overview project-text-section"
+        className="basilar-page-section basilar-page-overview project-text-section"
         aria-labelledby="basilar-overview-title"
       >
-        <div className="basilar-overview-inner">
+        <div className="project-text-section-inner">
           <h2 id="basilar-overview-title" className="basilar-overview-heading">
             Overview
           </h2>
