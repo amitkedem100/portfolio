@@ -69,8 +69,7 @@
   --theme-toggle-sun-bg: #F6C945;
   --theme-toggle-moon-bg: #4C6FFF;
 
-  /* Project page textual sections — shared frame (Personas / Pain Points / intro measure) */
-  --project-text-inner-max-width: 960px;
+  /* Project page textual sections — intro line measure (inner wrapper is width: 100%) */
   --project-text-intro-max-width: 760px;
 }
 

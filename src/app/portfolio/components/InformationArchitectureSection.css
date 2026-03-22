@@ -1,0 +1,159 @@
+/* Information architecture section — shared frame via ProjectTextSection; diagram hierarchy */
+
+.ia-section-header {
+  margin-bottom: 28px;
+  text-align: start;
+}
+
+.ia-section-title {
+  margin: 0 0 16px;
+  font: var(--portfolio-text-h2);
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.ia-section-intro {
+  margin: 0;
+  max-width: min(var(--project-text-intro-max-width), 100%);
+  font: var(--portfolio-text-b1);
+  color: var(--text-secondary);
+}
+
+.ia-section-diagram-wrap {
+  margin: 0;
+  padding-block: 32px 40px;
+  overflow-x: auto;
+  overflow-y: visible;
+  -webkit-overflow-scrolling: touch;
+}
+
+.ia-diagram {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  margin-inline: 0;
+}
+
+/* Connection lines: low contrast */
+.ia-diagram__line {
+  stroke: var(--border);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+
+.ia-diagram__line--main {
+  stroke-opacity: 0.28;
+}
+
+.ia-diagram__line--branch {
+  stroke-opacity: 0.22;
+}
+
+.ia-diagram__line--sub {
+  stroke-opacity: 0.16;
+}
+
+/* Top-level categories: stronger */
+.ia-diagram__node--hub {
+  fill: var(--surface);
+  stroke: var(--border);
+  stroke-width: 1.5;
+}
+
+.ia-diagram__node--primary {
+  fill: var(--surface-subtle);
+  stroke: var(--border);
+  stroke-width: 1.5;
+}
+
+.ia-diagram__label--hub {
+  fill: var(--text-primary);
+  font: 600 14px var(--portfolio-font-heading), sans-serif;
+}
+
+.ia-diagram__label--primary {
+  fill: var(--text-primary);
+  font: 600 13px var(--portfolio-font-heading), sans-serif;
+}
+
+/* Lower level: quieter */
+.ia-diagram__node--secondary {
+  fill: var(--background);
+  stroke: var(--border-subtle);
+  stroke-width: 1;
+}
+
+.ia-diagram__label--secondary {
+  fill: var(--text-secondary);
+  font: 500 11px var(--portfolio-font-body), sans-serif;
+}
+
+.ia-section-decisions {
+  margin-top: 8px;
+  padding-top: 40px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.ia-section-decisions-title {
+  margin: 0 0 16px;
+  font: var(--portfolio-text-h3);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.ia-section-decisions-list {
+  margin: 0;
+  padding-inline-start: 1.25rem;
+  list-style-type: disc;
+}
+
+.ia-section-decisions-list li {
+  margin-bottom: 12px;
+  font: var(--portfolio-text-b2);
+  color: var(--text-primary);
+}
+
+.ia-section-decisions-list li::marker {
+  color: var(--accent);
+}
+
+.ia-section-decisions-list li:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 1024px) {
+  .ia-section-diagram-wrap {
+    padding-block: 28px 36px;
+  }
+}
+
+@media (max-width: 768px) {
+  .ia-section-title {
+    font-size: 1.375rem;
+  }
+
+  .ia-section-intro {
+    font-size: 1rem;
+  }
+
+  .ia-section-diagram-wrap {
+    padding-block: 24px 28px;
+  }
+
+  /* Allow horizontal scroll for diagram; min width keeps layout readable */
+  .ia-diagram {
+    width: 720px;
+    max-width: none;
+  }
+
+  .ia-section-decisions {
+    padding-top: 32px;
+  }
+
+  .ia-section-decisions-list li {
+    font-size: 0.9375rem;
+    line-height: 1.55;
+  }
+}

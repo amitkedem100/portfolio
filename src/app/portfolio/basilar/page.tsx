@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "@/app/portfolio/components/ProjectTextSection.css";
 import "./page.css";
+import { BasilarInformationArchitectureSection } from "@/app/portfolio/basilar/BasilarInformationArchitectureSection";
 import { BasilarPainPointsSection } from "@/app/portfolio/basilar/BasilarPainPointsSection";
 import { BasilarPersonasSection } from "@/app/portfolio/basilar/BasilarPersonasSection";
 import { BasilarProductShowcase } from "@/app/portfolio/components/BasilarProductShowcase";
@@ -90,6 +91,8 @@ export default function BasilarProjectPage() {
       <BasilarPersonasSection />
 
       <BasilarPainPointsSection />
+
+      <BasilarInformationArchitectureSection />
     </div>
   );
 }
