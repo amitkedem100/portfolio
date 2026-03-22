@@ -23,7 +23,22 @@
   height: 100%;
   object-fit: cover;
   object-position: center;
+
+  /* Exposure adjustment variables */
+  filter:
+    brightness(var(--showcase-bg-brightness,0.6))
+    contrast(var(--showcase-bg-contrast,1))
+    saturate(var(--showcase-bg-saturate,1));
+  transition: filter 0.3s;
 }
+
+/* Example:
+   :root {
+     --showcase-bg-brightness: 1.15;
+     --showcase-bg-contrast: 1.05;
+     --showcase-bg-saturate: 1.1;
+   }
+*/
 
 /* Very subtle scrim for device separation from photo */
 .basilar-product-showcase-scrim {

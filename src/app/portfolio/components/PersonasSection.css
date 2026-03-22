@@ -1,0 +1,196 @@
+/* Editorial personas: spacing + type hierarchy, no cards */
+
+.personas-section {
+  width: 100%;
+}
+
+.personas-section-inner {
+  max-width: min(960px, 100%);
+  margin-inline: 0 auto;
+}
+
+.personas-section-header {
+  margin-bottom: 48px;
+  text-align: start;
+}
+
+.personas-section-title {
+  margin: 0 0 16px;
+  font: var(--portfolio-text-h2);
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.personas-section-intro {
+  margin: 0;
+  max-width: min(760px, 100%);
+  font: var(--portfolio-text-b1);
+  color: var(--text-secondary);
+}
+
+.personas-section-list {
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+}
+
+.personas-persona {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 48px 56px;
+}
+
+/* Persona 2: image on the right */
+.personas-persona--reverse {
+  flex-direction: row-reverse;
+}
+
+.personas-persona-media {
+  flex: 0 1 42%;
+  max-width: 420px;
+  min-width: 0;
+}
+
+.personas-persona-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: var(--radius-8);
+}
+
+.personas-persona-body {
+  flex: 1 1 58%;
+  min-width: 0;
+  text-align: start;
+}
+
+.personas-persona-name {
+  margin: 0 0 24px;
+  font-family: var(--portfolio-font-heading);
+  font-weight: 600;
+  font-size: clamp(1.375rem, 2.5vw, 1.75rem);
+  line-height: 1.25;
+  color: var(--text-primary);
+}
+
+.personas-persona-name-text {
+  font-weight: 700;
+}
+
+.personas-persona-role {
+  font-weight: 400;
+  color: var(--text-secondary);
+}
+
+.personas-persona-label {
+  margin: 0 0 8px;
+  font: var(--portfolio-text-b3);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.personas-persona-text {
+  margin: 0 0 28px;
+  font: var(--portfolio-text-b2);
+  color: var(--text-primary);
+}
+
+.personas-persona-text--needs {
+  margin-bottom: 0;
+}
+
+.personas-persona-bullets {
+  margin: 0 0 28px;
+  padding-inline-start: 1.15rem;
+  list-style-type: disc;
+}
+
+.personas-persona-bullets li {
+  margin-bottom: 10px;
+  font: var(--portfolio-text-b2);
+  color: var(--text-primary);
+  padding-inline-start: 0.25rem;
+}
+
+.personas-persona-bullets li::marker {
+  color: var(--accent);
+}
+
+.personas-persona-bullets li:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 1024px) {
+  .personas-section-list {
+    gap: 56px;
+  }
+
+  .personas-persona {
+    gap: 40px;
+  }
+
+  .personas-persona-media {
+    flex-basis: 40%;
+    max-width: 360px;
+  }
+}
+
+@media (max-width: 768px) {
+  .personas-section-header {
+    margin-bottom: 36px;
+  }
+
+  .personas-section-title {
+    font-size: 1.375rem;
+  }
+
+  .personas-section-intro {
+    font-size: 1rem;
+  }
+
+  .personas-section-list {
+    gap: 48px;
+  }
+
+  .personas-persona,
+  .personas-persona--reverse {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .personas-persona-media {
+    flex: none;
+    max-width: none;
+    width: 100%;
+  }
+
+  .personas-persona-image {
+    max-height: 320px;
+    aspect-ratio: 16 / 10;
+  }
+
+  .personas-persona-name {
+    margin-bottom: 18px;
+  }
+
+  .personas-persona-text {
+    margin-bottom: 22px;
+    font-size: 0.9375rem;
+    line-height: 1.55;
+  }
+
+  .personas-persona-bullets {
+    margin-bottom: 22px;
+  }
+
+  .personas-persona-bullets li {
+    font-size: 0.9375rem;
+    line-height: 1.55;
+  }
+}

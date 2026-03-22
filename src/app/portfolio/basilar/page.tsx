@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./page.css";
+import { BasilarPersonasSection } from "@/app/portfolio/basilar/BasilarPersonasSection";
 import { BasilarProductShowcase } from "@/app/portfolio/components/BasilarProductShowcase";
 import { ProjectVideoHero } from "@/app/portfolio/components/ProjectVideoHero";
 
@@ -82,6 +83,10 @@ export default function BasilarProjectPage() {
           backgroundImageSrc={BASILAR_SHOWCASE_BG_IMAGE}
           deviceVideoSrc={BASILAR_SHOWCASE_WALKTHROUGH}
         />
+      </section>
+
+      <section className="basilar-page-section">
+        <BasilarPersonasSection />
       </section>
     </div>
   );

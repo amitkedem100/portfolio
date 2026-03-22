@@ -35,6 +35,23 @@
   }
 }
 
+/* Personas section (uses shared PersonasSection + page spacing) */
+.basilar-page-personas {
+  padding-block: 56px 72px;
+}
+
+@media (max-width: 1024px) {
+  .basilar-page-personas {
+    padding-block: 48px 56px;
+  }
+}
+
+@media (max-width: 768px) {
+  .basilar-page-personas {
+    padding-block: 40px 48px;
+  }
+}
+
 /* Editorial overview: left-aligned, constrained measure */
 .basilar-overview {
   padding-block: 56px 72px;
