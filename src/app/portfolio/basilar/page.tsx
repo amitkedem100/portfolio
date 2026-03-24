@@ -4,6 +4,7 @@ import "./page.css";
 import { BasilarInformationArchitectureSection } from "@/app/portfolio/basilar/BasilarInformationArchitectureSection";
 import { BasilarPainPointsSection } from "@/app/portfolio/basilar/BasilarPainPointsSection";
 import { BasilarPersonasSection } from "@/app/portfolio/basilar/BasilarPersonasSection";
+import { BasilarUserInterfaceSection } from "@/app/portfolio/basilar/BasilarUserInterfaceSection";
 import { BasilarProductShowcase } from "@/app/portfolio/components/BasilarProductShowcase";
 import { ProjectVideoHero } from "@/app/portfolio/components/ProjectVideoHero";
 
@@ -93,6 +94,8 @@ export default function BasilarProjectPage() {
       <BasilarPainPointsSection />
 
       <BasilarInformationArchitectureSection />
+
+      <BasilarUserInterfaceSection />
     </div>
   );
 }

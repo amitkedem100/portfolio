@@ -119,6 +119,7 @@ html.basilar-project {
   --cursor-accent: #00ff0a;
   /* IA diagram active stroke / focus: Basilar green, not portfolio --accent */
   --ia-active-stroke: var(--cursor-accent);
+  --basilar-ui-label: #92B079;
   --basilar-background-light: #eeeeee;
   --basilar-background-dark: #3b443b;
   --basilar-background: var(--basilar-background-light);
