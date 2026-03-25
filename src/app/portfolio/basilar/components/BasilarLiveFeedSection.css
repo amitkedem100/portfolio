@@ -1,17 +1,58 @@
 /* Live Feed — tighter band (shorter device column); page background, no full-bleed strip */
 
 .basilar-page-ui-live-feed {
-  padding-block: 40px 52px;
+  padding-block: 40px 44px;
 }
 
 @media (max-width: 1024px) {
   .basilar-page-ui-live-feed {
-    padding-block: 36px 48px;
+    padding-block: 36px 44px;
   }
 }
 
 @media (max-width: 768px) {
   .basilar-page-ui-live-feed {
-    padding-block: 32px 44px;
+    padding-block: 30px 40px;
   }
+
+  .basilar-page-ui-live-feed .basilar-ui-segment--live-feed-media .basilar-ui-segment__media {
+    max-width: min(280px, 88vw);
+    width: 100%;
+  }
+}
+
+/* Live Feed-specific media tuning (video class is added in BasilarUISegmentBlock) */
+.basilar-page-ui-live-feed .basilar-ui-segment--live-feed-media {
+  align-items: center; /* fixes extra vertical rhythm from Live Feed and down */
+}
+
+.basilar-page-ui-live-feed .basilar-ui-segment--live-feed-media .basilar-ui-segment__media {
+  flex: 0 0 min(280px, 32vw);
+  max-width: min(320px, 92vw);
+  min-width: 0;
+}
+
+.basilar-page-ui-live-feed
+  .basilar-ui-segment--live-feed-media
+  .basilar-ui-segment__device-wrap {
+  margin-top: 10px; /* lower the frame to match the content block */
+}
+
+/* Override global device video height:100% — frame hugs video, no gray bars */
+.basilar-page-ui-live-feed
+  .basilar-ui-segment--live-feed-media
+  .basilar-ui-segment__device.project-video-hero-device {
+  aspect-ratio: unset;
+  height: auto;
+  display: block;
+  border-radius: var(--radius-20);
+}
+
+.basilar-page-ui-live-feed .basilar-live-feed-device-video {
+  width: 100%;
+  height: auto;
+  max-height: none;
+  object-fit: contain;
+  object-position: center 50%;
+  transform: none;
 }

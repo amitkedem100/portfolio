@@ -6,17 +6,21 @@
   max-width: 100vw;
   padding: 0;
   box-sizing: border-box;
-  min-height: 340px;
-  height: clamp(320px, 48vh, 640px);
 }
 
 .basilar-page-vibe-photo-inner {
   position: relative;
   width: 100%;
-  height: clamp(220px, 38vh, 520px);
+  height: clamp(528px, 48vh, 800px);
 }
 
 .basilar-page-vibe-photo-img {
   object-fit: cover;
-  object-position: center 40%;
+  object-position: center 80%;
+}
+
+@media (max-width: 768px) {
+  .basilar-page-vibe-photo-inner {
+    height: clamp(240px, 36vh, 420px);
+  }
 }

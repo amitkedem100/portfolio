@@ -1,4 +1,30 @@
-/* Grid: .portfolio-page-inner-grid (portfolio.css) */
+/* Same 8-col grid as .portfolio-page-inner-grid before gap:0 — home keeps row/column gaps for layout */
+.home-page.portfolio-page-inner-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 32px;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+  grid-auto-rows: auto;
+  box-sizing: border-box;
+}
+
+@media (max-width: 1024px) {
+  .home-page.portfolio-page-inner-grid {
+    gap: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .home-page.portfolio-page-inner-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+}
+
 .home-page {
   margin-inline: 0;
 }

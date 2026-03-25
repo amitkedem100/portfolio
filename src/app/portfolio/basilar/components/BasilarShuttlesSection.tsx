@@ -11,10 +11,12 @@ const SHUTTLES_SEGMENT: BasilarUISegmentContent = {
   title: "Seamless Travel",
   description:
     "Basilar shuttles are part of the festival experience, offering a smooth ride to and from the venue. With clear Arrival and Departure tabs, users can quickly check schedules and purchase tickets without interrupting the flow of the event.",
-  deviceVideoSrc: "/images/basilar/arrival-departure 1.mp4",
-  deviceVideoAriaLabel: "Basilar shuttle arrival flow",
-  secondaryDeviceVideoSrc: "/images/basilar/arrival-departure 2.mp4",
-  secondaryDeviceVideoAriaLabel: "Basilar shuttle departure flow",
+  deviceVideoSrc: "/images/basilar/arrival-departure%201.mp4",
+  deviceVideoAriaLabel: "Basilar shuttle arrival and departure flows",
+  deviceVideoPlaylist: [
+    "/images/basilar/arrival-departure%201.mp4",
+    "/images/basilar/arrival-departure%202.mp4",
+  ] as const,
 };
 
 export function BasilarShuttlesSection() {

@@ -66,41 +66,38 @@
   justify-content: center;
 }
 
-.basilar-ui-segment__media--stacked {
-  align-items: center;
-}
-
-.basilar-ui-segment__stack {
-  position: relative;
-  width: min(300px, 100%);
-  aspect-ratio: 10 / 18;
-}
-
 .basilar-ui-segment__device-wrap {
   width: min(280px, 100%);
   margin-top: 0;
-}
-
-.basilar-ui-segment__device-wrap--stack-left {
-  position: absolute;
-  inset-block-start: 0;
-  inset-inline-start: 0;
-  width: min(190px, 50%);
-  z-index: 1;
-}
-
-.basilar-ui-segment__device-wrap--stack-right {
-  position: absolute;
-  inset-block-start: 6%;
-  inset-inline-end: 0;
-  width: min(190px, 50%);
-  z-index: 2;
 }
 
 .basilar-ui-segment__device {
   box-shadow:
     0 24px 48px rgba(0, 0, 0, 0.28),
     0 8px 16px rgba(0, 0, 0, 0.16);
+}
+
+/* Shuttles: playlist in one 9:19 shell; slight zoom reduces side letterboxing under contain */
+.basilar-ui-segment__device.basilar-ui-segment__device--shuttle-loop {
+  position: relative;
+}
+
+.basilar-ui-segment__shuttle-loop-videos {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  overflow: hidden;
+}
+
+.basilar-ui-segment__shuttle-loop-videos .project-video-hero-device-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center center;
+  transform: scale(1.049);
+  transform-origin: center center;
 }
 
 /* Live Feed asset is wider than 9:19 — keep phone chrome, show full UI (contain) at body-like height */
@@ -120,14 +117,16 @@
 
 .basilar-ui-segment--live-feed-media .basilar-ui-segment__device.project-video-hero-device {
   aspect-ratio: unset;
-  height: clamp(200px, 32vh, 300px);
+  height: auto;
   width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: block;
+  overflow: hidden;
 }
 
+/* Frame height follows video intrinsic ratio — avoids gray letterboxing from fixed-height + contain */
 .basilar-ui-segment--live-feed-media .project-video-hero-device-video {
+  width: 100%;
+  height: auto;
   object-fit: contain;
 }
 
@@ -142,10 +141,6 @@
 
   .basilar-ui-segment__media {
     flex-basis: min(260px, 36vw);
-  }
-
-  .basilar-ui-segment__stack {
-    width: min(260px, 100%);
   }
 }
 
@@ -183,26 +178,6 @@
 
   .basilar-ui-segment__device-wrap {
     width: min(240px, 82vw);
-  }
-
-  .basilar-ui-segment__stack {
-    width: min(240px, 82vw);
-  }
-
-  .basilar-ui-segment__device-wrap--stack-left {
-    inset-block-start: 0;
-    inset-inline-start: 0;
-    width: min(168px, 48%);
-  }
-
-  .basilar-ui-segment__device-wrap--stack-right {
-    inset-block-start: 8%;
-    inset-inline-end: 0;
-    width: min(168px, 48%);
-  }
-
-  .basilar-ui-segment--live-feed-media .basilar-ui-segment__device.project-video-hero-device {
-    height: clamp(180px, 36vh, 260px);
   }
 
   .basilar-ui-segment--live-feed-media .basilar-ui-segment__media {
