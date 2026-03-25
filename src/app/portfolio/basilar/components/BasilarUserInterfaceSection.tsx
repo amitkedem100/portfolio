@@ -1,55 +1,11 @@
 import "@/app/portfolio/components/ProjectTextSection.css";
+import {
+  BasilarUISegmentBlock,
+  type BasilarUISegmentContent,
+} from "@/app/portfolio/basilar/components/BasilarUISegmentBlock";
 import "./BasilarUserInterfaceSection.css";
 
-type BasilarUISegment = {
-  id: string;
-  label: string;
-  title: string;
-  description: string;
-  deviceVideoSrc: string;
-  deviceVideoAriaLabel: string;
-};
-
-type BasilarUISegmentProps = {
-  segment: BasilarUISegment;
-  reverse?: boolean;
-};
-
-function BasilarUISegmentBlock({ segment, reverse = false }: BasilarUISegmentProps) {
-  return (
-    <article
-      className={reverse ? "basilar-ui-segment basilar-ui-segment--reverse" : "basilar-ui-segment"}
-      aria-labelledby={`basilar-ui-segment-title-${segment.id}`}
-    >
-      <div className="basilar-ui-segment__body">
-        <p className="basilar-ui-segment__label">{segment.label}</p>
-        <h3 id={`basilar-ui-segment-title-${segment.id}`} className="basilar-ui-segment__title">
-          {segment.title}
-        </h3>
-        <p className="basilar-ui-segment__description">{segment.description}</p>
-      </div>
-
-      <div className="basilar-ui-segment__media">
-        <div className="project-video-hero-device-wrap basilar-ui-segment__device-wrap">
-          <div className="project-video-hero-device basilar-ui-segment__device">
-            <video
-              className="project-video-hero-device-video"
-              src={segment.deviceVideoSrc}
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="metadata"
-              aria-label={segment.deviceVideoAriaLabel}
-            />
-          </div>
-        </div>
-      </div>
-    </article>
-  );
-}
-
-const UI_SEGMENTS: BasilarUISegment[] = [
+const UI_SEGMENTS: BasilarUISegmentContent[] = [
   {
     id: "login",
     label: "Log In",

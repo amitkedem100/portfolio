@@ -1,0 +1,36 @@
+/*
+  BasilarPainPointsSection — full-bleed band (pseudo) while inner copy aligns with project-text-section-inner
+*/
+
+.pain-points-section.basilar-painpoints-section {
+  position: relative;
+  isolation: isolate;
+  min-width: 0;
+  padding-block: 56px 72px;
+  box-sizing: border-box;
+}
+
+.pain-points-section.basilar-painpoints-section::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  top: 0;
+  bottom: 0;
+  background: var(--basilar-background);
+  pointer-events: none;
+}
+
+@media (max-width: 1024px) {
+  .pain-points-section.basilar-painpoints-section {
+    padding-block: 48px 56px;
+  }
+}
+
+@media (max-width: 768px) {
+  .pain-points-section.basilar-painpoints-section {
+    padding-block: 40px 48px;
+  }
+}

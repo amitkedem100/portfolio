@@ -1,0 +1,17 @@
+/* Live Feed — tighter band (shorter device column); page background, no full-bleed strip */
+
+.basilar-page-ui-live-feed {
+  padding-block: 40px 52px;
+}
+
+@media (max-width: 1024px) {
+  .basilar-page-ui-live-feed {
+    padding-block: 36px 48px;
+  }
+}
+
+@media (max-width: 768px) {
+  .basilar-page-ui-live-feed {
+    padding-block: 32px 44px;
+  }
+}

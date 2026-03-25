@@ -1,0 +1,17 @@
+/* BasilarInformationArchitectureSection — spacing for IA block on Basilar page */
+
+.basilar-page-ia {
+  padding-block: 56px 72px;
+}
+
+@media (max-width: 1024px) {
+  .basilar-page-ia {
+    padding-block: 48px 56px;
+  }
+}
+
+@media (max-width: 768px) {
+  .basilar-page-ia {
+    padding-block: 40px 48px;
+  }
+}

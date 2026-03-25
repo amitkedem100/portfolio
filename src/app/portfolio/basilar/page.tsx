@@ -1,10 +1,16 @@
 import type { Metadata } from "next";
 import "@/app/portfolio/components/ProjectTextSection.css";
 import "./page.css";
-import { BasilarInformationArchitectureSection } from "@/app/portfolio/basilar/BasilarInformationArchitectureSection";
-import { BasilarPainPointsSection } from "@/app/portfolio/basilar/BasilarPainPointsSection";
-import { BasilarPersonasSection } from "@/app/portfolio/basilar/BasilarPersonasSection";
-import { BasilarUserInterfaceSection } from "@/app/portfolio/basilar/BasilarUserInterfaceSection";
+import { BasilarInformationArchitectureSection } from "@/app/portfolio/basilar/components/BasilarInformationArchitectureSection";
+import { BasilarLiveFeedSection } from "@/app/portfolio/basilar/components/BasilarLiveFeedSection";
+import { BasilarPainPointsSection } from "@/app/portfolio/basilar/components/BasilarPainPointsSection";
+import { BasilarPersonasSection } from "@/app/portfolio/basilar/components/BasilarPersonasSection";
+import { BasilarHomePageSection } from "@/app/portfolio/basilar/components/BasilarHomePageSection";
+import { BasilarFestivalVibeSection } from "@/app/portfolio/basilar/components/BasilarFestivalVibeSection";
+import { BasilarShuttlesSection } from "@/app/portfolio/basilar/components/BasilarShuttlesSection";
+import { BasilarTicketsSection } from "@/app/portfolio/basilar/components/BasilarTicketsSection";
+import { BasilarUITeaserSection } from "@/app/portfolio/basilar/components/BasilarUITeaserSection";
+import { BasilarUserInterfaceSection } from "@/app/portfolio/basilar/components/BasilarUserInterfaceSection";
 import { BasilarProductShowcase } from "@/app/portfolio/components/BasilarProductShowcase";
 import { ProjectVideoHero } from "@/app/portfolio/components/ProjectVideoHero";
 
@@ -96,6 +102,18 @@ export default function BasilarProjectPage() {
       <BasilarInformationArchitectureSection />
 
       <BasilarUserInterfaceSection />
+
+      <BasilarUITeaserSection />
+
+      <BasilarHomePageSection />
+
+      <BasilarLiveFeedSection />
+
+      <BasilarTicketsSection />
+
+      <BasilarShuttlesSection />
+
+      <BasilarFestivalVibeSection />
     </div>
   );
 }

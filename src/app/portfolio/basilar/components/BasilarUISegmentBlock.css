@@ -1,0 +1,213 @@
+.basilar-ui-segment {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(32px, 5vw, 64px);
+}
+
+.basilar-ui-segment--reverse {
+  flex-direction: row-reverse;
+}
+
+/* Reverse segment: Basilar band + full-bleed gutters (same pattern as Pain Points / User Interface) */
+.basilar-ui-segment.basilar-ui-segment--reverse {
+  position: relative;
+  isolation: isolate;
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
+  padding-block: 56px 72px;
+}
+
+.basilar-ui-segment.basilar-ui-segment--reverse::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  top: 0;
+  bottom: 0;
+  background: var(--basilar-background);
+  pointer-events: none;
+}
+
+.basilar-ui-segment__body {
+  flex: 1 1 58%;
+  min-width: 0;
+}
+
+.basilar-ui-segment__label {
+  margin: 0 0 10px;
+  font: var(--portfolio-text-b3);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--basilar-ui-label);
+}
+
+.basilar-ui-segment__title {
+  margin: 0 0 14px;
+  font: var(--portfolio-text-h2);
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.basilar-ui-segment__description {
+  margin: 0;
+  font: var(--portfolio-text-b2);
+  color: var(--text-primary);
+}
+
+.basilar-ui-segment__media {
+  flex: 0 0 min(280px, 32vw);
+  display: flex;
+  justify-content: center;
+}
+
+.basilar-ui-segment__media--stacked {
+  align-items: center;
+}
+
+.basilar-ui-segment__stack {
+  position: relative;
+  width: min(300px, 100%);
+  aspect-ratio: 10 / 18;
+}
+
+.basilar-ui-segment__device-wrap {
+  width: min(280px, 100%);
+  margin-top: 0;
+}
+
+.basilar-ui-segment__device-wrap--stack-left {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  width: min(190px, 50%);
+  z-index: 1;
+}
+
+.basilar-ui-segment__device-wrap--stack-right {
+  position: absolute;
+  inset-block-start: 6%;
+  inset-inline-end: 0;
+  width: min(190px, 50%);
+  z-index: 2;
+}
+
+.basilar-ui-segment__device {
+  box-shadow:
+    0 24px 48px rgba(0, 0, 0, 0.28),
+    0 8px 16px rgba(0, 0, 0, 0.16);
+}
+
+/* Live Feed asset is wider than 9:19 — keep phone chrome, show full UI (contain) at body-like height */
+.basilar-ui-segment--live-feed-media {
+  align-items: flex-start;
+}
+
+.basilar-ui-segment--live-feed-media .basilar-ui-segment__media {
+  flex: 0 0 min(200px, 28vw);
+  max-width: min(210px, 32vw);
+}
+
+.basilar-ui-segment--live-feed-media .basilar-ui-segment__device-wrap {
+  width: 100%;
+  margin-top: 0;
+}
+
+.basilar-ui-segment--live-feed-media .basilar-ui-segment__device.project-video-hero-device {
+  aspect-ratio: unset;
+  height: clamp(200px, 32vh, 300px);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.basilar-ui-segment--live-feed-media .project-video-hero-device-video {
+  object-fit: contain;
+}
+
+@media (max-width: 1024px) {
+  .basilar-ui-segment {
+    gap: 28px 40px;
+  }
+
+  .basilar-ui-segment.basilar-ui-segment--reverse {
+    padding-block: 48px 56px;
+  }
+
+  .basilar-ui-segment__media {
+    flex-basis: min(260px, 36vw);
+  }
+
+  .basilar-ui-segment__stack {
+    width: min(260px, 100%);
+  }
+}
+
+@media (max-width: 768px) {
+  .basilar-ui-segment.basilar-ui-segment--reverse {
+    padding-block: 40px 48px;
+  }
+
+  .basilar-ui-segment,
+  .basilar-ui-segment--reverse {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .basilar-ui-segment__media {
+    order: 1;
+    flex: none;
+    width: 100%;
+  }
+
+  .basilar-ui-segment__body {
+    order: 2;
+    width: 100%;
+  }
+
+  .basilar-ui-segment__title {
+    font-size: 1.25rem;
+  }
+
+  .basilar-ui-segment__description {
+    font-size: 0.9375rem;
+    line-height: 1.55;
+  }
+
+  .basilar-ui-segment__device-wrap {
+    width: min(240px, 82vw);
+  }
+
+  .basilar-ui-segment__stack {
+    width: min(240px, 82vw);
+  }
+
+  .basilar-ui-segment__device-wrap--stack-left {
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    width: min(168px, 48%);
+  }
+
+  .basilar-ui-segment__device-wrap--stack-right {
+    inset-block-start: 8%;
+    inset-inline-end: 0;
+    width: min(168px, 48%);
+  }
+
+  .basilar-ui-segment--live-feed-media .basilar-ui-segment__device.project-video-hero-device {
+    height: clamp(180px, 36vh, 260px);
+  }
+
+  .basilar-ui-segment--live-feed-media .basilar-ui-segment__media {
+    flex: none;
+    max-width: min(200px, 72vw);
+    width: 100%;
+  }
+}

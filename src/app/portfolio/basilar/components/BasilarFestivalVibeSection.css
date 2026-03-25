@@ -1,0 +1,22 @@
+/* Full-bleed festival photo — no copy, edge-to-edge rhythm */
+
+.basilar-page-vibe-photo {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  max-width: 100vw;
+  padding: 0;
+  box-sizing: border-box;
+  min-height: 340px;
+  height: clamp(320px, 48vh, 640px);
+}
+
+.basilar-page-vibe-photo-inner {
+  position: relative;
+  width: 100%;
+  height: clamp(220px, 38vh, 520px);
+}
+
+.basilar-page-vibe-photo-img {
+  object-fit: cover;
+  object-position: center 40%;
+}

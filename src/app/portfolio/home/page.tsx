@@ -15,21 +15,21 @@ export default function PortfolioHomePage() {
       >
         <CursorZone variant="viewProject">
           <ProjectCard
-            title="Project title placeholder"
-            description="A short description of the project in a few concise sentences. This block can be replaced easily when connecting real project data."
-            keywords="UX · Mobile App · Concept"
-            imageAlt="Project cover"
-            href="/portfolio/project/placeholder"
+            title="SaaS"
+            description="A B2B SaaS case study — product thinking, workflows, and interface craft (content in progress)."
+            keywords="Product Design · SaaS · UX"
+            imageAlt="SaaS project"
+            href="/portfolio/saas"
             imagePosition="right"
           />
         </CursorZone>
         <CursorZone variant="viewProject">
           <ProjectCard
-            title="Second project placeholder"
-            description="Another featured project with placeholder copy. Layout alternates so the image appears on the left for visual variety."
-            keywords="UI · Web · Design System"
-            imageAlt="Second project cover"
-            href="/portfolio/project/placeholder-2"
+            title="Command Center"
+            description="An operations and monitoring experience — clarity under load and scalable information architecture (content in progress)."
+            keywords="UX · Complex Systems · Dashboard"
+            imageAlt="Command Center project"
+            href="/portfolio/command-center"
             imagePosition="left"
           />
         </CursorZone>

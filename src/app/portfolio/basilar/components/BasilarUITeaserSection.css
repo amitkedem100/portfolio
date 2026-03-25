@@ -1,0 +1,112 @@
+/* UI Teaser — visual-only three-up strip; tighter vertical padding than text sections */
+
+.basilar-ui-teaser {
+  padding-block: 40px 48px;
+}
+
+.basilar-ui-teaser-devices {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(20px, 4vw, 40px);
+  width: 100%;
+  max-width: 100%;
+  margin-inline: auto;
+}
+
+.basilar-ui-teaser-device {
+  flex: 0 0 auto;
+}
+
+.basilar-ui-teaser-frame {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-32);
+  box-shadow:
+    0 24px 48px rgba(0, 0, 0, 0.14),
+    0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.basilar-ui-teaser-img {
+  object-fit: cover;
+}
+
+/* Side phones: slightly smaller + tilt */
+.basilar-ui-teaser-device--left .basilar-ui-teaser-frame {
+  width: min(220px, 26vw);
+  aspect-ratio: 9 / 19;
+}
+
+.basilar-ui-teaser-device--right .basilar-ui-teaser-frame {
+  width: min(220px, 26vw);
+  aspect-ratio: 9 / 19;
+}
+
+.basilar-ui-teaser-device--left {
+  transform: rotate(-2deg);
+}
+
+.basilar-ui-teaser-device--right {
+  transform: rotate(2deg);
+}
+
+/* Center: larger, no rotation */
+.basilar-ui-teaser-device--center .basilar-ui-teaser-frame {
+  width: min(280px, 32vw);
+  aspect-ratio: 9 / 19;
+}
+
+.basilar-ui-teaser-device--center {
+  transform: none;
+}
+
+@media (max-width: 1024px) {
+  .basilar-ui-teaser {
+    padding-block: 32px 40px;
+  }
+
+  .basilar-ui-teaser-device--left .basilar-ui-teaser-frame,
+  .basilar-ui-teaser-device--right .basilar-ui-teaser-frame {
+    width: min(200px, 28vw);
+  }
+
+  .basilar-ui-teaser-device--center .basilar-ui-teaser-frame {
+    width: min(248px, 34vw);
+  }
+}
+
+@media (max-width: 768px) {
+  .basilar-ui-teaser {
+    padding-block: 28px 36px;
+  }
+
+  .basilar-ui-teaser-devices {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .basilar-ui-teaser-device--left,
+  .basilar-ui-teaser-device--right {
+    transform: none;
+  }
+
+  .basilar-ui-teaser-device--left .basilar-ui-teaser-frame,
+  .basilar-ui-teaser-device--right .basilar-ui-teaser-frame,
+  .basilar-ui-teaser-device--center .basilar-ui-teaser-frame {
+    width: min(260px, 72vw);
+  }
+
+  /* Center hero first on small screens */
+  .basilar-ui-teaser-device--center {
+    order: -1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .basilar-ui-teaser-device--left,
+  .basilar-ui-teaser-device--right {
+    transform: none;
+  }
+}

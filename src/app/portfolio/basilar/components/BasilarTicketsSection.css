@@ -1,0 +1,33 @@
+/* Tickets — full-bleed Basilar band (swapped with Live Feed plain strip) */
+
+.basilar-page-ui-tickets {
+  position: relative;
+  isolation: isolate;
+  padding-block: 56px 72px;
+  box-sizing: border-box;
+}
+
+.basilar-page-ui-tickets::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  top: 0;
+  bottom: 0;
+  background: var(--basilar-background);
+  pointer-events: none;
+}
+
+@media (max-width: 1024px) {
+  .basilar-page-ui-tickets {
+    padding-block: 48px 56px;
+  }
+}
+
+@media (max-width: 768px) {
+  .basilar-page-ui-tickets {
+    padding-block: 40px 48px;
+  }
+}

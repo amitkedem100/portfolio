@@ -152,6 +152,9 @@ src/app/portfolio/components/
 Page-only components:
 src/app/portfolio/<page>/components/
 
+Example (Basilar case study):
+src/app/portfolio/basilar/components/
+
 ---------------------------------------------------------
 COMPONENT RESPONSIBILITY
 ---------------------------------------------------------

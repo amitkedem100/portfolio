@@ -125,9 +125,11 @@ html.basilar-project {
   --basilar-background: var(--basilar-background-light);
 }
 
-/* Basilar: pain-points / project bands — switch background when theme matches PortfolioContext */
+/* Basilar: band backgrounds + UI labels on bands — align with PortfolioContext dark theme */
 html[data-theme="dark"].basilar-project {
   --basilar-background: var(--basilar-background-dark);
+  /* Slightly brighter sage on dark green band (User Interface, Home segment, Pain Points) */
+  --basilar-ui-label: #b8d1a3;
 }
 
 /* Dark theme only when user toggles (data-theme set by PortfolioContext) */
