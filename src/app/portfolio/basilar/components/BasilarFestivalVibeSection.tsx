@@ -1,16 +1,24 @@
 import Image from "next/image";
 import "./BasilarFestivalVibeSection.css";
 
-const VIBE_IMAGE_SRC = "/images/basilar/basilar-vibe-photo.jpg";
+const DEFAULT_VIBE_IMAGE_SRC = "/images/basilar/basilar-vibe-photo.jpg";
 
-/* Full-bleed visual break — image only, no heading */
-export function BasilarFestivalVibeSection() {
+type BasilarFestivalVibeSectionProps = {
+  imageSrc?: string;
+  ariaLabel?: string;
+};
+
+/* Full-bleed visual break — image only, no heading (same layout for multiple atmosphere strips) */
+export function BasilarFestivalVibeSection({
+  imageSrc = DEFAULT_VIBE_IMAGE_SRC,
+  ariaLabel = "Festival atmosphere",
+}: BasilarFestivalVibeSectionProps = {}) {
   return (
-    <section className="basilar-page-section basilar-page-vibe-photo" aria-label="Festival atmosphere">
+    <section className="basilar-page-section basilar-page-vibe-photo" aria-label={ariaLabel}>
       <div className="basilar-page-vibe-photo-inner">
         <Image
           className="basilar-page-vibe-photo-img"
-          src={VIBE_IMAGE_SRC}
+          src={imageSrc}
           alt=""
           fill
           sizes="100vw"

@@ -1,0 +1,18 @@
+/* Lineup — tighter top gap after full-bleed vibe photo */
+
+.basilar-page-ui-lineup {
+  padding-block: 28px 72px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 1024px) {
+  .basilar-page-ui-lineup {
+    padding-block: 24px 56px;
+  }
+}
+
+@media (max-width: 768px) {
+  .basilar-page-ui-lineup {
+    padding-block: 20px 48px;
+  }
+}

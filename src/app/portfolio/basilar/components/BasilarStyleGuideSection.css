@@ -1,0 +1,224 @@
+/* Style guide — Archivo (Basilar product) via --font-basilar-style-guide-archivo; band + palette */
+
+.basilar-style-guide {
+  position: relative;
+  isolation: isolate;
+  padding-block: 56px 72px;
+  padding-inline: clamp(20px, 4vw, 64px);
+  box-sizing: border-box;
+  font-family: var(--font-basilar-style-guide-archivo), sans-serif;
+}
+
+.basilar-style-guide::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  top: 0;
+  bottom: 0;
+  background: var(--basilar-background);
+  pointer-events: none;
+}
+
+/* Override global portfolio heading family inside this section */
+.basilar-style-guide h2,
+.basilar-style-guide h3 {
+  font-family: var(--font-basilar-style-guide-archivo), sans-serif;
+}
+
+.basilar-style-guide__inner {
+  max-width: min(960px, 100%);
+  margin-inline: auto;
+  color: var(--text-primary);
+}
+
+.basilar-style-guide__page-title {
+  margin: 0 0 clamp(32px, 5vw, 48px);
+  font-family: var(--font-basilar-style-guide-archivo), sans-serif;
+  font-size: clamp(1.75rem, 4vw, 2rem);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  text-align: center;
+  color: var(--text-primary);
+}
+
+.basilar-style-guide__block {
+  margin-top: clamp(28px, 4vw, 40px);
+}
+
+.basilar-style-guide__block:first-of-type {
+  margin-top: 0;
+}
+
+.basilar-style-guide__block-title {
+  margin: 0 0 clamp(16px, 2.5vw, 22px);
+  font-family: var(--font-basilar-style-guide-archivo), sans-serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+  text-align: start;
+}
+
+.basilar-style-guide__typo-grid {
+  display: grid;
+  grid-template-columns: minmax(100px, 1fr) minmax(0, 2.2fr) minmax(120px, 0.9fr);
+  gap: clamp(20px, 3vw, 36px);
+  align-items: start;
+}
+
+.basilar-style-guide__typo-stack {
+  min-width: 0;
+}
+
+.basilar-style-guide__typo-aa {
+  margin: 0 0 8px;
+  font-family: var(--font-basilar-style-guide-archivo), sans-serif;
+  font-size: clamp(2.5rem, 6vw, 3.5rem);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+}
+
+.basilar-style-guide__typo-name {
+  margin: 0;
+  font-family: var(--font-basilar-style-guide-archivo), sans-serif;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.basilar-style-guide__charset {
+  margin: 0;
+  font-family: var(--font-basilar-style-guide-archivo), sans-serif;
+  font-size: clamp(0.8125rem, 1.6vw, 0.9375rem);
+  font-weight: 400;
+  line-height: 1.55;
+  letter-spacing: 0.02em;
+  word-break: break-word;
+  color: var(--text-primary);
+}
+
+.basilar-style-guide__weights {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--font-basilar-style-guide-archivo), sans-serif;
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: var(--text-primary);
+}
+
+.basilar-style-guide__weight {
+  margin: 0;
+}
+
+.basilar-style-guide__weight--200 {
+  font-weight: 200;
+}
+
+.basilar-style-guide__weight--300 {
+  font-weight: 300;
+}
+
+.basilar-style-guide__weight--400 {
+  font-weight: 400;
+}
+
+.basilar-style-guide__weight--500 {
+  font-weight: 500;
+}
+
+.basilar-style-guide__weight--600 {
+  font-weight: 600;
+}
+
+.basilar-style-guide__weight--700 {
+  font-weight: 700;
+}
+
+.basilar-style-guide__swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(16px, 3vw, 28px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.basilar-style-guide__swatch-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  min-width: 88px;
+}
+
+.basilar-style-guide__swatch {
+  display: block;
+  width: min(100px, 22vw);
+  height: min(100px, 22vw);
+  border-radius: var(--radius-20);
+  box-sizing: border-box;
+}
+
+.basilar-style-guide__swatch--white {
+  background: #ffffff;
+  border: 1px solid color-mix(in srgb, var(--text-primary) 18%, transparent);
+}
+
+.basilar-style-guide__swatch--neon {
+  background: var(--cursor-accent);
+  border: 1px solid color-mix(in srgb, #03000a 15%, transparent);
+}
+
+.basilar-style-guide__swatch--ink {
+  background: #03000a;
+  border: 1px solid color-mix(in srgb, #ffffff 12%, transparent);
+}
+
+.basilar-style-guide__swatch--signal {
+  background: #ff0000;
+  border: 1px solid color-mix(in srgb, #03000a 20%, transparent);
+}
+
+.basilar-style-guide__hex {
+  font-family: var(--font-basilar-style-guide-archivo), sans-serif;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.5;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 1024px) {
+  .basilar-style-guide {
+    padding-block: 48px 56px;
+  }
+}
+
+@media (max-width: 768px) {
+  .basilar-style-guide {
+    padding-block: 40px 48px;
+  }
+
+  .basilar-style-guide__page-title {
+    font-size: 1.5rem;
+    margin-bottom: 28px;
+  }
+
+  .basilar-style-guide__typo-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .basilar-style-guide__weights {
+    padding-top: 4px;
+  }
+}

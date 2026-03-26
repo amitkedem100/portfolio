@@ -1,0 +1,39 @@
+/* Thanks — same band token as other Basilar sections (--basilar-background + --text-primary) */
+
+.basilar-thanks {
+  grid-column: 1 / -1;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  max-width: 100vw;
+  padding-block: clamp(32px, 5vw, 52px);
+  padding-inline: clamp(20px, 4vw, 32px);
+  box-sizing: border-box;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--basilar-background);
+  color: var(--text-primary);
+}
+
+.basilar-thanks__text {
+  margin: 0;
+  max-width: min(40ch, 100%);
+  font: var(--portfolio-text-b1);
+  font-weight: 500;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  color: inherit;
+}
+
+@media (max-width: 768px) {
+  .basilar-thanks {
+    padding-block: clamp(28px, 4vw, 40px);
+  }
+
+  .basilar-thanks__text {
+    font: var(--portfolio-text-b2);
+    font-size: 1rem;
+    font-weight: 500;
+  }
+}

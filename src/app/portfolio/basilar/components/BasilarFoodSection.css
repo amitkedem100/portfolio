@@ -1,0 +1,18 @@
+/* Food block — same vertical rhythm as other UI segments (page background) */
+
+.basilar-page-ui-food {
+  padding-block: 56px 72px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 1024px) {
+  .basilar-page-ui-food {
+    padding-block: 48px 56px;
+  }
+}
+
+@media (max-width: 768px) {
+  .basilar-page-ui-food {
+    padding-block: 40px 48px;
+  }
+}

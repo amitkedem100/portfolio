@@ -1,0 +1,58 @@
+/* SOS — standard UI segment (copy left, video right) */
+
+.basilar-page-ui-sos {
+  padding-block: 56px 72px;
+  box-sizing: border-box;
+}
+
+.basilar-sos-segment__body .basilar-sos-title {
+  margin-top: 0;
+}
+
+.basilar-sos-title {
+  margin: 0 0 14px;
+  font: var(--portfolio-text-h1);
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+  text-align: start;
+}
+
+/* Error-style emphasis — readable on light and dark portfolio themes */
+.basilar-sos-highlight {
+  color: #c62828;
+  font-weight: 600;
+}
+
+html[data-theme="dark"] .basilar-sos-highlight {
+  color: #ef5350;
+}
+
+.basilar-sos-device {
+  box-shadow:
+    0 24px 48px rgba(0, 0, 0, 0.28),
+    0 8px 16px rgba(0, 0, 0, 0.16);
+}
+
+@media (max-width: 1024px) {
+  .basilar-page-ui-sos {
+    padding-block: 48px 56px;
+  }
+}
+
+@media (max-width: 768px) {
+  .basilar-page-ui-sos {
+    padding-block: 40px 48px;
+  }
+
+  .basilar-sos-title {
+    font: var(--portfolio-text-h2);
+    font-weight: 600;
+    font-size: 1.25rem;
+    text-align: center;
+  }
+
+  .basilar-sos-segment .basilar-ui-segment__description {
+    text-align: center;
+  }
+}

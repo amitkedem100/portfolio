@@ -1,0 +1,123 @@
+/* Dropped pin — large non-accent title; text left, square video + illustration on the right */
+
+.basilar-page-ui-dropped-pin {
+  padding-block: 56px 72px;
+  box-sizing: border-box;
+}
+
+.basilar-dropped-pin-segment__title {
+  margin: 0 0 16px;
+  font: var(--portfolio-text-h1);
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.basilar-dropped-pin-segment .basilar-ui-segment__body {
+  flex: 1 1 44%;
+}
+
+.basilar-dropped-pin-segment .basilar-ui-segment__media {
+  flex: 1 1 52%;
+  min-width: 0;
+  max-width: none;
+  justify-content: flex-end;
+}
+
+.basilar-dropped-pin-visuals {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  gap: clamp(12px, 2.5vw, 28px);
+  width: 100%;
+  max-width: min(560px, 100%);
+}
+
+.basilar-dropped-pin-video-wrap {
+  flex-shrink: 0;
+  width: min(200px, 28vw);
+  aspect-ratio: 1;
+  border-radius: var(--radius-20);
+  overflow: hidden;
+  background: var(--surface-dark);
+  box-shadow:
+    0 24px 48px rgba(0, 0, 0, 0.22),
+    0 8px 16px rgba(0, 0, 0, 0.14);
+}
+
+.basilar-dropped-pin-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.basilar-dropped-pin-illustration-wrap {
+  position: relative;
+  flex-shrink: 0;
+  width: min(156px, 34vw);
+  height: min(76px, 17vw);
+  padding: 0;
+  box-sizing: border-box;
+  background: #000000;
+  border-radius: var(--radius-8);
+  overflow: hidden;
+}
+
+/* Fill the black box as much as possible without cropping */
+.basilar-dropped-pin-illustration {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+@media (max-width: 1024px) {
+  .basilar-page-ui-dropped-pin {
+    padding-block: 48px 56px;
+  }
+
+  .basilar-dropped-pin-video-wrap {
+    width: min(180px, 34vw);
+  }
+}
+
+@media (max-width: 768px) {
+  .basilar-page-ui-dropped-pin {
+    padding-block: 40px 48px;
+  }
+
+  /* Keep copy first, visuals second on small screens */
+  .basilar-dropped-pin-segment .basilar-ui-segment__body {
+    order: 1;
+  }
+
+  .basilar-dropped-pin-segment .basilar-ui-segment__media {
+    order: 2;
+    justify-content: center;
+  }
+
+  .basilar-dropped-pin-segment__title {
+    font: var(--portfolio-text-h2);
+    font-weight: 600;
+    font-size: 1.5rem;
+    margin-bottom: 12px;
+  }
+
+  .basilar-dropped-pin-visuals {
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 100%;
+  }
+
+  .basilar-dropped-pin-video-wrap {
+    width: min(160px, 42vw);
+  }
+
+  .basilar-dropped-pin-illustration-wrap {
+    width: min(148px, 62vw);
+    height: min(72px, 28vw);
+  }
+}

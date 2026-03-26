@@ -6,11 +6,22 @@ import { BasilarLiveFeedSection } from "@/app/portfolio/basilar/components/Basil
 import { BasilarPainPointsSection } from "@/app/portfolio/basilar/components/BasilarPainPointsSection";
 import { BasilarPersonasSection } from "@/app/portfolio/basilar/components/BasilarPersonasSection";
 import { BasilarHomePageSection } from "@/app/portfolio/basilar/components/BasilarHomePageSection";
+import { BasilarDroppedPinSection } from "@/app/portfolio/basilar/components/BasilarDroppedPinSection";
+import { BasilarFoodSection } from "@/app/portfolio/basilar/components/BasilarFoodSection";
+import { BasilarLineupSection } from "@/app/portfolio/basilar/components/BasilarLineupSection";
+import { BasilarMapSection } from "@/app/portfolio/basilar/components/BasilarMapSection";
+import { BasilarScreenshotsSection } from "@/app/portfolio/basilar/components/BasilarScreenshotsSection";
+import { BasilarSetReminderSection } from "@/app/portfolio/basilar/components/BasilarSetReminderSection";
 import { BasilarFestivalVibeSection } from "@/app/portfolio/basilar/components/BasilarFestivalVibeSection";
 import { BasilarShuttlesSection } from "@/app/portfolio/basilar/components/BasilarShuttlesSection";
+import { BasilarSosSection } from "@/app/portfolio/basilar/components/BasilarSosSection";
+import { BasilarStyleGuideSection } from "@/app/portfolio/basilar/components/BasilarStyleGuideSection";
+import { BasilarThanksSection } from "@/app/portfolio/basilar/components/BasilarThanksSection";
 import { BasilarTicketsSection } from "@/app/portfolio/basilar/components/BasilarTicketsSection";
+import { BasilarTokensSection } from "@/app/portfolio/basilar/components/BasilarTokensSection";
 import { BasilarUITeaserSection } from "@/app/portfolio/basilar/components/BasilarUITeaserSection";
 import { BasilarUserInterfaceSection } from "@/app/portfolio/basilar/components/BasilarUserInterfaceSection";
+import { BasilarWaveAFriendSection } from "@/app/portfolio/basilar/components/BasilarWaveAFriendSection";
 import { BasilarProductShowcase } from "@/app/portfolio/components/BasilarProductShowcase";
 import { ProjectVideoHero } from "@/app/portfolio/components/ProjectVideoHero";
 
@@ -114,6 +125,33 @@ export default function BasilarProjectPage() {
       <BasilarShuttlesSection />
 
       <BasilarFestivalVibeSection />
+
+      <BasilarLineupSection />
+
+      <BasilarFoodSection />
+
+      <BasilarSetReminderSection />
+
+      <BasilarTokensSection />
+
+      <BasilarFestivalVibeSection
+        imageSrc="/images/basilar/basilar-vibe-photo-2.png"
+        ariaLabel="Festival crowd atmosphere"
+      />
+
+      <BasilarMapSection />
+
+      <BasilarDroppedPinSection />
+
+      <BasilarWaveAFriendSection />
+
+      <BasilarSosSection />
+
+      <BasilarScreenshotsSection />
+
+      <BasilarStyleGuideSection />
+
+      <BasilarThanksSection />
     </div>
   );
 }

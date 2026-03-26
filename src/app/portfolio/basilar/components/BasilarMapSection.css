@@ -1,0 +1,57 @@
+/* Map — centered column; video below copy */
+
+.basilar-page-ui-map {
+  padding-block: 56px 72px;
+  box-sizing: border-box;
+}
+
+.basilar-map-ui-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: min(var(--project-text-intro-max-width), 100%);
+  margin-inline: auto;
+}
+
+.basilar-map-ui-inner .basilar-ui-segment__label {
+  text-align: center;
+}
+
+.basilar-map-ui-inner .basilar-ui-segment__title {
+  text-align: center;
+}
+
+.basilar-map-ui-lead {
+  max-width: 52ch;
+  margin-inline: auto;
+}
+
+.basilar-map-ui-video-wrap {
+  margin-top: clamp(28px, 5vw, 44px);
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.basilar-map-ui-device-wrap {
+  margin-top: 0;
+}
+
+.basilar-map-ui-device {
+  box-shadow:
+    0 24px 48px rgba(0, 0, 0, 0.28),
+    0 8px 16px rgba(0, 0, 0, 0.16);
+}
+
+@media (max-width: 1024px) {
+  .basilar-page-ui-map {
+    padding-block: 48px 56px;
+  }
+}
+
+@media (max-width: 768px) {
+  .basilar-page-ui-map {
+    padding-block: 40px 48px;
+  }
+}

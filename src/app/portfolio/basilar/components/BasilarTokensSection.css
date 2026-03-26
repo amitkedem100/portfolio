@@ -1,0 +1,58 @@
+/* Tokens — video left (reverse); large coin SVG watermark behind content */
+
+.basilar-page-ui-tokens {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding-block: 56px 72px;
+  box-sizing: border-box;
+}
+
+.basilar-page-ui-tokens__bg {
+  position: absolute;
+  z-index: 0;
+  left: clamp(-48px, -4vw, 0);
+  top: 50%;
+  transform: translateY(-50%);
+  width: min(52vw, 440px);
+  max-height: 90%;
+  opacity: 0.16;
+  pointer-events: none;
+}
+
+.basilar-page-ui-tokens__bg-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.basilar-page-ui-tokens__inner {
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 1024px) {
+  .basilar-page-ui-tokens {
+    padding-block: 48px 56px;
+  }
+
+  .basilar-page-ui-tokens__bg {
+    width: min(48vw, 360px);
+    opacity: 0.12;
+  }
+}
+
+@media (max-width: 768px) {
+  .basilar-page-ui-tokens {
+    padding-block: 40px 48px;
+  }
+
+  .basilar-page-ui-tokens__bg {
+    left: 50%;
+    top: 18%;
+    transform: translate(-50%, 0);
+    width: min(88vw, 320px);
+    opacity: 0.1;
+  }
+}
