@@ -42,7 +42,7 @@ export default function BasilarProjectPage() {
       <section className="basilar-page-section basilar-page-hero" aria-label="Basilar project hero">
         <ProjectVideoHero
           title="Basilar"
-          description="A mobile product designed to simplify the logistics of a multi-day music festival experience — from entry and transport to food, navigation, and real-time updates."
+          description="A mobile product designed to simplify the logistics of a multi-day music festival experience. from entry and transport to food, navigation, and real-time updates."
           meta="Festival Experience · Mobile UX · Personal Project · May 2023"
           backgroundVideoSrc={BASILAR_BG_VIDEO}
           deviceVideoSrc={BASILAR_DEVICE_VIDEO}
@@ -59,7 +59,7 @@ export default function BasilarProjectPage() {
           </h2>
           <p className="basilar-overview-lead">
             Basilar is a concept for a companion app that keeps festival-goers oriented across days,
-            venues, and services — reducing friction between what people need and what the event delivers.
+            venues, and services. reducing friction between what people need and what the event delivers.
           </p>
 
           <h3 className="basilar-overview-subheading">Problem</h3>
