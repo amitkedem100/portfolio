@@ -5,6 +5,10 @@
   text-align: start;
 }
 
+.personas-section-header--no-intro .personas-section-title {
+  margin-bottom: 0;
+}
+
 .personas-section-title {
   margin: 0 0 16px;
   font: var(--portfolio-text-h2);
@@ -18,6 +22,11 @@
   max-width: min(var(--project-text-intro-max-width), 100%);
   font: var(--portfolio-text-b1);
   color: var(--text-secondary);
+}
+
+.personas-section-intro strong {
+  font-weight: 700;
+  color: var(--text-primary);
 }
 
 .personas-section-list {
@@ -70,8 +79,10 @@
 
 .personas-persona-name-text {
   font-weight: 700;
+  color: var(--text-primary);
 }
 
+/* Role on the same line — muted vs name; tokens track light/dark */
 .personas-persona-role {
   font-weight: 400;
   color: var(--text-secondary);
@@ -90,6 +101,10 @@
   margin: 0 0 28px;
   font: var(--portfolio-text-b2);
   color: var(--text-primary);
+}
+
+.personas-persona-body strong {
+  font-weight: 700;
 }
 
 .personas-persona-text--needs {

@@ -12,112 +12,147 @@
   max-width: 100vw;
 }
 
-/* Full-bleed visual break between text sections */
+/* Full-bleed walkthrough — no outer vertical margin/padding; inner .basilar-product-showcase handles inset */
 .basilar-page-showcase {
   width: 100vw;
   margin-left: calc(50% - 50vw);
   max-width: 100vw;
-  padding-block: 56px 72px;
+  margin-block: 0;
+  padding-block: 0;
   box-sizing: border-box;
 }
 
-@media (max-width: 1024px) {
-  .basilar-page-showcase {
-    padding-block: 48px 56px;
-  }
-}
-
-@media (max-width: 768px) {
-  .basilar-page-showcase {
-    padding-block: 40px 48px;
-  }
-}
-
-/* Overview: same frame as other textual sections (project-text-section + project-text-section-inner) */
+/* Overview: same vertical rhythm as other Basilar sections (symmetric block padding) */
 .basilar-page-overview {
-  padding-block: 56px 72px;
+  padding-block: 56px 56px;
+}
+
+.basilar-overview-header {
+  margin: 0;
+  text-align: start;
 }
 
 .basilar-overview-heading {
-  margin: 0 0 20px;
+  margin: 0 0 16px;
   font: var(--portfolio-text-h2);
+  font-weight: 600;
   color: var(--text-primary);
   letter-spacing: -0.02em;
 }
 
-.basilar-overview-lead {
-  margin: 0;
-  font: var(--portfolio-text-b1);
+.basilar-overview-prose {
+  text-align: start;
+}
+
+.basilar-overview-prose strong {
+  font-weight: 700;
+}
+
+.basilar-overview-lead strong {
+  font-weight: 700;
   color: var(--text-primary);
 }
 
+.basilar-overview-lead {
+  margin: 0 0 36px;
+  font: var(--portfolio-text-b1);
+  color: var(--text-secondary);
+}
+
+/* Same voice as .personas-persona-label (WHO SHE IS) */
 .basilar-overview-subheading {
-  margin: 40px 0 14px;
-  font: var(--portfolio-text-h3);
-  color: var(--text-primary);
-  letter-spacing: -0.01em;
+  margin: 0 0 10px;
+  font: var(--portfolio-text-b3);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
 }
 
 .basilar-overview-subheading:first-of-type {
-  margin-top: 36px;
+  margin-top: 0;
 }
 
-.basilar-overview-list {
-  margin: 0;
-  padding-inline-start: 1.25rem;
-  list-style-type: disc;
+.basilar-overview-problem-list + .basilar-overview-subheading {
+  margin-top: 32px;
 }
 
-.basilar-overview-list li {
-  margin-bottom: 12px;
+.basilar-overview-problem-list {
+  margin: 0 0 32px;
+  padding: 0;
+  list-style: none;
+  counter-reset: basilar-overview-problem;
+}
+
+.basilar-overview-problem-list li {
+  counter-increment: basilar-overview-problem;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 18px;
   font: var(--portfolio-text-b2);
   color: var(--text-primary);
 }
 
-.basilar-overview-list li:last-child {
+.basilar-overview-problem-list li::before {
+  content: counter(basilar-overview-problem, decimal-leading-zero);
+  flex-shrink: 0;
+  margin-top: 0.12em;
+  font: var(--portfolio-text-b3);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+}
+
+/* Single flex child for body text — avoids each <strong> becoming a flex item and breaking lines */
+.basilar-overview-problem-list__text {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.basilar-overview-problem-list li:last-child {
   margin-bottom: 0;
+}
+
+.basilar-overview-solution {
+  margin: 0;
+  font: var(--portfolio-text-b2);
+  color: var(--text-primary);
 }
 
 @media (max-width: 1024px) {
   .basilar-page-overview {
-    padding-block: 48px 56px;
-  }
-
-  .basilar-overview-subheading {
-    margin-top: 36px;
-  }
-
-  .basilar-overview-subheading:first-of-type {
-    margin-top: 28px;
+    padding-block: 48px 48px;
   }
 }
 
 @media (max-width: 768px) {
   .basilar-page-overview {
-    padding-block: 40px 48px;
+    padding-block: 40px 40px;
   }
 
   .basilar-overview-heading {
-    font: var(--portfolio-text-h3);
     font-size: 1.375rem;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
   }
 
   .basilar-overview-lead {
-    font: var(--portfolio-text-b2);
+    margin-bottom: 28px;
     font-size: 1rem;
+    line-height: 1.55;
   }
 
-  .basilar-overview-subheading {
-    margin-top: 32px;
-    font-size: 1.0625rem;
+  .basilar-overview-problem-list {
+    margin-bottom: 28px;
   }
 
-  .basilar-overview-subheading:first-of-type {
-    margin-top: 24px;
+  .basilar-overview-problem-list li {
+    font-size: 0.9375rem;
+    line-height: 1.55;
+    gap: 12px;
   }
 
-  .basilar-overview-list li {
+  .basilar-overview-solution {
     font-size: 0.9375rem;
     line-height: 1.55;
   }

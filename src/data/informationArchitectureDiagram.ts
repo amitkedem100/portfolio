@@ -68,18 +68,24 @@ function branchGeometry(index: number) {
 }
 
 /** Total SVG width: inset + 6 primaries + 5 gaps + right inset */
-export const IA_VIEWBOX = {
-  width: PRIMARY_START_X + 6 * IA_PRIMARY_WIDTH + 5 * IA_PRIMARY_GAP + PRIMARY_START_X,
-  height: 600,
-};
+const IA_VIEWBOX_WIDTH =
+  PRIMARY_START_X + 6 * IA_PRIMARY_WIDTH + 5 * IA_PRIMARY_GAP + PRIMARY_START_X;
 
 /** Full-width subtree panel (foreignObject) — matches diagram content width */
 export const IA_SUBTREE_PANEL = {
   x: PRIMARY_START_X,
   y: IA_PRIMARY_BOTTOM_Y + IA_PRIMARY_GAP,
-  width:
-    IA_VIEWBOX.width - 2 * PRIMARY_START_X,
+  width: IA_VIEWBOX_WIDTH - 2 * PRIMARY_START_X,
   height: 432,
+};
+
+/** Small inset below subtree panel inside SVG — trims dead space vs a fixed tall viewBox */
+const IA_VIEWBOX_BOTTOM_INSET = 8;
+
+/** ViewBox height derived from layout so the SVG ends just under content (diagram look unchanged) */
+export const IA_VIEWBOX = {
+  width: IA_VIEWBOX_WIDTH,
+  height: IA_SUBTREE_PANEL.y + IA_SUBTREE_PANEL.height + IA_VIEWBOX_BOTTOM_INSET,
 };
 
 /** Line Up subtree: three primary columns + gaps — Listen / Share / Remind aligned under Artist bio */
@@ -171,6 +177,7 @@ export function getShuttlePairRowPaddingStart(branch: IADiagramBranch): number |
   return branch.centerX - fo.x - gapCenterOffset;
 }
 
+/* Left → right: Ticket, Food Area, Tokens, Shuttle, Line Up, Map */
 export const IA_DIAGRAM_BRANCHES: IADiagramBranch[] = [
   {
     id: "ticket",
@@ -179,9 +186,38 @@ export const IA_DIAGRAM_BRANCHES: IADiagramBranch[] = [
     tree: { id: "ticket-my", label: "My Ticket" },
   },
   {
+    id: "food",
+    label: "Food Area",
+    ...branchGeometry(1),
+    tree: { id: "food-menu", label: "Menu" },
+  },
+  {
+    id: "tokens",
+    label: "Tokens",
+    ...branchGeometry(2),
+    tree: {
+      id: "tokens-root",
+      label: "",
+      children: [
+        { id: "tokens-balance", label: "Current Balance" },
+        {
+          id: "tokens-load",
+          label: "Load a Package",
+          children: [
+            {
+              id: "tokens-payment",
+              label: "Payment",
+              children: [{ id: "tokens-add-wallet", label: "Add to Wallet" }],
+            },
+          ],
+        },
+      ],
+    },
+  },
+  {
     id: "shuttle",
     label: "Shuttle",
-    ...branchGeometry(1),
+    ...branchGeometry(3),
     tree: {
       id: "shuttle-root",
       label: "",
@@ -228,15 +264,9 @@ export const IA_DIAGRAM_BRANCHES: IADiagramBranch[] = [
     },
   },
   {
-    id: "food",
-    label: "Food Area",
-    ...branchGeometry(2),
-    tree: { id: "food-menu", label: "Menu" },
-  },
-  {
     id: "lineup",
     label: "Line Up",
-    ...branchGeometry(3),
+    ...branchGeometry(4),
     tree: {
       id: "lineup-root",
       label: "",
@@ -253,29 +283,6 @@ export const IA_DIAGRAM_BRANCHES: IADiagramBranch[] = [
                 { id: "lineup-share", label: "Share" },
                 { id: "lineup-remind", label: "Remind me" },
               ],
-            },
-          ],
-        },
-      ],
-    },
-  },
-  {
-    id: "tokens",
-    label: "Tokens",
-    ...branchGeometry(4),
-    tree: {
-      id: "tokens-root",
-      label: "",
-      children: [
-        { id: "tokens-balance", label: "Current Balance" },
-        {
-          id: "tokens-load",
-          label: "Load a Package",
-          children: [
-            {
-              id: "tokens-payment",
-              label: "Payment",
-              children: [{ id: "tokens-add-wallet", label: "Add to Wallet" }],
             },
           ],
         },

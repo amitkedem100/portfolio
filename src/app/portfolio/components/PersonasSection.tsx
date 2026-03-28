@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import "./ProjectTextSection.css";
 import "./PersonasSection.css";
 
@@ -7,14 +8,15 @@ export type PersonaContent = {
   role: string;
   imageSrc: string;
   imageAlt: string;
-  whoTheyAre: string;
-  keyFrictions: string[];
-  whatTheyNeed: string;
+  whoTheyAre: ReactNode;
+  keyFrictions: ReactNode[];
+  whatTheyNeed: ReactNode;
 };
 
 export type PersonasSectionProps = {
   title: string;
-  intro: string;
+  /** Optional — omit when the section title is enough */
+  intro?: ReactNode;
   personas: PersonaContent[];
   /** Section sublabels (e.g. "Who she is" vs "Who they are") */
   labels: {
@@ -35,6 +37,7 @@ export function PersonasSection({
   className = "",
 }: PersonasSectionProps) {
   const titleId = "personas-section-title";
+  const hasIntro = intro != null && intro !== "";
 
   return (
     <section
@@ -42,11 +45,17 @@ export function PersonasSection({
       aria-labelledby={titleId}
     >
       <div className="project-text-section-inner">
-        <header className="personas-section-header">
+        <header
+          className={
+            hasIntro
+              ? "personas-section-header"
+              : "personas-section-header personas-section-header--no-intro"
+          }
+        >
           <h2 id={titleId} className="personas-section-title">
             {title}
           </h2>
-          <p className="personas-section-intro">{intro}</p>
+          {hasIntro ? <p className="personas-section-intro">{intro}</p> : null}
         </header>
 
         <div className="personas-section-list">
@@ -79,8 +88,8 @@ export function PersonasSection({
                     id={`persona-name-${persona.id}`}
                     className="personas-persona-name"
                   >
-                    <span className="personas-persona-name-text">{persona.name}</span>
-                    <span className="personas-persona-role"> — {persona.role}</span>
+                    <span className="personas-persona-name-text">{persona.name}</span>{" "}
+                    <span className="personas-persona-role">{persona.role}</span>
                   </h3>
 
                   <p className="personas-persona-label">{labels.who}</p>

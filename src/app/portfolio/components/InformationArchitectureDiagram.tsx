@@ -13,6 +13,23 @@ import {
   isSubtreeSingleLeafOnly,
 } from "@/data/informationArchitectureDiagram";
 
+const IA_AUTO_ADVANCE_MS = 3500;
+const IA_BRANCH_LEAVE_DEBOUNCE_MS = 150;
+
+function usePrefersReducedMotion() {
+  const [reduced, setReduced] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => setReduced(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+
+  return reduced;
+}
+
 /* Interactive IA: collapsed by default; hover (desktop) or tap (mobile) reveals one subtree at a time. */
 
 function usePrefersHoverInteraction() {
@@ -156,21 +173,52 @@ export function IATreeBlock({
 export function InformationArchitectureDiagram() {
   const { setVariant: setCursorVariant } = useCursorContext();
   const prefersHover = usePrefersHoverInteraction();
+  const prefersReducedMotion = usePrefersReducedMotion();
   const [activeBranchId, setActiveBranchId] = useState<string | null>(null);
-  const leaveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  /* Desktop: pause automatic cycling while pointer is over a primary branch */
+  const [autoPaused, setAutoPaused] = useState(false);
+  const leaveTimerRef = useRef<number | null>(null);
   const svgRef = useRef<SVGSVGElement | null>(null);
 
   const clearLeaveTimer = useCallback(() => {
     if (leaveTimerRef.current !== null) {
-      clearTimeout(leaveTimerRef.current);
+      window.clearTimeout(leaveTimerRef.current);
       leaveTimerRef.current = null;
     }
   }, []);
+
+  useEffect(() => {
+    if (prefersHover === true) {
+      setActiveBranchId((prev) => prev ?? IA_DIAGRAM_BRANCHES[0].id);
+    } else if (prefersHover === false) {
+      setActiveBranchId(null);
+      setAutoPaused(false);
+    }
+  }, [prefersHover]);
+
+  useEffect(() => {
+    if (prefersHover !== true) return;
+    if (autoPaused) return;
+    if (prefersReducedMotion) return;
+
+    const id = window.setInterval(() => {
+      setActiveBranchId((prev) => {
+        const cur = prev ?? IA_DIAGRAM_BRANCHES[0].id;
+        const idx = IA_DIAGRAM_BRANCHES.findIndex((b) => b.id === cur);
+        const i = idx >= 0 ? idx : 0;
+        const next = (i + 1) % IA_DIAGRAM_BRANCHES.length;
+        return IA_DIAGRAM_BRANCHES[next].id;
+      });
+    }, IA_AUTO_ADVANCE_MS);
+
+    return () => window.clearInterval(id);
+  }, [prefersHover, autoPaused, prefersReducedMotion]);
 
   const handleBranchEnter = useCallback(
     (id: string) => {
       if (prefersHover !== true) return;
       clearLeaveTimer();
+      setAutoPaused(true);
       setActiveBranchId(id);
     },
     [prefersHover, clearLeaveTimer],
@@ -179,10 +227,10 @@ export function InformationArchitectureDiagram() {
   const handleBranchLeave = useCallback(() => {
     if (prefersHover !== true) return;
     clearLeaveTimer();
-    leaveTimerRef.current = setTimeout(() => {
-      setActiveBranchId(null);
+    leaveTimerRef.current = window.setTimeout(() => {
+      setAutoPaused(false);
       leaveTimerRef.current = null;
-    }, 150);
+    }, IA_BRANCH_LEAVE_DEBOUNCE_MS);
   }, [prefersHover, clearLeaveTimer]);
 
   const handleBranchTap = useCallback(
@@ -210,16 +258,20 @@ export function InformationArchitectureDiagram() {
   const showCoarsePointer = prefersHover === false;
   const vb = IA_VIEWBOX;
 
+  const resolvedActiveId =
+    prefersHover === false
+      ? activeBranchId
+      : (activeBranchId ?? IA_DIAGRAM_BRANCHES[0].id);
+
   return (
     <svg
       ref={svgRef}
       className={`ia-diagram${showCoarsePointer ? " ia-diagram--coarse-pointer" : ""}`}
       viewBox={`0 0 ${vb.width} ${vb.height}`}
       role="img"
-      aria-label="App information architecture: Home connects to six primary areas. Hover or tap a primary area to reveal its child screens."
+      aria-label="App information architecture: Home connects to six primary areas. On desktop, areas cycle automatically; hover an area to pause and inspect. On touch, tap an area to show its screens."
       xmlns="http://www.w3.org/2000/svg"
     >
-      <title>Information architecture overview</title>
       <desc>
         Six primary areas branch from Home. Details for each area appear on hover (desktop) or tap
         (touch).
@@ -245,7 +297,7 @@ export function InformationArchitectureDiagram() {
       </g>
 
       {IA_DIAGRAM_BRANCHES.map((branch) => {
-        const isActive = activeBranchId === branch.id;
+        const isActive = resolvedActiveId === branch.id;
         const cx = branch.centerX;
         const pr = branch.primaryRect;
         const subtreeId = `ia-subtree-${branch.id}`;
@@ -262,47 +314,64 @@ export function InformationArchitectureDiagram() {
               }
             : undefined;
 
+        const branchClass =
+          `ia-diagram__branch${isActive ? " ia-diagram__branch--active" : ""}` +
+          (prefersHover === true && !isActive ? " ia-diagram__branch--inactive" : "");
+
+        /* Scale from rect center in SVG space — avoids asymmetric fill-box on g+text */
+        const primaryScaleOrigin = `${cx}px ${pr.y + pr.height / 2}px`;
+
         return (
           <g
             key={branch.id}
-            className={`ia-diagram__branch${isActive ? " ia-diagram__branch--active" : ""}`}
+            className={branchClass}
             onMouseEnter={() => handleBranchEnter(branch.id)}
             onMouseLeave={handleBranchLeave}
           >
-            <rect
-              className="ia-diagram__node ia-diagram__node--primary"
-              x={pr.x}
-              y={pr.y}
-              width={pr.width}
-              height={pr.height}
-              rx={8}
-              role="button"
-              tabIndex={0}
-              aria-expanded={isActive}
-              aria-controls={subtreeId}
-              aria-label={branch.label}
-              onMouseEnter={() => setCursorVariant("hidden")}
-              onMouseLeave={() => setCursorVariant("default")}
-              onClick={(e) => {
-                if (prefersHover === true) return;
-                e.stopPropagation();
-                handleBranchTap(branch.id);
-              }}
-              onKeyDown={(e) => {
-                if (e.key !== "Enter" && e.key !== " ") return;
-                e.preventDefault();
-                setActiveBranchId((prev) => (prev === branch.id ? null : branch.id));
-              }}
-            />
-            <text
-              className="ia-diagram__label ia-diagram__label--primary"
-              x={cx}
-              y={primaryLabelY(pr)}
-              textAnchor="middle"
-              pointerEvents="none"
+            <g
+              className="ia-diagram__primary-slot"
+              style={{ transformOrigin: primaryScaleOrigin }}
             >
-              {branch.label}
-            </text>
+              <rect
+                className="ia-diagram__node ia-diagram__node--primary"
+                x={pr.x}
+                y={pr.y}
+                width={pr.width}
+                height={pr.height}
+                rx={8}
+                role="button"
+                tabIndex={0}
+                aria-expanded={isActive}
+                aria-controls={subtreeId}
+                aria-label={branch.label}
+                onMouseEnter={() => setCursorVariant("hidden")}
+                onMouseLeave={() => setCursorVariant("default")}
+                onClick={(e) => {
+                  if (prefersHover === true) return;
+                  e.stopPropagation();
+                  handleBranchTap(branch.id);
+                }}
+                onKeyDown={(e) => {
+                  if (e.key !== "Enter" && e.key !== " ") return;
+                  e.preventDefault();
+                  if (prefersHover === true) {
+                    setAutoPaused(true);
+                    setActiveBranchId(branch.id);
+                    return;
+                  }
+                  setActiveBranchId((prev) => (prev === branch.id ? null : branch.id));
+                }}
+              />
+              <text
+                className="ia-diagram__label ia-diagram__label--primary"
+                x={cx}
+                y={primaryLabelY(pr)}
+                textAnchor="middle"
+                pointerEvents="none"
+              >
+                {branch.label}
+              </text>
+            </g>
 
             <g id={subtreeId} className="ia-diagram__subtree" aria-hidden={!isActive}>
               <foreignObject x={fo.x} y={fo.y} width={fo.width} height={fo.height}>

@@ -42,7 +42,7 @@ export default function BasilarProjectPage() {
       <section className="basilar-page-section basilar-page-hero" aria-label="Basilar project hero">
         <ProjectVideoHero
           title="Basilar"
-          description="A mobile product designed to simplify the logistics of a multi-day music festival experience. from entry and transport to food, navigation, and real-time updates."
+          description="A mobile product designed to simplify the logistics of a multi-day music festival experience—from entry and transport to food, navigation, and real-time updates."
           meta="Festival Experience · Mobile UX · Personal Project · May 2023"
           backgroundVideoSrc={BASILAR_BG_VIDEO}
           deviceVideoSrc={BASILAR_DEVICE_VIDEO}
@@ -54,45 +54,54 @@ export default function BasilarProjectPage() {
         aria-labelledby="basilar-overview-title"
       >
         <div className="project-text-section-inner">
-          <h2 id="basilar-overview-title" className="basilar-overview-heading">
-            Overview
-          </h2>
-          <p className="basilar-overview-lead">
-            Basilar is a concept for a companion app that keeps festival-goers oriented across days,
-            venues, and services. reducing friction between what people need and what the event delivers.
-          </p>
+          <div className="basilar-overview-prose project-text-section-inner--prose">
+            <header className="basilar-overview-header">
+              <h2 id="basilar-overview-title" className="basilar-overview-heading">
+                Overview
+              </h2>
+            </header>
 
-          <h3 className="basilar-overview-subheading">Problem</h3>
-          <ul className="basilar-overview-list">
-            <li>
-              Multi-day festivals bundle entry, transport, food, and navigation into fragmented touchpoints
-              that are hard to track on the ground.
-            </li>
-            <li>
-              Schedules, stages, and facilities change; printed maps and one-off announcements do not scale
-              when crowds move and lines form unpredictably.
-            </li>
-            <li>
-              Attendees need a single place to understand where to go next, how long it takes, and what is
-              available without losing the flow of the experience.
-            </li>
-          </ul>
+            <p className="basilar-overview-lead">
+              Basilar is a concept for a companion app that keeps festival-goers oriented across days, venues,
+              and services. Reducing friction between what people need and what the event delivers.
+            </p>
 
-          <h3 className="basilar-overview-subheading">Solution</h3>
-          <ul className="basilar-overview-list">
-            <li>
-              A mobile-first flow that prioritizes the next relevant action — arrival, movement between
-              areas, food, and showtime — in one calm, scannable structure.
-            </li>
-            <li>
-              Lightweight real-time signals for queues, changes, and highlights so decisions stay
-              grounded in the current day, not yesterday&apos;s PDF.
-            </li>
-            <li>
-              Visual hierarchy and pacing tuned for outdoor context: high contrast, short labels, and
-              predictable patterns that work in sunlight and at night.
-            </li>
-          </ul>
+            <h3 className="basilar-overview-subheading">Problem</h3>
+            <ol className="basilar-overview-problem-list">
+              <li>
+                <span className="basilar-overview-problem-list__text">
+                  As a <strong>niche festival</strong> within a competitive European scene, Basilar needed to
+                  offer more than just a lineup. To stand out and build lasting connections with its audience,
+                  the experience had to deliver a clear, memorable value beyond the event itself.
+                </span>
+              </li>
+              <li>
+                <span className="basilar-overview-problem-list__text">
+                  Previous events revealed challenges in managing tickets, food services, and on-site
+                  logistics. Without a <strong>unified system</strong>, coordination across different
+                  touchpoints became inefficient, impacting both the attendee experience and the operational
+                  flow.
+                </span>
+              </li>
+              <li>
+                <span className="basilar-overview-problem-list__text">
+                  Unexpected logistical issues in past events led to financial losses the production could
+                  not afford. Without <strong>real-time visibility</strong> into activity and usage during the
+                  event, the team struggled to respond quickly and maintain control over operations.
+                </span>
+              </li>
+            </ol>
+
+            <h3 className="basilar-overview-subheading">Solution</h3>
+            <p className="basilar-overview-solution">
+              A <strong>mobile-first</strong> structure that supports fluid, on-demand access to key moments,
+              from arrival and movement between areas to food and showtime, creating a clear, cohesive
+              experience that supports both users and operations. Lightweight real-time signals keep
+              attendees and organizers aligned with what&apos;s happening in the moment, while a visual system
+              designed for outdoor conditions ensures clarity through high contrast, short labels, and
+              predictable patterns in any environment.
+            </p>
+          </div>
         </div>
       </section>
 

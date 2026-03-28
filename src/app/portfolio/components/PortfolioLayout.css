@@ -34,6 +34,20 @@
   }
 }
 
+/*
+  Case-study pages only (not home): wider horizontal inset on large viewports so line length
+  stays readable on ultra-wide screens (e.g. 1920px). Home keeps shell padding above.
+*/
+@media (min-width: 1025px) {
+  .portfolio-layout.layout-grid:has(.basilar-page),
+  .portfolio-layout.layout-grid:has(.command-center-page),
+  .portfolio-layout.layout-grid:has(.saas-page),
+  .portfolio-layout.layout-grid:has(.project-page) {
+    padding-left: clamp(64px, 5vw + 40px, 180px);
+    padding-right: clamp(64px, 5vw + 40px, 180px);
+  }
+}
+
 /* Project pages only: hero meets header (home keeps default vertical gap from .layout-grid) */
 .portfolio-layout.layout-grid:has(.basilar-page),
 .portfolio-layout.layout-grid:has(.project-page) {

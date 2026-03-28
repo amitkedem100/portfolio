@@ -1,6 +1,6 @@
 /* Shared frame for portfolio project textual sections.
    Inner spans full width of the grid column (no centered 960px cap — avoids empty side gap).
-   Line length for intros: --project-text-intro-max-width on headings/intro classes where needed. */
+   Line length: --project-text-intro-max-width (intros) or --project-text-prose-max-width (opt-in prose). */
 
 .project-text-section {
   width: 100%;
@@ -13,4 +13,10 @@
   margin-inline: 0;
   text-align: start;
   box-sizing: border-box;
+}
+
+/* Same measure as Overview dense copy (globals: --project-text-prose-max-width) */
+.project-text-section-inner--prose {
+  max-width: min(var(--project-text-prose-max-width), 100%);
+  margin-inline: auto;
 }

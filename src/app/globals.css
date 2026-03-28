@@ -76,6 +76,8 @@
 
   /* Project page textual sections — intro line measure (inner wrapper is width: 100%) */
   --project-text-intro-max-width: 760px;
+  /* Dense body copy — opt-in via .project-text-section-inner--prose or local max-width */
+  --project-text-prose-max-width: 65ch;
 }
 
 /* ---------------------------------------------------------
@@ -118,8 +120,8 @@
 /* Basilar: project-scoped tokens (accent + band backgrounds; do not alter global DS tokens) */
 html.basilar-project {
   --cursor-accent: #00ff0a;
-  /* IA diagram active stroke / focus: Basilar green, not portfolio --accent */
-  --ia-active-stroke: var(--cursor-accent);
+  /* IA diagram active stroke / focus: portfolio accent (orange), not cursor green */
+  --ia-active-stroke: var(--accent);
   --basilar-ui-label: #92B079;
   --basilar-background-light: #eeeeee;
   --basilar-background-dark: #3b443b;
