@@ -1,16 +1,12 @@
-/* Dropped pin — large non-accent title; text left, square video + illustration on the right */
+/* Dropped pin — text left, square video + illustration on the right (title: .basilar-ui-segment__title) */
 
 .basilar-page-ui-dropped-pin {
   padding-block: 56px 72px;
   box-sizing: border-box;
 }
 
-.basilar-dropped-pin-segment__title {
-  margin: 0 0 16px;
-  font: var(--portfolio-text-h1);
-  font-weight: 600;
-  color: var(--text-primary);
-  letter-spacing: -0.02em;
+.basilar-dropped-pin-segment__body .basilar-ui-segment__title {
+  margin-top: 0;
 }
 
 .basilar-dropped-pin-segment .basilar-ui-segment__body {
@@ -99,11 +95,9 @@
     justify-content: center;
   }
 
-  .basilar-dropped-pin-segment__title {
-    font: var(--portfolio-text-h2);
-    font-weight: 600;
-    font-size: 1.5rem;
-    margin-bottom: 12px;
+  .basilar-dropped-pin-segment .basilar-ui-segment__title,
+  .basilar-dropped-pin-segment .basilar-ui-segment__description {
+    text-align: center;
   }
 
   .basilar-dropped-pin-visuals {

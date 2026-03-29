@@ -41,7 +41,7 @@ export function BasilarUITeaserSection() {
                     src={item.src}
                     alt={item.alt}
                     fill
-                    sizes="(max-width: 768px) 72vw, (max-width: 1024px) 28vw, 24vw"
+                    sizes="(max-width: 768px) 30vw, (max-width: 1024px) 28vw, 24vw"
                     className="basilar-ui-teaser-img"
                     priority={index === 1}
                   />

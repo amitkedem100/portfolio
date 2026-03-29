@@ -1,5 +1,8 @@
+"use client";
+
 import "@/app/portfolio/components/ProjectVideoHero.css";
 import { BasilarUISegmentPlaylistVideo } from "@/app/portfolio/basilar/components/BasilarUISegmentPlaylistVideo";
+import { BasilarUISegmentRevealBody } from "@/app/portfolio/basilar/components/BasilarUISegmentRevealBody";
 import "./BasilarUISegmentBlock.css";
 
 export type BasilarUISegmentContent = {
@@ -36,13 +39,13 @@ export function BasilarUISegmentBlock({ segment, reverse = false }: BasilarUISeg
 
   return (
     <article className={articleClassName} aria-labelledby={`basilar-ui-segment-title-${segment.id}`}>
-      <div className="basilar-ui-segment__body">
+      <BasilarUISegmentRevealBody>
         <p className="basilar-ui-segment__label">{segment.label}</p>
         <h3 id={`basilar-ui-segment-title-${segment.id}`} className="basilar-ui-segment__title">
           {segment.title}
         </h3>
         <p className="basilar-ui-segment__description">{segment.description}</p>
-      </div>
+      </BasilarUISegmentRevealBody>
 
       <div className="basilar-ui-segment__media">
         {usePlaylist && playlist ? (

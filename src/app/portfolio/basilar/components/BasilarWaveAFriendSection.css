@@ -5,17 +5,8 @@
   box-sizing: border-box;
 }
 
-.basilar-wave-friend-segment__body .basilar-wave-friend-title {
+.basilar-wave-friend-segment__body .basilar-ui-segment__title {
   margin-top: 0;
-}
-
-.basilar-wave-friend-title {
-  margin: 0 0 14px;
-  font: var(--portfolio-text-h1);
-  font-weight: 600;
-  color: var(--text-primary);
-  letter-spacing: -0.02em;
-  text-align: start;
 }
 
 .basilar-wave-friend-device {
@@ -25,10 +16,7 @@
 }
 
 @media (max-width: 768px) {
-  .basilar-wave-friend-title {
-    font: var(--portfolio-text-h2);
-    font-weight: 600;
-    font-size: 1.25rem;
+  .basilar-wave-friend-segment .basilar-ui-segment__title {
     text-align: center;
   }
 

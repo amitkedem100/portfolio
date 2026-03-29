@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { BasilarUISegmentRevealBody } from "@/app/portfolio/basilar/components/BasilarUISegmentRevealBody";
 import "@/app/portfolio/components/ProjectTextSection.css";
 import "./BasilarSetReminderSection.css";
 
@@ -17,7 +18,7 @@ export function BasilarSetReminderSection() {
           className="basilar-ui-segment basilar-set-reminder-segment"
           aria-labelledby="basilar-ui-segment-title-set-reminder"
         >
-          <div className="basilar-ui-segment__body basilar-set-reminder-segment__body">
+          <BasilarUISegmentRevealBody className="basilar-set-reminder-segment__body">
             <h3 id="basilar-ui-segment-title-set-reminder" className="basilar-ui-segment__title">
               Set a Reminder
             </h3>
@@ -25,7 +26,7 @@ export function BasilarSetReminderSection() {
               Easily set reminders for when your favorite DJ or artist is on stage, ensuring you never miss
               a moment.
             </p>
-          </div>
+          </BasilarUISegmentRevealBody>
 
           <div className="basilar-ui-segment__media">
             <div

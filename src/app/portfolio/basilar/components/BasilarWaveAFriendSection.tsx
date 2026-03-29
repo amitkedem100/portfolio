@@ -1,3 +1,4 @@
+import { BasilarUISegmentRevealBody } from "@/app/portfolio/basilar/components/BasilarUISegmentRevealBody";
 import "@/app/portfolio/basilar/components/BasilarUISegmentBlock.css";
 import "@/app/portfolio/components/ProjectVideoHero.css";
 import "@/app/portfolio/components/ProjectTextSection.css";
@@ -17,15 +18,15 @@ export function BasilarWaveAFriendSection() {
           className="basilar-ui-segment basilar-ui-segment--reverse basilar-wave-friend-segment"
           aria-labelledby="basilar-wave-friend-title"
         >
-          <div className="basilar-ui-segment__body basilar-wave-friend-segment__body">
-            <h3 id="basilar-wave-friend-title" className="basilar-wave-friend-title">
+          <BasilarUISegmentRevealBody className="basilar-wave-friend-segment__body">
+            <h3 id="basilar-wave-friend-title" className="basilar-ui-segment__title">
               Wave a friend
             </h3>
             <p className="basilar-ui-segment__description">
               In a loud, crowded area with booming music? Simply share your location with friends directly
               through the Basilar app—no phone call needed, just a quick, easy way to meet up.
             </p>
-          </div>
+          </BasilarUISegmentRevealBody>
 
           <div className="basilar-ui-segment__media">
             <div className="project-video-hero-device-wrap basilar-ui-segment__device-wrap">

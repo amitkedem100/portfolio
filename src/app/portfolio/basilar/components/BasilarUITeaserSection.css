@@ -1,4 +1,4 @@
-/* UI Teaser — visual-only three-up strip; tighter vertical padding than text sections */
+/* UI Teaser — three phones in one row; same hierarchy as desktop (center hero, side tilt) */
 
 .basilar-ui-teaser {
   padding-block: 40px 48px;
@@ -77,36 +77,46 @@
   }
 }
 
+/* Mobile: same layout as desktop — scaled down; tighter radius; inset from screen edges */
 @media (max-width: 768px) {
   .basilar-ui-teaser {
     padding-block: 28px 36px;
+    padding-inline: clamp(16px, 5.5vw, 28px);
+    box-sizing: border-box;
   }
 
   .basilar-ui-teaser-devices {
-    flex-direction: column;
-    gap: 24px;
+    gap: clamp(8px, 2.5vw, 14px);
+    padding-inline: clamp(4px, 1.5vw, 10px);
+    box-sizing: border-box;
   }
 
-  .basilar-ui-teaser-device--left,
-  .basilar-ui-teaser-device--right {
-    transform: none;
+  .basilar-ui-teaser-frame {
+    /* --radius-32 reads oversized on narrow frames; scale with strip */
+    border-radius: clamp(10px, 2.6vw, 14px);
+    box-shadow:
+      0 12px 28px rgba(0, 0, 0, 0.12),
+      0 4px 12px rgba(0, 0, 0, 0.07);
   }
 
   .basilar-ui-teaser-device--left .basilar-ui-teaser-frame,
-  .basilar-ui-teaser-device--right .basilar-ui-teaser-frame,
-  .basilar-ui-teaser-device--center .basilar-ui-teaser-frame {
-    width: min(260px, 72vw);
+  .basilar-ui-teaser-device--right .basilar-ui-teaser-frame {
+    width: min(96px, 25vw);
   }
 
-  /* Center hero first on small screens */
+  .basilar-ui-teaser-device--center .basilar-ui-teaser-frame {
+    width: min(122px, 33vw);
+  }
+
   .basilar-ui-teaser-device--center {
-    order: -1;
+    transform: translateY(-8px);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .basilar-ui-teaser-device--left,
-  .basilar-ui-teaser-device--right {
+  .basilar-ui-teaser-device--right,
+  .basilar-ui-teaser-device--center {
     transform: none;
   }
 }

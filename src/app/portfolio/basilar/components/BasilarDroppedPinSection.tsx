@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { BasilarUISegmentRevealBody } from "@/app/portfolio/basilar/components/BasilarUISegmentRevealBody";
 import "@/app/portfolio/components/ProjectTextSection.css";
 import "./BasilarDroppedPinSection.css";
 
@@ -17,15 +18,15 @@ export function BasilarDroppedPinSection() {
           className="basilar-ui-segment basilar-dropped-pin-segment"
           aria-labelledby="basilar-dropped-pin-title"
         >
-          <div className="basilar-ui-segment__body basilar-dropped-pin-segment__body">
-            <h3 id="basilar-dropped-pin-title" className="basilar-dropped-pin-segment__title">
+          <BasilarUISegmentRevealBody className="basilar-dropped-pin-segment__body">
+            <h3 id="basilar-dropped-pin-title" className="basilar-ui-segment__title">
               Dropped pin
             </h3>
             <p className="basilar-ui-segment__description">
               Pin important spots like your tent and car for quick access. Easily find your way back, even in
               busy areas, and share your location with new friends.
             </p>
-          </div>
+          </BasilarUISegmentRevealBody>
 
           <div className="basilar-ui-segment__media basilar-dropped-pin-segment__media">
             <div

@@ -29,12 +29,7 @@ export function BasilarUserInterfaceSection() {
             User Interface
           </h2>
           <p className="basilar-ui-intro">
-            Every design element in the app is crafted to address Basilar&apos;s core challenges, from
-            streamlined token workflows to intuitive navigation.
-          </p>
-          <p className="basilar-ui-intro">
-            Together, they create a seamless, high-end experience that supports both attendee needs and
-            festival logistics.
+          A clear, intuitive interface designed to support both attendee needs and festival operations.
           </p>
         </header>
 

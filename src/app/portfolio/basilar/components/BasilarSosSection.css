@@ -5,17 +5,8 @@
   box-sizing: border-box;
 }
 
-.basilar-sos-segment__body .basilar-sos-title {
+.basilar-sos-segment__body .basilar-ui-segment__title {
   margin-top: 0;
-}
-
-.basilar-sos-title {
-  margin: 0 0 14px;
-  font: var(--portfolio-text-h1);
-  font-weight: 600;
-  color: var(--text-primary);
-  letter-spacing: -0.02em;
-  text-align: start;
 }
 
 /* Error-style emphasis — readable on light and dark portfolio themes */
@@ -45,10 +36,7 @@ html[data-theme="dark"] .basilar-sos-highlight {
     padding-block: 40px 48px;
   }
 
-  .basilar-sos-title {
-    font: var(--portfolio-text-h2);
-    font-weight: 600;
-    font-size: 1.25rem;
+  .basilar-sos-segment .basilar-ui-segment__title {
     text-align: center;
   }
 

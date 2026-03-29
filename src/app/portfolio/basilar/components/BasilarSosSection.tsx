@@ -1,3 +1,4 @@
+import { BasilarUISegmentRevealBody } from "@/app/portfolio/basilar/components/BasilarUISegmentRevealBody";
 import "@/app/portfolio/basilar/components/BasilarUISegmentBlock.css";
 import "@/app/portfolio/components/ProjectVideoHero.css";
 import "@/app/portfolio/components/ProjectTextSection.css";
@@ -14,8 +15,8 @@ export function BasilarSosSection() {
     >
       <div className="project-text-section-inner">
         <article className="basilar-ui-segment basilar-sos-segment" aria-labelledby="basilar-sos-title">
-          <div className="basilar-ui-segment__body basilar-sos-segment__body">
-            <h3 id="basilar-sos-title" className="basilar-sos-title">
+          <BasilarUISegmentRevealBody className="basilar-sos-segment__body">
+            <h3 id="basilar-sos-title" className="basilar-ui-segment__title">
               SOS: Stay Safe
             </h3>
             <p className="basilar-ui-segment__description">
@@ -23,7 +24,7 @@ export function BasilarSosSection() {
               <span className="basilar-sos-highlight">alert staff if you need help</span>
               {", ensuring you're never alone if things get tricky. Set boundaries, stay confident, and enjoy your time at Basilar with peace of mind."}
             </p>
-          </div>
+          </BasilarUISegmentRevealBody>
 
           <div className="basilar-ui-segment__media">
             <div className="project-video-hero-device-wrap basilar-ui-segment__device-wrap">
