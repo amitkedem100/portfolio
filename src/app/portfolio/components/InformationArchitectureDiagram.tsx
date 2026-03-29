@@ -13,7 +13,7 @@ import {
   isSubtreeSingleLeafOnly,
 } from "@/data/informationArchitectureDiagram";
 
-const IA_AUTO_ADVANCE_MS = 3500;
+export const IA_AUTO_ADVANCE_MS = 3500;
 const IA_BRANCH_LEAVE_DEBOUNCE_MS = 150;
 
 function usePrefersReducedMotion() {
@@ -52,16 +52,25 @@ function primaryLabelY(rect: { y: number; height: number }) {
 
 /* Siblings at the same depth share one row (columns); nested levels stack under each branch */
 
+function displayNodeLabel(node: IATreeNode, preferMobileLabelShort: boolean) {
+  if (preferMobileLabelShort && node.labelMobile?.trim()) {
+    return node.labelMobile.trim();
+  }
+  return node.label;
+}
+
 export function IATreeBlock({
   node,
   depth = 0,
   branchId,
   shuttleRootRowStyle,
+  preferMobileLabelShort = false,
 }: {
   node: IATreeNode;
   depth?: number;
   branchId?: string;
   shuttleRootRowStyle?: CSSProperties;
+  preferMobileLabelShort?: boolean;
 }) {
   const hasChildren = Boolean(node.children?.length);
   const showLabel = node.label.trim().length > 0;
@@ -77,7 +86,7 @@ export function IATreeBlock({
             : "ia-diagram__node ia-diagram__node--html ia-diagram__node--leaf"
         }
       >
-        {node.label}
+        {displayNodeLabel(node, preferMobileLabelShort)}
       </div>
     );
   }
@@ -121,7 +130,12 @@ export function IATreeBlock({
           <div className="ia-tree-row ia-tree-row--leaf-row">
             {node.children.map((child) => (
               <div key={child.id} className="ia-tree-col ia-tree-col--leaf-row">
-                <IATreeBlock node={child} depth={depth + 1} branchId={branchId} />
+                <IATreeBlock
+                  node={child}
+                  depth={depth + 1}
+                  branchId={branchId}
+                  preferMobileLabelShort={preferMobileLabelShort}
+                />
               </div>
             ))}
           </div>
@@ -144,7 +158,12 @@ export function IATreeBlock({
         >
           {node.children.map((child) => (
             <div key={child.id} className="ia-tree-col">
-              <IATreeBlock node={child} depth={depth} branchId={branchId} />
+              <IATreeBlock
+                node={child}
+                depth={depth}
+                branchId={branchId}
+                preferMobileLabelShort={preferMobileLabelShort}
+              />
             </div>
           ))}
         </div>
@@ -155,14 +174,19 @@ export function IATreeBlock({
   return (
     <div className="ia-tree-block ia-tree-block--labeled">
       <div className="ia-diagram__node ia-diagram__node--html ia-diagram__node--primary">
-        {node.label}
+        {displayNodeLabel(node, preferMobileLabelShort)}
       </div>
       <div
         className={`ia-tree-row${node.children!.length === 1 ? " ia-tree-row--single" : ""}`}
       >
         {node.children!.map((child) => (
           <div key={child.id} className="ia-tree-col">
-            <IATreeBlock node={child} depth={depth + 1} branchId={branchId} />
+            <IATreeBlock
+              node={child}
+              depth={depth + 1}
+              branchId={branchId}
+              preferMobileLabelShort={preferMobileLabelShort}
+            />
           </div>
         ))}
       </div>

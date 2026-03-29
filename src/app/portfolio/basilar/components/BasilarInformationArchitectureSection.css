@@ -1,5 +1,11 @@
 /* BasilarInformationArchitectureSection — spacing for IA block on Basilar page */
 
+/* Same emphasis as .basilar-overview-lead strong / overview prose */
+.basilar-page-ia .ia-section-decisions-list strong {
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
 .basilar-page-ia {
   padding-block: 56px 72px;
 }

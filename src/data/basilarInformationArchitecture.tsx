@@ -6,8 +6,14 @@ export const basilarInformationArchitectureProps: InformationArchitectureSection
     "To address the identified pain points, the app structure was designed to simplify navigation, reduce friction, and centralize key services.",
   decisionsTitle: "Key Structure Decisions",
   decisions: [
-    "Core features are accessible directly from the homepage to reduce navigation depth",
-    "Transportation and ticketing are prioritized due to their impact on user flow",
-    "Real-time features are embedded within each section to reduce context switching",
+    <>
+      The experience is divided into six clear sections, enabling{" "}
+      <strong>fast orientation with minimal learning</strong>.
+    </>,
+    <>
+      <strong>Tickets, Shuttles, and Tokens</strong> support{" "}
+      <strong>essential event actions</strong>, while the remaining sections enhance comfort, trust,
+      and overall experience.
+    </>,
   ],
 };

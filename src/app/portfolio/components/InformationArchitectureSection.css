@@ -207,16 +207,16 @@
 .ia-mobile-carousel__panel[data-ia-branch="shuttle"] .ia-tree-row--shuttle-pair {
   justify-content: center;
   padding-inline-start: 0 !important;
-  gap: 10px;
+  gap: 24px;
 }
 
-/* Shuttle: tighter gap between labeled blocks (Arrival / Departure columns) */
+/* Shuttle: compact labeled block (Arrival / Departure title → Choose|Scan) */
 .ia-mobile-carousel__panel[data-ia-branch="shuttle"] .ia-tree-block--labeled {
-  gap: 10px;
+  gap: 8px;
 }
 
 .ia-mobile-carousel__panel[data-ia-branch="shuttle"] .ia-shuttle-choose-scan-col {
-  gap: 10px;
+  gap: 8px;
 }
 
 /* Tokens: keep Current Balance | Load a Package on one row; stack below matches tree */
@@ -260,20 +260,33 @@
   line-height: 1.25;
 }
 
-/* Map: tiles stay in scrollable row under page title; slightly smaller type if needed */
+/* Map (mobile carousel): content-sized tiles + --ia-step-gap — undoes fixed 144px cols/nodes from desktop map rules */
+.ia-diagram__foreign-root.ia-mobile-carousel__panel[data-ia-branch="map"]
+  .ia-tree-row--leaf-row
+  > .ia-tree-col {
+  flex: 0 0 auto;
+  width: auto;
+  max-width: none;
+  min-width: 0;
+}
+
+/* Same horizontal rhythm as .ia-tree-row / diagram primary gap */
 .ia-mobile-carousel__panel[data-ia-branch="map"] .ia-tree-row--leaf-row {
   flex-wrap: nowrap;
   justify-content: center;
-  gap: 10px;
+  gap: var(--ia-step-gap);
 }
 
 .ia-mobile-carousel__panel[data-ia-branch="map"] .ia-tree-row--leaf-row .ia-diagram__node--html {
-  flex: 0 1 auto;
+  flex: 0 0 auto;
+  width: auto;
   min-width: 0;
-  max-width: 100px;
-  padding: 8px 14px;
+  max-width: none;
+  padding: 8px 12px;
   font-size: 11px;
   line-height: 1.25;
+  white-space: nowrap;
+  box-sizing: border-box;
 }
 
 .ia-diagram__foreign-root.ia-mobile-carousel__panel[data-ia-branch="map"] {
@@ -507,7 +520,7 @@
   flex-direction: row;
   flex-wrap: nowrap;
   align-items: flex-start;
-  gap: var(--ia-step-gap);
+  gap: 16px;
   width: 100%;
   box-sizing: border-box;
 }
@@ -713,6 +726,43 @@
     flex-direction: column;
     align-items: center;
   }
+
+  /*
+   * Shuttle (mobile carousel, narrow): row stacks vertically — col flex was 0 0 --ia-shuttle-column-width,
+   * so that basis became *height* and created a huge band between Arrival / Departure labeled blocks.
+   */
+  .ia-diagram__foreign-root.ia-mobile-carousel__panel[data-ia-branch="shuttle"]
+    .ia-tree-block--shuttle-two-col
+    > .ia-tree-row
+    > .ia-tree-col {
+    flex: 0 0 auto;
+    width: 100%;
+    max-width: var(--ia-shuttle-column-width);
+    padding-block-start: 0;
+    padding-block-end: 0;
+    margin-block-end: 0;
+  }
+}
+
+/*
+ * Tokens (mobile carousel only): Current Balance | Load a Package — top-align both columns.
+ * Global 640px rule adds padding-block-start: 8px on non-first .ia-tree-col, which drops the right stack.
+ */
+.ia-diagram__foreign-root.ia-mobile-carousel__panel[data-ia-branch="tokens"]
+  .ia-tree-block--root
+  > .ia-tree-row
+  > .ia-tree-col {
+  padding-block-start: 0;
+  align-self: flex-start;
+}
+
+/* Line Up: Listen link | Share | Remind me — undo 640px .ia-tree-col top pad on 2nd/3rd columns */
+.ia-diagram__foreign-root.ia-mobile-carousel__panel[data-ia-branch="lineup"]
+  .ia-tree-block--labeled
+  .ia-tree-row:not(.ia-tree-row--single)
+  > .ia-tree-col {
+  padding-block-start: 0;
+  align-self: flex-start;
 }
 
 .ia-section-decisions {

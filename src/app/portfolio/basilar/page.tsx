@@ -62,8 +62,8 @@ export default function BasilarProjectPage() {
             </header>
 
             <p className="basilar-overview-lead">
-              Basilar is a concept for a companion app that keeps festival-goers oriented across days, venues,
-              and services. Reducing friction between what people need and what the event delivers.
+            <strong> Basilar </strong> is a concept for a companion app that keeps festival-goers oriented across days, venues,
+              and services. Reducing friction between <strong>what people need</strong> and what the event delivers.
             </p>
 
             <h3 className="basilar-overview-subheading">Problem</h3>

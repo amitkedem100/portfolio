@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import "./ProjectTextSection.css";
 import "./InformationArchitectureSection.css";
 import { InformationArchitectureDiagram } from "./InformationArchitectureDiagram";
@@ -8,7 +9,7 @@ export type InformationArchitectureSectionProps = {
   title: string;
   intro: string;
   decisionsTitle: string;
-  decisions: string[];
+  decisions: ReactNode[];
   className?: string;
 };
 

@@ -3,6 +3,8 @@
 export type IATreeNode = {
   id: string;
   label: string;
+  /** Mobile IA carousel only — short tile label; desktop SVG keeps `label` */
+  labelMobile?: string;
   children?: IATreeNode[];
   /** Shuttle: Choose + Scan row; map tiles as leaf row */
   layout?: "shuttle-choose-scan" | "leaf-row";
@@ -298,10 +300,10 @@ export const IA_DIAGRAM_BRANCHES: IADiagramBranch[] = [
       label: "",
       layout: "leaf-row",
       children: [
-        { id: "map-festival", label: "Festival Map" },
-        { id: "map-pins", label: "Dropped Pins" },
-        { id: "map-wave", label: "Wave a Friend" },
-        { id: "map-sos", label: "SOS" },
+        { id: "map-festival", label: "Festival Map", labelMobile: "Map" },
+        { id: "map-pins", label: "Dropped Pins", labelMobile: "Pins" },
+        { id: "map-wave", label: "Wave a Friend", labelMobile: "Wave a friend" },
+        { id: "map-sos", label: "SOS", labelMobile: "SOS" },
       ],
     },
   },

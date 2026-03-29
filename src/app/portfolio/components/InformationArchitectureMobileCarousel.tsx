@@ -1,11 +1,11 @@
 "use client";
 
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   IA_DIAGRAM_BRANCHES,
   isSubtreeSingleLeafOnly,
 } from "@/data/informationArchitectureDiagram";
-import { IATreeBlock } from "./InformationArchitectureDiagram";
+import { IA_AUTO_ADVANCE_MS, IATreeBlock } from "./InformationArchitectureDiagram";
 
 const BRANCH_COUNT = IA_DIAGRAM_BRANCHES.length;
 /* One slide per area — subtree only (no Home overview) */
@@ -13,19 +13,46 @@ const TOTAL_SLIDES = BRANCH_COUNT;
 
 const SWIPE_MIN_PX = 48;
 
-/* Mobile IA carousel: one subtree per area; loop nav + swipe */
+function usePrefersReducedMotion() {
+  const [reduced, setReduced] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => setReduced(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+
+  return reduced;
+}
+
+/* Mobile IA carousel: auto-advance like desktop; stops permanently after user swipe or arrow nav */
 
 export function InformationArchitectureMobileCarousel() {
   const [index, setIndex] = useState(0);
+  /* User-driven nav disables auto until full page reload */
+  const [autoAdvanceStopped, setAutoAdvanceStopped] = useState(false);
+  const prefersReducedMotion = usePrefersReducedMotion();
   const touchStartX = useRef<number | null>(null);
 
   const goPrev = useCallback(() => {
+    setAutoAdvanceStopped(true);
     setIndex((i) => (i - 1 + TOTAL_SLIDES) % TOTAL_SLIDES);
   }, []);
 
   const goNext = useCallback(() => {
+    setAutoAdvanceStopped(true);
     setIndex((i) => (i + 1) % TOTAL_SLIDES);
   }, []);
+
+  useEffect(() => {
+    if (autoAdvanceStopped || prefersReducedMotion) return;
+    const id = window.setInterval(() => {
+      setIndex((i) => (i + 1) % TOTAL_SLIDES);
+    }, IA_AUTO_ADVANCE_MS);
+    return () => window.clearInterval(id);
+  }, [autoAdvanceStopped, prefersReducedMotion]);
 
   const onTouchStart = useCallback((e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
@@ -38,10 +65,14 @@ export function InformationArchitectureMobileCarousel() {
       const dx = endX - touchStartX.current;
       touchStartX.current = null;
       if (Math.abs(dx) < SWIPE_MIN_PX) return;
-      if (dx > 0) goPrev();
-      else goNext();
+      setAutoAdvanceStopped(true);
+      if (dx > 0) {
+        setIndex((i) => (i - 1 + TOTAL_SLIDES) % TOTAL_SLIDES);
+      } else {
+        setIndex((i) => (i + 1) % TOTAL_SLIDES);
+      }
     },
-    [goPrev, goNext],
+    [],
   );
 
   const branch = IA_DIAGRAM_BRANCHES[index];
@@ -81,6 +112,7 @@ export function InformationArchitectureMobileCarousel() {
                   node={branch.tree}
                   branchId={branch.id}
                   shuttleRootRowStyle={undefined}
+                  preferMobileLabelShort={branch.id === "map"}
                 />
               )}
             </div>

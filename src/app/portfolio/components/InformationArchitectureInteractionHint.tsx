@@ -6,7 +6,7 @@ export function InformationArchitectureInteractionHint() {
   return (
     <p className="ia-interaction-hint" role="note">
       <span className="ia-interaction-hint__text ia-interaction-hint__text--desktop">
-        Cycles through each area — hover to pause and explore
+        Cycles through each area - hover to pause and explore
       </span>
       <span className="ia-interaction-hint__text ia-interaction-hint__text--mobile">
         Swipe to reveal each page structure
