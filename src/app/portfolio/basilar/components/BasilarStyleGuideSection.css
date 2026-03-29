@@ -18,7 +18,8 @@
   width: 100vw;
   top: 0;
   bottom: 0;
-  background: var(--basilar-background);
+  /* Lighter strip — aligned with Live Feed / page surface (not sage band) */
+  background: var(--background);
   pointer-events: none;
 }
 
@@ -112,6 +113,13 @@
   font-size: 0.9375rem;
   line-height: 1.65;
   color: var(--text-primary);
+  text-align: right;
+}
+
+@media (max-width: 768px) {
+  .basilar-style-guide__weights {
+    text-align: left;
+  }
 }
 
 .basilar-style-guide__weight {

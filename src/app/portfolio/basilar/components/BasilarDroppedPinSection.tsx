@@ -5,6 +5,8 @@ import "./BasilarDroppedPinSection.css";
 
 const DROP_PIN_VIDEO = encodeURI("/videos/basilar/drop pin.mp4");
 const DROP_PIN_ILLUSTRATION = "/images/basilar/drop-pin-illustration.png";
+/* Source asset is square (757×757); layout must keep 1:1 — no fixed short height */
+const DROP_PIN_ILLUSTRATION_SIZE = 757 as const;
 
 /* Text left; square video + illustration on the right (video left of image) */
 export function BasilarDroppedPinSection() {
@@ -47,12 +49,15 @@ export function BasilarDroppedPinSection() {
                 />
               </div>
               <div className="basilar-dropped-pin-illustration-wrap">
+                {/* Rounded panel — same height as video square, slightly inset vs illustration */}
+                <div className="basilar-dropped-pin-illustration-bg" aria-hidden="true" />
                 <Image
                   className="basilar-dropped-pin-illustration"
                   src={DROP_PIN_ILLUSTRATION}
                   alt=""
-                  fill
-                  sizes="(max-width: 768px) min(148px, 40vw) 156px"
+                  width={DROP_PIN_ILLUSTRATION_SIZE}
+                  height={DROP_PIN_ILLUSTRATION_SIZE}
+                  sizes="(max-width: 768px) min(240px, 72vw) min(300px, 36vw)"
                 />
               </div>
             </div>

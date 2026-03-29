@@ -1,1 +1,5 @@
-/* Shuttles block — reverse Basilar segment carries its own full-bleed band and spacing */
+/* Shuttles — same full-bleed surface as Live Feed (page background, not sage band) */
+
+.basilar-page-ui-shuttles .basilar-ui-segment--reverse::before {
+  background: var(--background);
+}

@@ -1,30 +1,32 @@
 .portfolio-footer {
-  display: block;
-  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80px;
 }
 
 .portfolio-footer-inner {
-  display: block;
+  width: 100%;
 }
 
 .portfolio-footer-text {
   display: block;
   text-align: center;
   font: var(--portfolio-text-b3);
+  width: 100%;
 }
 
 /* Tablet */
 @media (max-width: 1024px) {
   .portfolio-footer {
-    height: 36px;
+    height: 80px;
   }
 }
 
 /* Mobile */
 @media (max-width: 768px) {
   .portfolio-footer {
-    height: 32px;
+    height: 80px;
   }
 }
-
 

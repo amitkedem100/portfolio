@@ -1,4 +1,8 @@
-/* Lineup — tighter top gap after full-bleed vibe photo */
+/* Lineup — tighter top gap after full-bleed vibe photo; band matches Live Feed (page background) */
+
+.basilar-page-ui-lineup .basilar-ui-segment--reverse::before {
+  background: var(--background);
+}
 
 .basilar-page-ui-lineup {
   padding-block: 28px 72px;

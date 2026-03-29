@@ -19,6 +19,11 @@
   object-position: center 80%;
 }
 
+/* Strip before map — centered night stage / DJ frame */
+.basilar-page-vibe-photo--before-map .basilar-page-vibe-photo-img {
+  object-position: center center;
+}
+
 @media (max-width: 768px) {
   .basilar-page-vibe-photo-inner {
     height: clamp(240px, 36vh, 420px);

@@ -144,8 +144,10 @@ export default function BasilarProjectPage() {
       <BasilarTokensSection />
 
       <BasilarFestivalVibeSection
-        imageSrc="/images/basilar/basilar-vibe-photo-2.png"
-        ariaLabel="Festival crowd atmosphere"
+        imageSrc="/images/basilar/basilar-vibe-before-map.png"
+        ariaLabel="Night festival stage"
+        unoptimized
+        sectionClassName="basilar-page-vibe-photo--before-map"
       />
 
       <BasilarMapSection />

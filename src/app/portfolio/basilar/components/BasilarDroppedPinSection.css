@@ -21,6 +21,8 @@
 }
 
 .basilar-dropped-pin-visuals {
+  /* Shared square size: video frame + illustration background height */
+  --dropped-pin-video-size: min(200px, 28vw);
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -32,11 +34,11 @@
 
 .basilar-dropped-pin-video-wrap {
   flex-shrink: 0;
-  width: min(200px, 28vw);
+  width: var(--dropped-pin-video-size);
   aspect-ratio: 1;
   border-radius: var(--radius-20);
   overflow: hidden;
-  background: var(--surface-dark);
+  background: #000;
   box-shadow:
     0 24px 48px rgba(0, 0, 0, 0.22),
     0 8px 16px rgba(0, 0, 0, 0.14);
@@ -50,24 +52,39 @@
   display: block;
 }
 
+/* Square asset (757×757): image size unchanged; rounded bg matches video, inset */
 .basilar-dropped-pin-illustration-wrap {
   position: relative;
   flex-shrink: 0;
-  width: min(156px, 34vw);
-  height: min(76px, 17vw);
+  width: min(300px, 36vw);
+  max-width: 100%;
   padding: 0;
   box-sizing: border-box;
-  background: #000000;
-  border-radius: var(--radius-8);
-  overflow: hidden;
+  line-height: 0;
 }
 
-/* Fill the black box as much as possible without cropping */
+.basilar-dropped-pin-illustration-bg {
+  position: absolute;
+  z-index: 0;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(100% - 20px);
+  height: var(--dropped-pin-video-size);
+  border-radius: var(--radius-20);
+  background: #000;
+  box-shadow:
+    0 24px 48px rgba(0, 0, 0, 0.22),
+    0 8px 16px rgba(0, 0, 0, 0.14);
+  pointer-events: none;
+}
+
 .basilar-dropped-pin-illustration {
+  position: relative;
+  z-index: 1;
+  display: block;
   width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: center;
+  height: auto;
 }
 
 @media (max-width: 1024px) {
@@ -75,8 +92,8 @@
     padding-block: 48px 56px;
   }
 
-  .basilar-dropped-pin-video-wrap {
-    width: min(180px, 34vw);
+  .basilar-dropped-pin-visuals {
+    --dropped-pin-video-size: min(180px, 34vw);
   }
 }
 
@@ -106,12 +123,11 @@
     max-width: 100%;
   }
 
-  .basilar-dropped-pin-video-wrap {
-    width: min(160px, 42vw);
+  .basilar-dropped-pin-visuals {
+    --dropped-pin-video-size: min(160px, 42vw);
   }
 
   .basilar-dropped-pin-illustration-wrap {
-    width: min(148px, 62vw);
-    height: min(72px, 28vw);
+    width: min(260px, 72vw);
   }
 }

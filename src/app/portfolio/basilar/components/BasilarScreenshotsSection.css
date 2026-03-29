@@ -1,8 +1,23 @@
-/* Screenshots — three per row; full-width images, vertical rhythm from natural scroll */
+/* Screenshots — three per row; full-bleed sage band */
 
 .basilar-screenshots {
+  position: relative;
+  isolation: isolate;
   padding-block: 56px 72px;
   box-sizing: border-box;
+}
+
+.basilar-screenshots::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  top: 0;
+  bottom: 0;
+  background: var(--basilar-background);
+  pointer-events: none;
 }
 
 .basilar-screenshots__inner {

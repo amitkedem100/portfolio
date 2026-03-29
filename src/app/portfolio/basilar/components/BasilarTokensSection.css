@@ -1,11 +1,23 @@
-/* Tokens — video left (reverse); large coin SVG watermark behind content */
+/* Tokens — full-bleed sage band like Food; coin watermark behind content */
 
 .basilar-page-ui-tokens {
   position: relative;
   isolation: isolate;
-  overflow: hidden;
   padding-block: 56px 72px;
   box-sizing: border-box;
+}
+
+.basilar-page-ui-tokens::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  top: 0;
+  bottom: 0;
+  background: var(--basilar-background);
+  pointer-events: none;
 }
 
 .basilar-page-ui-tokens__bg {
