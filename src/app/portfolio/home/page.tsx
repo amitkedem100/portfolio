@@ -15,10 +15,10 @@ export default function PortfolioHomePage() {
       >
         <CursorZone variant="viewProject">
           <ProjectCard
-            title="SaaS"
-            description="A B2B SaaS case study — product thinking, workflows, and interface craft (content in progress)."
-            keywords="Product Design · SaaS · UX"
-            imageAlt="SaaS project"
+            title="Astra"
+            description="A safety intelligence platform designed to monitor, analyze, and improve construction site safety through AI-driven insights and real-time reporting."
+            keywords="SaaS Platform · Safety Analytics · AI Monitoring · 2026"
+            imageAlt="Astra project"
             href="/portfolio/saas"
             imagePosition="right"
           />

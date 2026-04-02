@@ -50,6 +50,7 @@
 
 /* Project pages only: hero meets header (home keeps default vertical gap from .layout-grid) */
 .portfolio-layout.layout-grid:has(.basilar-page),
+.portfolio-layout.layout-grid:has(.saas-page),
 .portfolio-layout.layout-grid:has(.project-page) {
   row-gap: 0;
 }

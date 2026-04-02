@@ -1,0 +1,17 @@
+/* SaasPersonasSection — vertical rhythm matches Basilar personas */
+
+.saas-page-personas {
+  padding-block: 56px 72px;
+}
+
+@media (max-width: 1024px) {
+  .saas-page-personas {
+    padding-block: 48px 56px;
+  }
+}
+
+@media (max-width: 768px) {
+  .saas-page-personas {
+    padding-block: 40px 48px;
+  }
+}

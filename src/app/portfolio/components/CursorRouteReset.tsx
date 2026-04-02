@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { useCursorContext } from "../context/CursorContext";
 
-/* Reset cursor variant on route change; scope Basilar cursor accent on document root (cursor is outside page DOM) */
+/* Reset cursor variant on route change; scope project cursor accents on document root */
 export function CursorRouteReset() {
   const pathname = usePathname();
   const { setVariant } = useCursorContext();
@@ -15,10 +15,15 @@ export function CursorRouteReset() {
     const isBasilar =
       pathname === "/portfolio/basilar" ||
       pathname.startsWith("/portfolio/basilar/");
+    const isSaas =
+      pathname === "/portfolio/saas" ||
+      pathname.startsWith("/portfolio/saas/");
     document.documentElement.classList.toggle("basilar-project", isBasilar);
+    document.documentElement.classList.toggle("saas-project", isSaas);
 
     return () => {
       document.documentElement.classList.remove("basilar-project");
+      document.documentElement.classList.remove("saas-project");
     };
   }, [pathname, setVariant]);
 

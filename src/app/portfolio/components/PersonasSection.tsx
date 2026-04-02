@@ -11,6 +11,8 @@ export type PersonaContent = {
   whoTheyAre: ReactNode;
   keyFrictions: ReactNode[];
   whatTheyNeed: ReactNode;
+  /** Optional block after needs (same typography as body) — requires labels.behaviorProfile */
+  behaviorProfile?: ReactNode;
 };
 
 export type PersonasSectionProps = {
@@ -23,6 +25,7 @@ export type PersonasSectionProps = {
     who: string;
     keyFrictions: string;
     whatTheyNeed: string;
+    behaviorProfile?: string;
   };
   /** Optional extra class on the root section (e.g. page spacing) */
   className?: string;
@@ -103,9 +106,24 @@ export function PersonasSection({
                   </ul>
 
                   <p className="personas-persona-label">{labels.whatTheyNeed}</p>
-                  <p className="personas-persona-text personas-persona-text--needs">
+                  <p
+                    className={
+                      persona.behaviorProfile != null && labels.behaviorProfile
+                        ? "personas-persona-text"
+                        : "personas-persona-text personas-persona-text--needs"
+                    }
+                  >
                     {persona.whatTheyNeed}
                   </p>
+
+                  {persona.behaviorProfile != null && labels.behaviorProfile ? (
+                    <>
+                      <p className="personas-persona-label">{labels.behaviorProfile}</p>
+                      <p className="personas-persona-text personas-persona-text--needs">
+                        {persona.behaviorProfile}
+                      </p>
+                    </>
+                  ) : null}
                 </div>
               </article>
             );

@@ -128,6 +128,18 @@ html.basilar-project {
   --basilar-background: var(--basilar-background-light);
 }
 
+/* Astra (SaaS case study): cursor + section band tokens (apply in section CSS when needed) */
+html.saas-project {
+  --cursor-accent: #e63c67;
+  --astra-background-light: #eeeeee;
+  --astra-background-dark: #23366a;
+  --astra-background: var(--astra-background-light);
+}
+
+html[data-theme="dark"].saas-project {
+  --astra-background: var(--astra-background-dark);
+}
+
 /* Basilar: band backgrounds + UI labels on bands — align with PortfolioContext dark theme */
 html[data-theme="dark"].basilar-project {
   --basilar-background: var(--basilar-background-dark);

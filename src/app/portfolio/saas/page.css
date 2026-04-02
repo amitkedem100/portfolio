@@ -1,14 +1,35 @@
-/* SaaS case study page shell (extend alongside page.tsx as content grows) */
+/* SaaS / Astra case study page shell */
 
 .saas-page-section {
   grid-column: 1 / -1;
 }
 
 .saas-page-hero {
-  padding-block: 56px 72px;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  max-width: 100vw;
 }
 
-.saas-page-title {
+/* Full-bleed showcase — no outer vertical margin; inner .saas-product-showcase handles padding */
+.saas-page-showcase {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  max-width: 100vw;
+  margin-block: 0;
+  padding-block: 0;
+  box-sizing: border-box;
+}
+
+.saas-page-overview {
+  padding-block: 56px;
+}
+
+.saas-overview-header {
+  margin: 0;
+  text-align: start;
+}
+
+.saas-overview-heading {
   margin: 0 0 16px;
   font: var(--portfolio-text-h2);
   font-weight: 600;
@@ -16,29 +37,297 @@
   letter-spacing: -0.02em;
 }
 
-.saas-page-lead {
-  margin: 0;
-  max-width: min(var(--project-text-intro-max-width), 100%);
+.saas-overview-prose {
+  text-align: start;
+}
+
+.saas-overview-lead {
+  margin: 0 0 36px;
   font: var(--portfolio-text-b1);
+  color: var(--text-secondary);
+}
+
+.saas-overview-subheading {
+  margin: 0 0 10px;
+  font: var(--portfolio-text-b3);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.saas-overview-subheading:first-of-type {
+  margin-top: 0;
+}
+
+.saas-overview-problem-list + .saas-overview-subheading {
+  margin-top: 32px;
+}
+
+.saas-overview-problem-list {
+  margin: 0 0 32px;
+  padding: 0;
+  list-style: none;
+  counter-reset: saas-overview-problem;
+}
+
+.saas-overview-problem-list li {
+  counter-increment: saas-overview-problem;
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 2px 14px;
+  margin-bottom: 18px;
+  font: var(--portfolio-text-b2);
+  color: var(--text-primary);
+}
+
+.saas-overview-problem-list li::before {
+  content: counter(saas-overview-problem, decimal-leading-zero);
+  flex-shrink: 0;
+  margin-top: 0.12em;
+  font: var(--portfolio-text-b3);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+}
+
+.saas-overview-problem-list__title {
+  flex: 1 1 calc(100% - 42px);
+  min-width: 0;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.saas-overview-problem-list__text {
+  flex: 1 1 calc(100% - 42px);
+  min-width: 0;
+  margin-left: calc(14px + 2ch);
+  color: var(--text-primary);
+}
+
+.saas-overview-problem-list li:last-child {
+  margin-bottom: 0;
+}
+
+.saas-overview-solution {
+  margin: 0;
+  font: var(--portfolio-text-b2);
+  color: var(--text-primary);
+}
+
+/* System Thinking — full-bleed Astra dark band; light text (token: --astra-background-dark) */
+.saas-page-system-thinking {
+  position: relative;
+  isolation: isolate;
+  padding-block: 56px;
+  box-sizing: border-box;
+}
+
+.saas-page-system-thinking::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  top: 0;
+  bottom: 0;
+  background: var(--astra-background-dark);
+  pointer-events: none;
+}
+
+.saas-system-thinking-prose {
+  position: relative;
+  z-index: 1;
+  text-align: start;
+}
+
+.saas-system-thinking-header {
+  margin: 0;
+  text-align: start;
+}
+
+.saas-system-thinking-heading {
+  margin: 0 0 16px;
+  font: var(--portfolio-text-h2);
+  font-weight: 600;
+  color: var(--text-primary-dark);
+  letter-spacing: -0.02em;
+}
+
+.saas-system-thinking-lead {
+  margin: 0 0 32px;
+  font: var(--portfolio-text-b1);
+  color: var(--text-secondary-dark);
+}
+
+.saas-system-thinking-subheading {
+  margin: 0 0 10px;
+  font: var(--portfolio-text-b3);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-secondary-dark);
+}
+
+.saas-system-thinking-list {
+  margin: 0;
+  padding-inline-start: 1.15rem;
+  list-style-type: disc;
+}
+
+.saas-system-thinking-list li {
+  margin-bottom: 10px;
+  font: var(--portfolio-text-b2);
+  color: var(--text-primary-dark);
+  padding-inline-start: 0.25rem;
+}
+
+.saas-system-thinking-list li::marker {
+  color: var(--accent);
+}
+
+.saas-system-thinking-list li:last-child {
+  margin-bottom: 0;
+}
+
+.saas-system-thinking-list strong {
+  font-weight: 700;
+  color: var(--text-primary-dark);
+}
+
+/* Product Positioning — default surface / same rhythm as Overview */
+.saas-page-positioning {
+  padding-block: 56px;
+}
+
+.saas-positioning-prose {
+  text-align: start;
+}
+
+.saas-positioning-header {
+  margin: 0;
+  text-align: start;
+}
+
+.saas-positioning-heading {
+  margin: 0 0 16px;
+  font: var(--portfolio-text-h2);
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.saas-positioning-body {
+  margin: 0 0 20px;
+  font: var(--portfolio-text-b2);
+  color: var(--text-primary);
+}
+
+.saas-positioning-body:has(+ .saas-positioning-closing) {
+  margin-bottom: 0;
+}
+
+.saas-positioning-closing {
+  margin: 24px 0 0;
+  font: var(--portfolio-text-b2);
   color: var(--text-secondary);
 }
 
 @media (max-width: 1024px) {
   .saas-page-hero {
-    padding-block: 48px 56px;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    max-width: 100vw;
+  }
+
+  .saas-page-overview {
+    padding-block: 48px;
+  }
+
+  .saas-page-system-thinking {
+    padding-block: 48px;
+  }
+
+  .saas-page-positioning {
+    padding-block: 48px;
   }
 }
 
 @media (max-width: 768px) {
   .saas-page-hero {
-    padding-block: 40px 48px;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    max-width: 100vw;
   }
 
-  .saas-page-title {
+  .saas-page-overview {
+    padding-block: 40px;
+  }
+
+  .saas-overview-heading {
     font-size: 1.375rem;
+    margin-bottom: 12px;
   }
 
-  .saas-page-lead {
+  .saas-overview-lead {
     font-size: 1rem;
+    line-height: 1.55;
+    margin-bottom: 28px;
+  }
+
+  .saas-overview-problem-list {
+    margin-bottom: 28px;
+  }
+
+  .saas-overview-problem-list li {
+    font-size: 0.9375rem;
+    line-height: 1.55;
+    gap: 2px 12px;
+  }
+
+  .saas-overview-problem-list__text {
+    margin-left: calc(12px + 2ch);
+  }
+
+  .saas-overview-solution {
+    font-size: 0.9375rem;
+    line-height: 1.55;
+  }
+
+  .saas-page-system-thinking {
+    padding-block: 40px;
+  }
+
+  .saas-system-thinking-heading {
+    font-size: 1.375rem;
+    margin-bottom: 12px;
+  }
+
+  .saas-system-thinking-lead {
+    font-size: 1rem;
+    line-height: 1.55;
+    margin-bottom: 28px;
+  }
+
+  .saas-system-thinking-list li {
+    font-size: 0.9375rem;
+    line-height: 1.55;
+  }
+
+  .saas-page-positioning {
+    padding-block: 40px;
+  }
+
+  .saas-positioning-heading {
+    font-size: 1.375rem;
+    margin-bottom: 12px;
+  }
+
+  .saas-positioning-body,
+  .saas-positioning-closing {
+    font-size: 0.9375rem;
+    line-height: 1.55;
   }
 }
