@@ -1,0 +1,22 @@
+/*
+  Shared Astra desktop video embeds (hero, showcase, UI segments).
+  Width comes from parent layers; height follows a shorter aspect than 16:9 so the frame stays wide
+  without tall letterboxing. object-fit: cover fills width and trims top/bottom slightly on 16:9 sources.
+  User Profile uses intrinsic video height in SaasUserProfileSection.css (no fixed aspect frame).
+*/
+
+.saas-hero__desktop-frame,
+.saas-product-showcase-desktop-frame,
+.saas-ui-segment__desktop-frame {
+  /* Shorter than 16/9 at the same width — reduces empty/black bands vs a tall 16:9 box + contain */
+  aspect-ratio: 2 / 1;
+  border-radius: var(--radius-8);
+}
+
+.saas-hero__desktop-video,
+.saas-product-showcase-desktop-video,
+.saas-ui-segment__desktop-video {
+  object-fit: cover;
+  object-position: center center;
+}
+

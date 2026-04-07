@@ -1,0 +1,111 @@
+/* User Profile — Astra band like .saas-page-system-thinking (full-bleed ::before + prose/video above) */
+
+.saas-user-profile {
+  position: relative;
+  isolation: isolate;
+  padding-block: 56px;
+  box-sizing: border-box;
+}
+
+.saas-user-profile::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  top: 0;
+  bottom: 0;
+  background: var(--astra-background);
+  pointer-events: none;
+}
+
+.saas-user-profile > .project-text-section-inner {
+  position: relative;
+  z-index: 1;
+}
+
+.saas-user-profile__header {
+  margin-bottom: 20px;
+  text-align: start;
+}
+
+/* Same pattern as .saas-ui-segment__label / __title (Onboarding) */
+.saas-user-profile__label {
+  margin: 0 0 10px;
+  font: var(--portfolio-text-b3);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--cursor-accent);
+}
+
+.saas-user-profile__title {
+  margin: 0 0 14px;
+  font: var(--portfolio-text-h2);
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.saas-user-profile__description {
+  margin-bottom: clamp(28px, 4vw, 40px);
+  text-align: start;
+}
+
+.saas-user-profile__description p {
+  margin: 0 0 16px;
+  font: var(--portfolio-text-b2);
+  color: var(--text-primary);
+}
+
+.saas-user-profile__description p:last-child {
+  margin-bottom: 0;
+}
+
+/* Rail width matches other SaaS video blocks; height follows the video’s native aspect (no fixed-ratio box) */
+.saas-user-profile__video-wrap {
+  width: 100%;
+  max-width: min(1180px, 100%);
+  margin-inline: auto;
+}
+
+.saas-user-profile__video-frame {
+  width: 100%;
+  overflow: hidden;
+  border-radius: var(--radius-8);
+  box-shadow:
+    0 30px 56px rgba(0, 0, 0, 0.22),
+    0 12px 22px rgba(0, 0, 0, 0.14);
+  box-sizing: border-box;
+  /* Kills sub-pixel gap under replaced content in some engines */
+  line-height: 0;
+}
+
+.saas-user-profile__video {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+}
+
+@media (max-width: 1024px) {
+  .saas-user-profile {
+    padding-block: 48px;
+  }
+}
+
+@media (max-width: 768px) {
+  .saas-user-profile {
+    padding-block: 40px;
+  }
+
+  .saas-user-profile__title {
+    font-size: 1.25rem;
+  }
+
+  .saas-user-profile__description p {
+    font-size: 0.9375rem;
+    line-height: 1.55;
+  }
+}

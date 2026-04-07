@@ -1,0 +1,104 @@
+/* Site Association — section rhythm + two-column layout aligned with Basilar Live Feed */
+
+.saas-site-association {
+  padding-block: 40px 44px;
+}
+
+.saas-site-association-segment {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(32px, 5vw, 48px);
+}
+
+.saas-site-association__body {
+  flex: 1 1 58%;
+  min-width: 0;
+  text-align: start;
+}
+
+/* Label + title — same tokens as .saas-ui-segment__label / __title (Onboarding) */
+.saas-site-association__label {
+  margin: 0 0 10px;
+  font: var(--portfolio-text-b3);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--cursor-accent);
+}
+
+.saas-site-association__title {
+  margin: 0 0 14px;
+  font: var(--portfolio-text-h2);
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.saas-site-association__description p {
+  margin: 0 0 16px;
+  font: var(--portfolio-text-b2);
+  color: var(--text-primary);
+}
+
+.saas-site-association__description p:last-child {
+  margin-bottom: 0;
+}
+
+.saas-site-association__media {
+  flex: 0 0 min(280px, 32vw);
+  max-width: min(360px, 92vw);
+  min-width: 0;
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.saas-site-association__img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-4);
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.12),
+    0 6px 14px rgba(0, 0, 0, 0.08);
+}
+
+@media (max-width: 1024px) {
+  .saas-site-association {
+    padding-block: 36px 44px;
+  }
+}
+
+@media (max-width: 768px) {
+  .saas-site-association {
+    padding-block: 30px 40px;
+  }
+
+  .saas-site-association-segment {
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(24px, 6vw, 32px);
+  }
+
+  .saas-site-association__body {
+    order: 1;
+    width: 100%;
+  }
+
+  .saas-site-association__media {
+    order: 2;
+    flex: none;
+    max-width: min(360px, 88vw);
+    width: 100%;
+    margin-top: 0;
+  }
+
+  .saas-site-association__title {
+    font-size: 1.25rem;
+  }
+
+  .saas-site-association__description p {
+    font-size: 0.9375rem;
+    line-height: 1.55;
+  }
+}

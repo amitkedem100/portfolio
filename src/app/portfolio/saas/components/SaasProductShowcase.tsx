@@ -1,8 +1,8 @@
 import "./SaasProductShowcase.css";
+import "./saas-desktop-video.css";
 
 const SHOWCASE_BG = "/images/saas/showcase-environment.png";
-/* Placeholder until asset is added under public/videos/Astra/ */
-const SHOWCASE_DESKTOP_VIDEO = "/videos/Astra/showcase-desktop.mp4";
+const SHOWCASE_DESKTOP_VIDEO = encodeURI("/videos/Astra/logIn flow.mp4");
 
 /* Photo background + desktop video (same visual language as hero desktop frame; Basilar-style scrim on image) */
 export function SaasProductShowcase() {
@@ -29,7 +29,7 @@ export function SaasProductShowcase() {
             loop
             playsInline
             preload="metadata"
-            aria-label="Astra product interface walkthrough"
+            aria-label="Astra login flow"
           />
         </div>
       </div>

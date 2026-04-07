@@ -116,7 +116,13 @@
   color: var(--text-primary);
 }
 
-/* System Thinking — full-bleed Astra dark band; light text (token: --astra-background-dark) */
+.saas-overview-lead strong,
+.saas-overview-solution strong {
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* System Thinking — full-bleed Astra band; --astra-background switches light (#eee) / dark (#23366a) via globals */
 .saas-page-system-thinking {
   position: relative;
   isolation: isolate;
@@ -133,7 +139,7 @@
   width: 100vw;
   top: 0;
   bottom: 0;
-  background: var(--astra-background-dark);
+  background: var(--astra-background);
   pointer-events: none;
 }
 
@@ -152,14 +158,19 @@
   margin: 0 0 16px;
   font: var(--portfolio-text-h2);
   font-weight: 600;
-  color: var(--text-primary-dark);
+  color: var(--text-primary);
   letter-spacing: -0.02em;
 }
 
 .saas-system-thinking-lead {
   margin: 0 0 32px;
   font: var(--portfolio-text-b1);
-  color: var(--text-secondary-dark);
+  color: var(--text-secondary);
+}
+
+.saas-system-thinking-lead strong {
+  font-weight: 700;
+  color: var(--text-primary);
 }
 
 .saas-system-thinking-subheading {
@@ -168,7 +179,7 @@
   font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: var(--text-secondary-dark);
+  color: var(--text-secondary);
 }
 
 .saas-system-thinking-list {
@@ -180,7 +191,7 @@
 .saas-system-thinking-list li {
   margin-bottom: 10px;
   font: var(--portfolio-text-b2);
-  color: var(--text-primary-dark);
+  color: var(--text-primary);
   padding-inline-start: 0.25rem;
 }
 
@@ -194,7 +205,7 @@
 
 .saas-system-thinking-list strong {
   font-weight: 700;
-  color: var(--text-primary-dark);
+  color: var(--text-primary);
 }
 
 /* Product Positioning — default surface / same rhythm as Overview */
@@ -233,6 +244,12 @@
   margin: 24px 0 0;
   font: var(--portfolio-text-b2);
   color: var(--text-secondary);
+}
+
+.saas-positioning-body strong,
+.saas-positioning-closing strong {
+  font-weight: 700;
+  color: var(--text-primary);
 }
 
 @media (max-width: 1024px) {

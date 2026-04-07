@@ -3,6 +3,10 @@ import "@/app/portfolio/components/ProjectTextSection.css";
 import { SaasHeroSection } from "@/app/portfolio/saas/components/SaasHeroSection";
 import { SaasPersonasSection } from "@/app/portfolio/saas/components/SaasPersonasSection";
 import { SaasProductShowcase } from "@/app/portfolio/saas/components/SaasProductShowcase";
+import { SaasUserInterfaceSection } from "@/app/portfolio/saas/components/SaasUserInterfaceSection";
+import { SaasSiteAssociationSection } from "@/app/portfolio/saas/components/SaasSiteAssociationSection";
+import { SaasUserProfileSection } from "@/app/portfolio/saas/components/SaasUserProfileSection";
+import { SaasAccessSettingsSection } from "@/app/portfolio/saas/components/SaasAccessSettingsSection";
 import "./page.css";
 
 export const metadata: Metadata = {
@@ -31,9 +35,9 @@ export default function SaasProjectPage() {
             </header>
 
             <p className="saas-overview-lead">
-              A safety intelligence platform built for construction companies to monitor site activity,
-              analyze safety incidents, and make informed decisions through structured reporting and
-              AI-driven insights.
+              A safety intelligence platform built for construction companies to monitor site activity, analyze
+              safety incidents, and make informed decisions through{" "}
+              <strong>structured reporting</strong> and <strong>AI-driven insights</strong>.
             </p>
 
             <h3 className="saas-overview-subheading">Problem</h3>
@@ -68,9 +72,10 @@ export default function SaasProjectPage() {
 
             <h3 className="saas-overview-subheading">Solution</h3>
             <p className="saas-overview-solution">
-              A centralized platform that aggregates incident data, AI detections, and site activity into
-              structured, role-based reports - enabling stakeholders to monitor safety performance, identify
-              patterns, and make faster, more informed decisions across all sites.
+              A centralized platform that aggregates <strong>incident data</strong>,{" "}
+              <strong>AI detections</strong>, and <strong>site activity</strong> into{" "}
+              <strong>structured, role-based reports</strong> — enabling stakeholders to monitor safety
+              performance, identify patterns, and make faster, more informed decisions across all sites.
             </p>
           </div>
         </div>
@@ -95,24 +100,24 @@ export default function SaasProjectPage() {
             </header>
 
             <p className="saas-system-thinking-lead">
-              A system designed to translate on-site safety activity into structured, actionable insights across
-              different organizational levels. From real-time detection on site to aggregated reporting at the
-              management level, the platform connects data, roles, and decision-making into one continuous
-              flow.
+              A system designed to translate on-site safety activity into{" "}
+              <strong>structured, actionable insights</strong> across different organizational levels. From
+              real-time detection on site to aggregated reporting at the management level, the platform connects
+              data, roles, and decision-making into <strong>one continuous flow</strong>.
             </p>
 
             <h3 className="saas-system-thinking-subheading">Core Structure</h3>
             <ul className="saas-system-thinking-list">
               <li>
-                <strong>Multi-level access</strong> — Site-level users focus on immediate issues, while
+                <strong>Multi-level access</strong> - Site-level users focus on immediate issues, while
                 executives monitor trends and performance across sites
               </li>
               <li>
-                <strong>Data-driven flow</strong> — AI detections, incidents, and reports are structured into
+                <strong>Data-driven flow</strong> - AI detections, incidents, and reports are structured into
                 clear, trackable safety insights
               </li>
               <li>
-                <strong>Centralized visibility</strong> — All safety activity is aggregated into a unified
+                <strong>Centralized visibility</strong> - All safety activity is aggregated into a unified
                 system, reducing fragmentation and improving response time
               </li>
             </ul>
@@ -133,19 +138,30 @@ export default function SaasProjectPage() {
             </header>
 
             <p className="saas-positioning-body">
-              While existing safety management systems focus on real-time alerts and manual event tracking, they
-              often lack advanced analytics, integration capabilities, and meaningful data visualization.
+              While existing safety management systems focus on <strong>real-time alerts</strong> and{" "}
+              <strong>manual event tracking</strong>, they often lack <strong>advanced analytics</strong>,{" "}
+              <strong>integration capabilities</strong>, and <strong>meaningful data visualization</strong>.
             </p>
             <p className="saas-positioning-body">
-              This project explores a more proactive approach — combining AI-based detection, structured
-              reporting, and clear visual insights to support both operational and strategic decision-making.
+              This project explores a more <strong>proactive approach</strong> — combining{" "}
+              <strong>AI-based detection</strong>, <strong>structured reporting</strong>, and{" "}
+              <strong>clear visual insights</strong> to support both operational and strategic decision-making.
             </p>
             <p className="saas-positioning-closing">
-              From reactive safety management to proactive, insight-driven decision making.
+              From <strong>reactive</strong> safety management to <strong>proactive</strong>,{" "}
+              <strong>insight-driven</strong> decision making.
             </p>
           </div>
         </div>
       </section>
+
+      <SaasUserInterfaceSection />
+
+      <SaasSiteAssociationSection />
+
+      <SaasUserProfileSection />
+
+      <SaasAccessSettingsSection />
     </div>
   );
 }

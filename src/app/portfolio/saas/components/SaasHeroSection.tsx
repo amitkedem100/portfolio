@@ -1,4 +1,5 @@
 import "./SaasHeroSection.css";
+import "./saas-desktop-video.css";
 
 const HERO_BACKGROUND_VIDEO = "/videos/Astra/background.mp4";
 const HERO_DESKTOP_VIDEO = "/videos/saas/hero-desktop.mp4";

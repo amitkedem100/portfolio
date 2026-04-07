@@ -1,0 +1,191 @@
+/* Saas UI section — full-bleed Astra band (same pattern as .basilar-page-ui), segment layout aligned with BasilarUISegmentBlock */
+
+.saas-page-ui {
+  position: relative;
+  isolation: isolate;
+  min-width: 0;
+  padding-block: 56px 72px;
+  box-sizing: border-box;
+}
+
+.saas-page-ui::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  top: 0;
+  bottom: 0;
+  background: var(--astra-background);
+  pointer-events: none;
+}
+
+/* Matches .basilar-ui-header / .basilar-ui-title / .basilar-ui-intro */
+.saas-ui-header {
+  margin-bottom: 44px;
+  max-width: min(var(--project-text-intro-max-width), 100%);
+  margin-inline: auto;
+  text-align: center;
+}
+
+.saas-ui-title {
+  margin: 0 0 16px;
+  font: var(--portfolio-text-h1);
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.saas-ui-intro-text {
+  margin: 0;
+  margin-inline: auto;
+  max-width: 52ch;
+  font: var(--portfolio-text-b2);
+  color: var(--text-secondary);
+}
+
+.saas-ui-segment {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: clamp(36px, 5vw, 52px);
+}
+
+.saas-ui-segment__body {
+  width: 100%;
+  max-width: min(var(--project-text-intro-max-width), 100%);
+  margin-inline: auto;
+  text-align: start;
+}
+
+.saas-ui-segment__label {
+  margin: 0 0 10px;
+  font: var(--portfolio-text-b3);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--cursor-accent);
+}
+
+.saas-ui-segment__title {
+  margin: 0 0 14px;
+  font: var(--portfolio-text-h2);
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.saas-ui-segment__description p {
+  margin: 0 0 16px;
+  font: var(--portfolio-text-b2);
+  color: var(--text-primary);
+}
+
+.saas-ui-segment__description p:last-child {
+  margin-bottom: 0;
+}
+
+.saas-ui-segment__media {
+  width: 100%;
+  max-width: min(1180px, 100%);
+  margin-inline: auto;
+  display: flex;
+  justify-content: center;
+}
+
+.saas-ui-segment__media--onboarding-stills {
+  max-width: min(1180px, 100%);
+}
+
+/*
+  Staggered pair: first image top-left; second lower-right with overlap — both stay readable,
+  not a symmetric vertical stack.
+*/
+.saas-onboarding-stills {
+  position: relative;
+  width: 100%;
+  max-width: min(1120px, 100%);
+  margin-inline: auto;
+  padding-bottom: clamp(24px, 4vw, 48px);
+}
+
+.saas-onboarding-still {
+  height: auto;
+  border-radius: var(--radius-8);
+  box-shadow:
+    0 24px 48px rgba(0, 0, 0, 0.2),
+    0 8px 16px rgba(0, 0, 0, 0.12);
+}
+
+.saas-onboarding-still--back {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: min(82%, 880px);
+  margin-left: 0;
+  margin-right: auto;
+}
+
+.saas-onboarding-still--front {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: min(78%, 820px);
+  margin-left: auto;
+  margin-right: 0;
+  /* Pull up into previous frame — side-by-side vertical stagger + overlap */
+  margin-top: clamp(-72px, -9vw, -40px);
+}
+
+@media (max-width: 1024px) {
+  .saas-page-ui {
+    padding-block: 48px 56px;
+  }
+
+  .saas-ui-header {
+    margin-bottom: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .saas-page-ui {
+    padding-block: 40px 48px;
+  }
+
+  .saas-ui-header {
+    margin-bottom: 34px;
+  }
+
+  .saas-ui-title {
+    font-size: clamp(1.5rem, 4.8vw, 1.875rem);
+    line-height: 1.2;
+  }
+
+  .saas-ui-intro-text {
+    font-size: 0.9375rem;
+    line-height: 1.55;
+  }
+
+  .saas-ui-segment {
+    gap: clamp(28px, 7vw, 40px);
+  }
+
+  .saas-ui-segment__title {
+    font-size: 1.25rem;
+  }
+
+  .saas-ui-segment__description p {
+    font-size: 0.9375rem;
+    line-height: 1.55;
+  }
+
+  .saas-onboarding-still--back {
+    width: min(94%, 100%);
+  }
+
+  .saas-onboarding-still--front {
+    width: min(92%, 100%);
+    margin-top: clamp(-40px, -8vw, -20px);
+  }
+}
