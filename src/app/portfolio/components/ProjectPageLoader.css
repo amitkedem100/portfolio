@@ -17,6 +17,18 @@
   backdrop-filter: blur(2px);
 }
 
+.project-page-loader__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 18px 22px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-8);
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.12);
+}
+
 .project-page-loader__spinner {
   width: 42px;
   height: 42px;
@@ -24,6 +36,21 @@
   border: 3px solid color-mix(in srgb, var(--border) 80%, transparent);
   border-top-color: var(--cursor-accent);
   animation: project-loader-spin 800ms linear infinite;
+}
+
+.project-page-loader__title {
+  margin: 0;
+  font: var(--portfolio-text-b3);
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: 0.02em;
+}
+
+.project-page-loader__text {
+  margin: 0;
+  font: var(--portfolio-text-b2);
+  color: var(--text-secondary);
+  text-align: center;
 }
 
 @keyframes project-loader-spin {

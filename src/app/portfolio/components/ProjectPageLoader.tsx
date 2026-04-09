@@ -114,7 +114,11 @@ export function ProjectPageLoader({ children }: ProjectPageLoaderProps) {
       {children}
       {showLoader && isLoading ? (
         <div className="project-page-loader__overlay" aria-live="polite" aria-busy="true">
-          <div className="project-page-loader__spinner" aria-hidden="true" />
+          <div className="project-page-loader__content">
+            <div className="project-page-loader__spinner" aria-hidden="true" />
+            <p className="project-page-loader__title">Loading project</p>
+            <p className="project-page-loader__text">Preparing images and videos for a smooth preview.</p>
+          </div>
         </div>
       ) : null}
     </div>
