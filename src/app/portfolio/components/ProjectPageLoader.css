@@ -1,0 +1,36 @@
+.project-page-loader {
+  position: relative;
+}
+
+.project-page-loader--loading {
+  min-height: 40vh;
+}
+
+.project-page-loader__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  backdrop-filter: blur(2px);
+}
+
+.project-page-loader__spinner {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 3px solid color-mix(in srgb, var(--border) 80%, transparent);
+  border-top-color: var(--cursor-accent);
+  animation: project-loader-spin 800ms linear infinite;
+}
+
+@keyframes project-loader-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

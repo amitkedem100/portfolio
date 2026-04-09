@@ -4,6 +4,7 @@ import { CursorRouteReset } from "./CursorRouteReset";
 import { PortfolioCursor } from "./PortfolioCursor";
 import { PortfolioFooter } from "./PortfolioFooter";
 import { PortfolioHeader } from "./PortfolioHeader";
+import { ProjectPageLoader } from "./ProjectPageLoader";
 
 type PortfolioLayoutProps = {
   children: ReactNode;
@@ -16,7 +17,7 @@ export function PortfolioLayout({ children }: PortfolioLayoutProps) {
       <PortfolioCursor />
       <PortfolioHeader />
       <main className="portfolio-layout-main" role="main">
-        {children}
+        <ProjectPageLoader>{children}</ProjectPageLoader>
       </main>
       <PortfolioFooter />
     </div>
