@@ -2,8 +2,8 @@ import Image from "next/image";
 import "@/app/portfolio/components/ProjectTextSection.css";
 import "./SaasUserInterfaceSection.css";
 
-const ONBOARDING_EXECUTIVE = "/images/saas/onboarding-executive.png";
-const ONBOARDING_SITE_TEAM = "/images/saas/onboarding-site-team-member.png";
+const ONBOARDING_EXECUTIVE = "/images/SaaS/onboarding-executive.png";
+const ONBOARDING_SITE_TEAM = "/images/SaaS/onboarding-site-team-member.png";
 
 /* User Interface intro + Onboarding (stills) — structure aligned with Basilar UI segment */
 export function SaasUserInterfaceSection() {

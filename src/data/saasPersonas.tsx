@@ -1,7 +1,7 @@
 import type { PersonasSectionProps } from "@/app/portfolio/components/PersonasSection";
 
-const PERSONA_IMG_PM = "/images/saas/personas/project-manager.png";
-const PERSONA_IMG_HEAD = "/images/saas/personas/head-of-safety.png";
+const PERSONA_IMG_PM = "/images/SaaS/Personas/project-manager.png";
+const PERSONA_IMG_HEAD = "/images/SaaS/Personas/head-of-safety.png";
 
 export const saasPersonasSectionProps: PersonasSectionProps = {
   title: "Personas",

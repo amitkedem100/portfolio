@@ -2,7 +2,7 @@ import Image from "next/image";
 import "@/app/portfolio/components/ProjectTextSection.css";
 import "./SaasSiteAssociationSection.css";
 
-const SITE_ASSOCIATION_IMG = "/images/saas/site-association-card.png";
+const SITE_ASSOCIATION_IMG = "/images/SaaS/site-association-card.png";
 
 /* Same rhythm as Basilar Live Feed: section padding + text column + media column */
 export function SaasSiteAssociationSection() {

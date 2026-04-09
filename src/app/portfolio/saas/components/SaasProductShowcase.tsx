@@ -1,7 +1,7 @@
 import "./SaasProductShowcase.css";
 import "./saas-desktop-video.css";
 
-const SHOWCASE_BG = "/images/saas/showcase-environment.png";
+const SHOWCASE_BG = "/images/SaaS/showcase-environment.png";
 const SHOWCASE_DESKTOP_VIDEO = encodeURI("/videos/Astra/logIn flow.mp4");
 
 /* Photo background + desktop video (same visual language as hero desktop frame; Basilar-style scrim on image) */
