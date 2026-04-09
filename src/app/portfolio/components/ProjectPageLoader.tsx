@@ -109,15 +109,29 @@ export function ProjectPageLoader({ children }: ProjectPageLoaderProps) {
     };
   }, [pathname, showLoader]);
 
+  useEffect(() => {
+    if (!(showLoader && isLoading)) {
+      document.body.style.removeProperty("overflow");
+      return;
+    }
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [showLoader, isLoading]);
+
   return (
     <div ref={containerRef} className={`project-page-loader${isLoading ? " project-page-loader--loading" : ""}`}>
-      {children}
+      <div className="project-page-loader__content-layer">{children}</div>
       {showLoader && isLoading ? (
-        <div className="project-page-loader__overlay" aria-live="polite" aria-busy="true">
-          <div className="project-page-loader__content">
+        <div className="project-page-loader__overlay" role="status" aria-live="polite" aria-busy="true">
+          <div className="project-page-loader__panel">
             <div className="project-page-loader__spinner" aria-hidden="true" />
-            <p className="project-page-loader__title">Loading project</p>
-            <p className="project-page-loader__text">Preparing images and videos for a smooth preview.</p>
+            <p className="project-page-loader__title">Getting things ready</p>
+            <p className="project-page-loader__text">Almost there...</p>
           </div>
         </div>
       ) : null}
