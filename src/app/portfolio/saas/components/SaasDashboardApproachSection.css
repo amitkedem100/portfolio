@@ -1,0 +1,108 @@
+.saas-dashboard-approach {
+  position: relative;
+  isolation: isolate;
+  padding-block: 56px;
+  box-sizing: border-box;
+}
+
+.saas-dashboard-approach::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  top: 0;
+  bottom: 0;
+  background: var(--astra-background);
+  pointer-events: none;
+}
+
+.saas-dashboard-approach__inner {
+  position: relative;
+  z-index: 1;
+}
+
+.saas-dashboard-approach__header {
+  margin-bottom: 20px;
+  text-align: start;
+}
+
+.saas-dashboard-approach__label {
+  margin: 0 0 10px;
+  font: var(--portfolio-text-b3);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--cursor-accent);
+}
+
+.saas-dashboard-approach__title {
+  margin: 0;
+  font: var(--portfolio-text-h2);
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.saas-dashboard-approach__description {
+  margin: 0 0 clamp(28px, 4vw, 40px);
+  font: var(--portfolio-text-b2);
+  color: var(--text-primary);
+}
+
+.saas-dashboard-approach__cards {
+  display: grid;
+  gap: clamp(16px, 2vw, 24px);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.saas-dashboard-approach-card {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-8);
+  background: color-mix(in srgb, var(--surface) 86%, transparent);
+  padding: clamp(16px, 2vw, 22px);
+}
+
+.saas-dashboard-approach-card__title {
+  margin: 0 0 10px;
+  font: var(--portfolio-text-b1);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.saas-dashboard-approach-card__description {
+  margin: 0;
+  font: var(--portfolio-text-b2);
+  color: var(--text-primary);
+}
+
+@media (max-width: 1024px) {
+  .saas-dashboard-approach {
+    padding-block: 48px;
+  }
+
+  .saas-dashboard-approach__cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .saas-dashboard-approach {
+    padding-block: 40px;
+  }
+
+  .saas-dashboard-approach__title {
+    font-size: 1.25rem;
+  }
+
+  .saas-dashboard-approach__description,
+  .saas-dashboard-approach-card__description {
+    font-size: 0.9375rem;
+    line-height: 1.55;
+  }
+
+  .saas-dashboard-approach__cards {
+    grid-template-columns: 1fr;
+  }
+}

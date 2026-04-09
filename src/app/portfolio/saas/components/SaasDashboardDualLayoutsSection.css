@@ -1,0 +1,46 @@
+.saas-dashboard-dual-layouts {
+  position: relative;
+  isolation: isolate;
+  padding-block: 40px 44px;
+  box-sizing: border-box;
+}
+
+.saas-dashboard-dual-layouts::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  top: 0;
+  bottom: 0;
+  background: var(--astra-background);
+  pointer-events: none;
+}
+
+.saas-dashboard-dual-layouts__inner {
+  position: relative;
+  z-index: 1;
+}
+
+.saas-dashboard-dual-layouts__media-placeholder {
+  width: 100%;
+  aspect-ratio: 2 / 1;
+  border-radius: var(--radius-8);
+  background: #0a0a0a;
+  box-shadow:
+    0 30px 56px rgba(0, 0, 0, 0.22),
+    0 12px 22px rgba(0, 0, 0, 0.14);
+}
+
+@media (max-width: 1024px) {
+  .saas-dashboard-dual-layouts {
+    padding-block: 36px 44px;
+  }
+}
+
+@media (max-width: 768px) {
+  .saas-dashboard-dual-layouts {
+    padding-block: 30px 40px;
+  }
+}

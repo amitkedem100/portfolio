@@ -1,0 +1,53 @@
+.saas-stacked-media-block__header {
+  margin-bottom: 20px;
+  text-align: start;
+}
+
+.saas-stacked-media-block__label {
+  margin: 0 0 10px;
+  font: var(--portfolio-text-b3);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--cursor-accent);
+}
+
+.saas-stacked-media-block__title {
+  margin: 0 0 14px;
+  font: var(--portfolio-text-h2);
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.saas-stacked-media-block__description {
+  margin-bottom: clamp(28px, 4vw, 40px);
+  text-align: start;
+}
+
+.saas-stacked-media-block__description p {
+  margin: 0 0 16px;
+  font: var(--portfolio-text-b2);
+  color: var(--text-primary);
+}
+
+.saas-stacked-media-block__description p:last-child {
+  margin-bottom: 0;
+}
+
+.saas-stacked-media-block__media-wrap {
+  width: 100%;
+  max-width: min(1180px, 100%);
+  margin-inline: auto;
+}
+
+@media (max-width: 768px) {
+  .saas-stacked-media-block__title {
+    font-size: 1.25rem;
+  }
+
+  .saas-stacked-media-block__description p {
+    font-size: 0.9375rem;
+    line-height: 1.55;
+  }
+}

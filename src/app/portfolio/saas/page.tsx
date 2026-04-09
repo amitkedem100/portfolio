@@ -7,6 +7,10 @@ import { SaasUserInterfaceSection } from "@/app/portfolio/saas/components/SaasUs
 import { SaasSiteAssociationSection } from "@/app/portfolio/saas/components/SaasSiteAssociationSection";
 import { SaasUserProfileSection } from "@/app/portfolio/saas/components/SaasUserProfileSection";
 import { SaasAccessSettingsSection } from "@/app/portfolio/saas/components/SaasAccessSettingsSection";
+import { SaasDashboardApproachSection } from "@/app/portfolio/saas/components/SaasDashboardApproachSection";
+import { SaasDashboardOverviewSection } from "@/app/portfolio/saas/components/SaasDashboardOverviewSection";
+import { SaasDashboardDualLayoutsSection } from "@/app/portfolio/saas/components/SaasDashboardDualLayoutsSection";
+import { SaasDashboardWidgetsSection } from "@/app/portfolio/saas/components/SaasDashboardWidgetsSection";
 import "./page.css";
 
 export const metadata: Metadata = {
@@ -162,6 +166,14 @@ export default function SaasProjectPage() {
       <SaasUserProfileSection />
 
       <SaasAccessSettingsSection />
+
+      <SaasDashboardApproachSection />
+
+      <SaasDashboardOverviewSection />
+
+      <SaasDashboardDualLayoutsSection />
+
+      <SaasDashboardWidgetsSection />
     </div>
   );
 }

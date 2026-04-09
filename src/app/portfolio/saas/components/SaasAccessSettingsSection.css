@@ -1,4 +1,4 @@
-/* Access & settings — two Basilar-style segments (text + media); second row reversed for rhythm */
+/* Access & settings — two shared stacked blocks (text above media) */
 
 .saas-access-settings {
   padding-block: 40px 44px;
@@ -10,91 +10,30 @@
   gap: clamp(44px, 5vw, 56px);
 }
 
-.saas-access-settings-segment {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: clamp(32px, 5vw, 48px);
-}
-
-.saas-access-settings-segment--reverse {
-  flex-direction: row-reverse;
-}
-
-.saas-access-settings__body {
-  flex: 1 1 58%;
-  min-width: 0;
-  text-align: start;
-}
-
-/* Label + title — match .saas-site-association__label / __title */
-.saas-access-settings__label {
-  margin: 0 0 10px;
-  font: var(--portfolio-text-b3);
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--cursor-accent);
-}
-
-.saas-access-settings__title {
-  margin: 0 0 14px;
-  font: var(--portfolio-text-h2);
-  font-weight: 600;
-  color: var(--text-primary);
-  letter-spacing: -0.02em;
-}
-
-.saas-access-settings__description p {
-  margin: 0 0 16px;
-  font: var(--portfolio-text-b2);
-  color: var(--text-primary);
-}
-
-.saas-access-settings__description p:last-child {
-  margin-bottom: 0;
-}
-
-.saas-access-settings__media {
-  flex: 0 0 min(280px, 32vw);
-  max-width: min(360px, 92vw);
-  min-width: 0;
-  display: flex;
-  justify-content: center;
-  margin-top: 10px;
+/* Let these two blocks breathe on a wider rail than default stacked media */
+.saas-access-settings .saas-stacked-media-block__media-wrap {
+  max-width: min(1320px, 100%);
 }
 
 .saas-access-settings__img {
   width: 100%;
   height: auto;
-  border-radius: var(--radius-4);
-  box-shadow:
-    0 20px 40px rgba(0, 0, 0, 0.12),
-    0 6px 14px rgba(0, 0, 0, 0.08);
+  display: block;
 }
 
-/* Desktop-style clip in the media column: intrinsic height, no forced aspect box */
-.saas-access-settings__media--video {
-  align-self: center;
-}
-
-.saas-access-settings__video-frame {
+.saas-access-settings__frame {
   width: 100%;
   overflow: hidden;
-  border-radius: var(--radius-4);
+  border-radius: var(--radius-8);
   box-shadow:
-    0 20px 40px rgba(0, 0, 0, 0.12),
-    0 6px 14px rgba(0, 0, 0, 0.08);
-  box-sizing: border-box;
+    0 30px 56px rgba(0, 0, 0, 0.22),
+    0 12px 22px rgba(0, 0, 0, 0.14);
   line-height: 0;
-  background: #0a0a0a;
 }
 
-.saas-access-settings__video {
-  display: block;
-  width: 100%;
-  max-width: 100%;
-  height: auto;
+.saas-access-settings__carousel {
+  width: min(1320px, 100%);
+  margin-inline: auto;
 }
 
 @media (max-width: 1024px) {
@@ -106,34 +45,5 @@
 @media (max-width: 768px) {
   .saas-access-settings {
     padding-block: 30px 40px;
-  }
-
-  .saas-access-settings-segment,
-  .saas-access-settings-segment--reverse {
-    flex-direction: column;
-    align-items: center;
-    gap: clamp(24px, 6vw, 32px);
-  }
-
-  .saas-access-settings__body {
-    order: 1;
-    width: 100%;
-  }
-
-  .saas-access-settings__media {
-    order: 2;
-    flex: none;
-    max-width: min(360px, 88vw);
-    width: 100%;
-    margin-top: 0;
-  }
-
-  .saas-access-settings__title {
-    font-size: 1.25rem;
-  }
-
-  .saas-access-settings__description p {
-    font-size: 0.9375rem;
-    line-height: 1.55;
   }
 }
