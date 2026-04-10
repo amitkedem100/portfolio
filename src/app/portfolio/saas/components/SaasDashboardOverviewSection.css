@@ -2,14 +2,28 @@
   padding-block: 40px 44px;
 }
 
-.saas-dashboard-overview__media-placeholder {
+.saas-dashboard-overview__media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
-  aspect-ratio: 2 / 1;
+  /* Slightly wider frame vs height (was 2/1) — small step down in screen chrome height; video fit rules unchanged */
+  aspect-ratio: 2.12 / 1;
   border-radius: var(--radius-8);
-  background: #0a0a0a;
+  overflow: hidden;
+  background: transparent;
   box-shadow:
     0 30px 56px rgba(0, 0, 0, 0.22),
     0 12px 22px rgba(0, 0, 0, 0.14);
+}
+
+/* Fit inside frame at native aspect ratio — shrink only, no stretch */
+.saas-dashboard-overview__media-video {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
 }
 
 @media (max-width: 1024px) {
