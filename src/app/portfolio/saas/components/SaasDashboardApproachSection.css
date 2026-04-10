@@ -60,8 +60,12 @@
 .saas-dashboard-approach-card {
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-8);
-  background: color-mix(in srgb, var(--surface) 86%, transparent);
+  background: color-mix(in srgb, var(--surface-subtle) 82%, var(--background) 18%);
   padding: clamp(16px, 2vw, 22px);
+}
+
+html[data-theme="dark"] .saas-dashboard-approach-card {
+  background: color-mix(in srgb, var(--surface-subtle) 72%, var(--background) 28%);
 }
 
 .saas-dashboard-approach-card__title {
