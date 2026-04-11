@@ -23,14 +23,8 @@
   z-index: 1;
 }
 
-.saas-dashboard-dual-layouts__media-placeholder {
+.saas-dashboard-dual-layouts__carousel {
   width: 100%;
-  aspect-ratio: 2 / 1;
-  border-radius: var(--radius-8);
-  background: #0a0a0a;
-  box-shadow:
-    0 30px 56px rgba(0, 0, 0, 0.22),
-    0 12px 22px rgba(0, 0, 0, 0.14);
 }
 
 @media (max-width: 1024px) {

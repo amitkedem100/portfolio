@@ -2,32 +2,54 @@
   padding-block: 40px 44px;
 }
 
+/* Matches .basilar-ui-header / .saas-ui-header (User Interface) — centered block */
 .saas-dashboard-widgets__header {
-  margin-bottom: clamp(30px, 4vw, 40px);
-  text-align: start;
-}
-
-.saas-dashboard-widgets__label {
-  margin: 0 0 10px;
-  font: var(--portfolio-text-b3);
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--cursor-accent);
+  margin-bottom: clamp(30px, 4vw, 44px);
+  max-width: min(var(--project-text-intro-max-width), 100%);
+  margin-inline: auto;
+  text-align: center;
 }
 
 .saas-dashboard-widgets__title {
-  margin: 0;
-  font: var(--portfolio-text-h2);
+  margin: 0 0 16px;
+  font: var(--portfolio-text-h1);
   font-weight: 600;
   color: var(--text-primary);
   letter-spacing: -0.02em;
+}
+
+.saas-dashboard-widgets__intro {
+  margin: 0;
+  margin-inline: auto;
+  max-width: 52ch;
+  font: var(--portfolio-text-b2);
+  color: var(--text-secondary);
 }
 
 .saas-dashboard-widgets__segments {
   display: flex;
   flex-direction: column;
   gap: clamp(36px, 4vw, 52px);
+}
+
+/* Live Incident: same pattern as SaasStackedMediaBlock — text above, wide video centered below; intrinsic aspect ratio */
+.saas-dashboard-widget-live-incident__frame {
+  width: 100%;
+  max-width: min(1180px, 100%);
+  margin-inline: auto;
+  border-radius: var(--radius-8);
+  overflow: hidden;
+  line-height: 0;
+  background: var(--surface-dark);
+  box-shadow:
+    0 24px 48px rgba(0, 0, 0, 0.2),
+    0 8px 16px rgba(0, 0, 0, 0.12);
+}
+
+.saas-dashboard-widget-live-incident__video {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .saas-dashboard-widget-segment {
@@ -86,9 +108,30 @@
     0 8px 16px rgba(0, 0, 0, 0.12);
 }
 
+/* Real screenshot in standard segment media column (e.g. Key Findings) */
+.saas-dashboard-widget-segment__media-frame {
+  width: 100%;
+  border-radius: var(--radius-8);
+  overflow: hidden;
+  line-height: 0;
+  box-shadow:
+    0 24px 48px rgba(0, 0, 0, 0.2),
+    0 8px 16px rgba(0, 0, 0, 0.12);
+}
+
+.saas-dashboard-widget-segment__media-img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
 @media (max-width: 1024px) {
   .saas-dashboard-widgets {
     padding-block: 36px 44px;
+  }
+
+  .saas-dashboard-widgets__header {
+    margin-bottom: 40px;
   }
 
   .saas-dashboard-widget-segment__media {
@@ -101,8 +144,18 @@
     padding-block: 30px 40px;
   }
 
+  .saas-dashboard-widgets__header {
+    margin-bottom: 34px;
+  }
+
   .saas-dashboard-widgets__title {
-    font-size: 1.25rem;
+    font-size: clamp(1.5rem, 4.8vw, 1.875rem);
+    line-height: 1.2;
+  }
+
+  .saas-dashboard-widgets__intro {
+    font-size: 0.9375rem;
+    line-height: 1.55;
   }
 
   .saas-dashboard-widget-segment,

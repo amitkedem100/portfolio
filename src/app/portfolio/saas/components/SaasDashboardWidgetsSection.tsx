@@ -1,11 +1,24 @@
+import Image from "next/image";
 import "@/app/portfolio/components/ProjectTextSection.css";
+import "./SaasStackedMediaBlock.css";
 import "./SaasDashboardWidgetsSection.css";
+
+const LIVE_INCIDENT_VIDEO = encodeURI("/videos/Astra/Live Incident example.mp4");
+const KEY_FINDINGS_LIST_IMG = encodeURI("/images/SaaS/key findings1.png");
 
 type WidgetSegment = {
   id: string;
   label: string;
   title: string;
   description: string;
+  /** Standard segment: single image in media column (text left, image right when not reversed) */
+  mediaImage?: {
+    src: string;
+    alt: string;
+    width: number;
+    height: number;
+    sizes: string;
+  };
 };
 
 const WIDGET_SEGMENTS: WidgetSegment[] = [
@@ -22,6 +35,13 @@ const WIDGET_SEGMENTS: WidgetSegment[] = [
     title: "Key Findings",
     description:
       "Actionable insights derived from aggregated data highlight where attention is needed most. Whether at the company or site level, these findings guide decision-making, reinforce safety priorities, and help define actionable goals.",
+    mediaImage: {
+      src: KEY_FINDINGS_LIST_IMG,
+      alt: "Company-level key findings list in Astra",
+      width: 569,
+      height: 371,
+      sizes: "(max-width: 768px) 92vw, min(560px, 38vw)",
+    },
   },
   {
     id: "high-risk-workers",
@@ -53,16 +73,55 @@ export function SaasDashboardWidgetsSection() {
       aria-labelledby="saas-dashboard-widgets-title"
     >
       <div className="project-text-section-inner">
-        <header className="saas-dashboard-widgets__header project-text-section-inner--prose">
-          <p className="saas-dashboard-widgets__label">Widget Deep Dive</p>
+        <header className="saas-dashboard-widgets__header">
           <h2 id="saas-dashboard-widgets-title" className="saas-dashboard-widgets__title">
-            Focused Widgets, Actionable Decisions
+            Widget Deep Dive
           </h2>
+          <p className="saas-dashboard-widgets__intro">Focused Widgets, Actionable Decisions</p>
         </header>
 
         <div className="saas-dashboard-widgets__segments">
           {WIDGET_SEGMENTS.map((segment, index) => {
-            const reverse = index % 2 === 1;
+            if (segment.id === "live-incident") {
+              return (
+                <article
+                  key={segment.id}
+                  className="saas-stacked-media-block"
+                  aria-labelledby={`saas-dashboard-widget-title-${segment.id}`}
+                >
+                  <header className="saas-stacked-media-block__header project-text-section-inner--prose">
+                    <p className="saas-stacked-media-block__label">{segment.label}</p>
+                    <h3
+                      id={`saas-dashboard-widget-title-${segment.id}`}
+                      className="saas-stacked-media-block__title"
+                    >
+                      {segment.title}
+                    </h3>
+                  </header>
+                  <div className="saas-stacked-media-block__description project-text-section-inner--prose">
+                    <p>{segment.description}</p>
+                  </div>
+                  <div className="saas-stacked-media-block__media-wrap">
+                    <div className="saas-dashboard-widget-live-incident__frame">
+                      <video
+                        className="saas-dashboard-widget-live-incident__video"
+                        src={LIVE_INCIDENT_VIDEO}
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        preload="metadata"
+                        aria-label="Live incident widget in Astra"
+                      />
+                    </div>
+                  </div>
+                </article>
+              );
+            }
+
+            /* Key Findings only: image left, text right (row-reverse). Others: alternating by index */
+            const reverse =
+              segment.id === "key-findings" ? true : index % 2 === 1;
             return (
               <article
                 key={segment.id}
@@ -78,7 +137,20 @@ export function SaasDashboardWidgetsSection() {
                 </div>
 
                 <div className="saas-dashboard-widget-segment__media">
-                  <div className="saas-dashboard-widget-segment__media-placeholder" aria-label={`${segment.title} media placeholder`} />
+                  {segment.mediaImage ? (
+                    <div className="saas-dashboard-widget-segment__media-frame">
+                      <Image
+                        className="saas-dashboard-widget-segment__media-img"
+                        src={segment.mediaImage.src}
+                        alt={segment.mediaImage.alt}
+                        width={segment.mediaImage.width}
+                        height={segment.mediaImage.height}
+                        sizes={segment.mediaImage.sizes}
+                      />
+                    </div>
+                  ) : (
+                    <div className="saas-dashboard-widget-segment__media-placeholder" aria-label={`${segment.title} media placeholder`} />
+                  )}
                 </div>
               </article>
             );
