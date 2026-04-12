@@ -20,7 +20,7 @@
   transition: transform 0.22s ease;
   will-change: transform;
   box-shadow:
-  0 8px 16px rgba(0, 0, 32, 0.0.02);
+    0 8px 16px rgba(0, 0, 32, 0.02);
 }
 
 .portfolio-header--retracted {
@@ -96,6 +96,104 @@
 
 .portfolio-header-nav-item a:hover::after {
   width: 100%;
+}
+
+/* Work: hover / focus-within opens project list; click on label scrolls home cards or navigates home#selected-work */
+.portfolio-header-work {
+  position: relative;
+  /* Padding extends hit-testing below the label so :hover isn’t lost in the gap before the abs-positioned panel. */
+  padding-bottom: 14px;
+  margin-bottom: -14px;
+}
+
+.portfolio-header-work-trigger {
+  font: inherit;
+  color: inherit;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  position: relative;
+}
+
+.portfolio-header-work-trigger::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 1px;
+  background: var(--icon-light);
+  transition: width 0.45s ease;
+}
+
+.portfolio-header-work:hover .portfolio-header-work-trigger::after,
+.portfolio-header-work--dropdown-open .portfolio-header-work-trigger::after,
+.portfolio-header-work-trigger:hover::after,
+.portfolio-header-work:focus-within .portfolio-header-work-trigger::after {
+  width: 100%;
+}
+
+.portfolio-header-work-dropdown {
+  position: absolute;
+  /* Align to bottom of .portfolio-header-work padding box + overlap so path from label into panel never leaves the wrapper. */
+  top: calc(100% - 6px);
+  left: 0;
+  right: auto;
+  min-width: 216px;
+  padding: 0 0;
+  background: var(--surface);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-8);
+  box-shadow:
+    0 12px 28px rgba(0, 0, 0, 0.12),
+    0 4px 10px rgba(0, 0, 0, 0.06);
+  z-index: 110;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.portfolio-header-work--dropdown-open .portfolio-header-work-dropdown {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.portfolio-header-work-dropdown > div {
+  display: block;
+}
+
+.portfolio-header-work-dropdown-link {
+  display: block;
+  padding: 10px 18px;
+  font: var(--portfolio-text-b2);
+  text-decoration: none;
+  color: inherit;
+}
+
+.portfolio-header-work-dropdown-link:hover {
+  background: var(--surface-subtle);
+}
+
+.portfolio-header-work-dropdown-link--current {
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.portfolio-header-work-dropdown-link--current:hover {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+/* Softer LTR underline than primary nav (inherits .portfolio-header-nav-item a::after) */
+.portfolio-header-nav-item--work .portfolio-header-work-dropdown-link::after {
+  background: var(--text-secondary);
+}
+
+.portfolio-header-nav-item--work .portfolio-header-work-dropdown-link--current::after {
+  background: var(--accent);
 }
 
 /* Menu button: hidden on desktop/tablet, shown only on mobile */
@@ -234,6 +332,61 @@
 
   .portfolio-header-menu-list .portfolio-header-nav-item {
     display: block;
+  }
+
+  .portfolio-header-menu-group--work {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .portfolio-header-menu-work-trigger {
+    font: var(--portfolio-text-b1);
+    color: inherit;
+    text-align: start;
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+    align-self: flex-start;
+  }
+
+  .portfolio-header-menu-work-list {
+    list-style: none;
+    margin: 0;
+    padding: 0 0 0 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .portfolio-header-menu-work-item {
+    display: block;
+    font: var(--portfolio-text-b2);
+  }
+
+  .portfolio-header-menu-work-item a {
+    position: relative;
+  }
+
+  .portfolio-header-menu-work-item a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 1px;
+    background: currentColor;
+    transition: width 0.45s ease;
+  }
+
+  .portfolio-header-menu-work-item a:hover::after {
+    width: 100%;
+  }
+
+  .portfolio-header-menu-work-item a.portfolio-header-work-dropdown-link--current::after {
+    background: var(--accent);
   }
 }
 

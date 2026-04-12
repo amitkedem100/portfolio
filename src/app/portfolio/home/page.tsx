@@ -2,14 +2,17 @@ import "./page.css";
 import { CursorZone } from "@/app/portfolio/components/CursorZone";
 import { ProjectCard } from "@/app/portfolio/components/ProjectCard";
 import { HomeHero } from "./components/HomeHero";
+import { ScrollToSelectedWork } from "./ScrollToSelectedWork";
 
 export default function PortfolioHomePage() {
   return (
     <div className="home-page portfolio-page-inner-grid">
+      <ScrollToSelectedWork />
       <section className="home-page-section home-page-hero">
         <HomeHero />
       </section>
       <section
+        id="selected-work"
         className="home-page-section home-page-selected-work"
         aria-label="Selected Work"
       >

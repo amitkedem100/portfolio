@@ -1,23 +1,124 @@
 "use client";
 
-import { useState, useEffect, useLayoutEffect, useRef } from "react";
+import { useState, useEffect, useLayoutEffect, useRef, useCallback } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import "./PortfolioHeader.css";
 import { CursorZone } from "./CursorZone";
 import { ThemeToggle } from "./ThemeToggle";
+import { SELECTED_WORK_SCROLL_FLAG_KEY } from "@/app/portfolio/home/ScrollToSelectedWork";
 
 /* Cumulative scroll deltas — short downward burst hides bar; shorter upward burst shows (any page depth). */
 const SCROLL_DOWN_TO_HIDE_PX = 56;
 const SCROLL_UP_TO_SHOW_PX = 28;
 const SCROLL_NEAR_TOP_PX = 12;
 
+const HOME_PATH = "/portfolio/home";
+const SELECTED_WORK_ID = "selected-work";
+
+const WORK_PROJECTS = [
+  { label: "Astra", href: "/portfolio/saas" },
+  { label: "Command Center", href: "/portfolio/command-center" },
+  { label: "Basilar", href: "/portfolio/basilar" },
+] as const;
+
+function scrollToSelectedWorkSection() {
+  document.getElementById(SELECTED_WORK_ID)?.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function isWorkProjectPathActive(pathname: string, projectHref: string) {
+  return pathname === projectHref || pathname.startsWith(`${projectHref}/`);
+}
+
+function workProjectLinkClass(pathname: string, projectHref: string) {
+  return [
+    "portfolio-header-work-dropdown-link",
+    isWorkProjectPathActive(pathname, projectHref) && "portfolio-header-work-dropdown-link--current",
+  ]
+    .filter(Boolean)
+    .join(" ");
+}
+
 export function PortfolioHeader() {
+  const pathname = usePathname();
+  const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [workDropdownOpen, setWorkDropdownOpen] = useState(false);
   const [retracted, setRetracted] = useState(false);
   const [menuPortalEl, setMenuPortalEl] = useState<HTMLElement | null>(null);
   const lastScrollY = useRef(0);
   const trendPx = useRef(0);
+  const workDropdownLeaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const closeWorkDropdown = useCallback(() => {
+    if (workDropdownLeaveTimer.current) {
+      clearTimeout(workDropdownLeaveTimer.current);
+      workDropdownLeaveTimer.current = null;
+    }
+    setWorkDropdownOpen(false);
+  }, []);
+
+  const openWorkDropdown = useCallback(() => {
+    if (workDropdownLeaveTimer.current) {
+      clearTimeout(workDropdownLeaveTimer.current);
+      workDropdownLeaveTimer.current = null;
+    }
+    setWorkDropdownOpen(true);
+  }, []);
+
+  const scheduleCloseWorkDropdown = useCallback(() => {
+    if (workDropdownLeaveTimer.current) {
+      clearTimeout(workDropdownLeaveTimer.current);
+      workDropdownLeaveTimer.current = null;
+    }
+    workDropdownLeaveTimer.current = setTimeout(() => setWorkDropdownOpen(false), 200);
+  }, []);
+
+  /* :focus-within on the panel kept it visible after click because focus stayed on the Link. */
+  const handleWorkAreaBlur = useCallback(
+    (e: React.FocusEvent<HTMLDivElement>) => {
+      const next = e.relatedTarget as Node | null;
+      if (next && e.currentTarget.contains(next)) return;
+      scheduleCloseWorkDropdown();
+    },
+    [scheduleCloseWorkDropdown]
+  );
+
+  useEffect(
+    () => () => {
+      if (workDropdownLeaveTimer.current) {
+        clearTimeout(workDropdownLeaveTimer.current);
+      }
+    },
+    []
+  );
+
+  useEffect(() => {
+    closeWorkDropdown();
+  }, [pathname, closeWorkDropdown]);
+
+  useEffect(() => {
+    if (!workDropdownOpen) return;
+    const onEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeWorkDropdown();
+    };
+    document.addEventListener("keydown", onEscape);
+    return () => document.removeEventListener("keydown", onEscape);
+  }, [workDropdownOpen, closeWorkDropdown]);
+
+  const handleWorkNavClick = () => {
+    if (pathname === HOME_PATH) {
+      scrollToSelectedWorkSection();
+      return;
+    }
+    try {
+      sessionStorage.setItem(SELECTED_WORK_SCROLL_FLAG_KEY, "1");
+    } catch {
+      /* private / blocked storage */
+    }
+    router.push(HOME_PATH);
+  };
 
   /* Portal keeps fixed overlay/panel under the viewport; header transform would otherwise clip fixed to the bar. */
   useLayoutEffect(() => {
@@ -120,29 +221,137 @@ export function PortfolioHeader() {
     return () => window.removeEventListener("scroll", onScroll);
   }, [menuOpen]);
 
-  const navLinks = (
+  const desktopWorkNav = (
+    <li className="portfolio-header-nav-item portfolio-header-nav-item--work">
+      <div
+        className={`portfolio-header-work${workDropdownOpen ? " portfolio-header-work--dropdown-open" : ""}`}
+        onPointerEnter={openWorkDropdown}
+        onPointerLeave={scheduleCloseWorkDropdown}
+        onFocusCapture={openWorkDropdown}
+        onBlur={handleWorkAreaBlur}
+      >
+        <CursorZone variant="large">
+          <button
+            type="button"
+            className="portfolio-header-work-trigger"
+            aria-haspopup="menu"
+            aria-expanded={workDropdownOpen}
+            onClick={() => {
+              handleWorkNavClick();
+              closeWorkDropdown();
+            }}
+          >
+            Work
+          </button>
+        </CursorZone>
+        <div className="portfolio-header-work-dropdown" role="menu" aria-label="Projects">
+          {WORK_PROJECTS.map((p) => (
+            <CursorZone variant="large" key={p.href}>
+              <Link
+                href={p.href}
+                className={workProjectLinkClass(pathname, p.href)}
+                role="menuitem"
+                onClick={(e) => {
+                  if (isWorkProjectPathActive(pathname, p.href)) {
+                    e.preventDefault();
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                  }
+                  closeWorkDropdown();
+                }}
+              >
+                {p.label}
+              </Link>
+            </CursorZone>
+          ))}
+        </div>
+      </div>
+    </li>
+  );
+
+  const navLinksSecondary = (
     <>
       <li className="portfolio-header-nav-item">
         <CursorZone variant="large">
-          <Link href="/portfolio/home" onClick={closeMenu}>Work</Link>
+          <Link href="#about" onClick={closeMenu}>
+            About
+          </Link>
         </CursorZone>
       </li>
       <li className="portfolio-header-nav-item">
         <CursorZone variant="large">
-          <Link href="#about" onClick={closeMenu}>About</Link>
+          <Link href="#contact" onClick={closeMenu}>
+            Contact
+          </Link>
         </CursorZone>
       </li>
       <li className="portfolio-header-nav-item">
         <CursorZone variant="large">
-          <Link href="#contact" onClick={closeMenu}>Contact</Link>
-        </CursorZone>
-      </li>
-      <li className="portfolio-header-nav-item">
-        <CursorZone variant="large">
-          <Link href="#cv" onClick={closeMenu}>CV</Link>
+          <Link href="#cv" onClick={closeMenu}>
+            CV
+          </Link>
         </CursorZone>
       </li>
     </>
+  );
+
+  const mobileMenuNav = (
+    <ul className="portfolio-header-menu-list">
+      <li className="portfolio-header-menu-group portfolio-header-menu-group--work">
+        <button
+          type="button"
+          className="portfolio-header-menu-work-trigger"
+          onClick={() => {
+            handleWorkNavClick();
+            closeMenu();
+          }}
+        >
+          Work
+        </button>
+        <ul className="portfolio-header-menu-work-list" aria-label="Projects">
+          {WORK_PROJECTS.map((p) => (
+            <li key={p.href} className="portfolio-header-menu-work-item">
+              <CursorZone variant="large">
+                <Link
+                  href={p.href}
+                  className={workProjectLinkClass(pathname, p.href)}
+                  onClick={(e) => {
+                    if (isWorkProjectPathActive(pathname, p.href)) {
+                      e.preventDefault();
+                      window.scrollTo({ top: 0, behavior: "smooth" });
+                    }
+                    closeMenu();
+                    closeWorkDropdown();
+                  }}
+                >
+                  {p.label}
+                </Link>
+              </CursorZone>
+            </li>
+          ))}
+        </ul>
+      </li>
+      <li className="portfolio-header-nav-item">
+        <CursorZone variant="large">
+          <Link href="#about" onClick={closeMenu}>
+            About
+          </Link>
+        </CursorZone>
+      </li>
+      <li className="portfolio-header-nav-item">
+        <CursorZone variant="large">
+          <Link href="#contact" onClick={closeMenu}>
+            Contact
+          </Link>
+        </CursorZone>
+      </li>
+      <li className="portfolio-header-nav-item">
+        <CursorZone variant="large">
+          <Link href="#cv" onClick={closeMenu}>
+            CV
+          </Link>
+        </CursorZone>
+      </li>
+    </ul>
   );
 
   return (
@@ -182,7 +391,8 @@ export function PortfolioHeader() {
           aria-label="Portfolio navigation"
         >
           <ul className="portfolio-header-nav-list">
-            {navLinks}
+            {desktopWorkNav}
+            {navLinksSecondary}
           </ul>
           <button
             type="button"
@@ -209,7 +419,7 @@ export function PortfolioHeader() {
         </nav>
       </div>
 
-      {menuPortalEl
+       {menuPortalEl
         ? createPortal(
             <>
               <div
@@ -246,7 +456,7 @@ export function PortfolioHeader() {
                       />
                     </svg>
                   </button>
-                  <ul className="portfolio-header-menu-list">{navLinks}</ul>
+                  {mobileMenuNav}
                 </div>
               </div>
             </>,
