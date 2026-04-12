@@ -41,7 +41,8 @@ export function SaasDashboardDualLayoutsSection() {
               <ImageCarousel
                 className="saas-dashboard-dual-layouts__carousel"
                 slides={DASHBOARD_DUAL_LAYOUT_SLIDES}
-                sizes="(max-width: 768px) 92vw, 1180px"
+                sizes="(max-width: 768px) 92vw, min(1024px, 92vw)"
+                unoptimized
               />
             }
           />

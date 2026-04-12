@@ -55,7 +55,8 @@ export function SaasAccessSettingsSection() {
                   alt="Astra user management table: roles, access levels, and site associations"
                   width={1320}
                   height={760}
-                  sizes="(max-width: 768px) 92vw, 1180px"
+                  sizes="(max-width: 768px) 92vw, min(1180px, 92vw)"
+                  unoptimized
                 />
               </div>
             }
@@ -73,7 +74,8 @@ export function SaasAccessSettingsSection() {
               <ImageCarousel
                 className="saas-access-settings__carousel"
                 slides={SYSTEM_CONFIGURATION_SLIDES}
-                sizes="(max-width: 768px) 92vw, 1180px"
+                sizes="(max-width: 768px) 92vw, min(1280px, 92vw)"
+                unoptimized
               />
             }
           />

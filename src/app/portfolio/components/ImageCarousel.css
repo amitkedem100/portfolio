@@ -19,6 +19,7 @@
   width: 100%;
   transition: transform 320ms ease;
   will-change: transform;
+  backface-visibility: hidden;
 }
 
 .image-carousel__slide {

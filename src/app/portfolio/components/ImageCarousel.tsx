@@ -15,9 +15,19 @@ type ImageCarouselProps = {
   slides: ImageCarouselSlide[];
   className?: string;
   sizes?: string;
+  /** PNG / UI captures: skip optimizer for sharper text (same tradeoff as dashboard widgets) */
+  unoptimized?: boolean;
+  /** Used when optimized; ignored if unoptimized */
+  quality?: number;
 };
 
-export function ImageCarousel({ slides, className = "", sizes = "100vw" }: ImageCarouselProps) {
+export function ImageCarousel({
+  slides,
+  className = "",
+  sizes = "100vw",
+  unoptimized = false,
+  quality = 92,
+}: ImageCarouselProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const total = slides.length;
 
@@ -38,7 +48,10 @@ export function ImageCarousel({ slides, className = "", sizes = "100vw" }: Image
   return (
     <div className={`image-carousel ${className}`.trim()} aria-label="Image carousel">
       <div className="image-carousel__viewport">
-        <div className="image-carousel__track" style={{ transform: `translateX(-${safeIndex * 100}%)` }}>
+        <div
+          className="image-carousel__track"
+          style={{ transform: `translate3d(-${safeIndex * 100}%, 0, 0)` }}
+        >
           {slides.map((slide) => (
             <div key={slide.src} className="image-carousel__slide">
               <Image
@@ -49,6 +62,8 @@ export function ImageCarousel({ slides, className = "", sizes = "100vw" }: Image
                 height={slide.height}
                 sizes={sizes}
                 loading="eager"
+                unoptimized={unoptimized}
+                quality={unoptimized ? undefined : quality}
               />
             </div>
           ))}

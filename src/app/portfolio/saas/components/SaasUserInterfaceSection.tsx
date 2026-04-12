@@ -54,6 +54,7 @@ export function SaasUserInterfaceSection() {
                 width={1920}
                 height={1080}
                 sizes="(max-width: 768px) 92vw, min(880px, 82vw)"
+                unoptimized
               />
               <Image
                 className="saas-onboarding-still saas-onboarding-still--front"
@@ -62,6 +63,7 @@ export function SaasUserInterfaceSection() {
                 width={1920}
                 height={1080}
                 sizes="(max-width: 768px) 92vw, min(820px, 78vw)"
+                unoptimized
               />
             </div>
           </div>
