@@ -1,10 +1,13 @@
 import Image from "next/image";
 import "@/app/portfolio/components/ProjectTextSection.css";
-import "./SaasStackedMediaBlock.css";
+import { SaasStackedMediaBlock } from "@/app/portfolio/saas/components/SaasStackedMediaBlock";
 import "./SaasDashboardWidgetsSection.css";
 
 const LIVE_INCIDENT_VIDEO = encodeURI("/videos/Astra/Live Incident example.mp4");
 const KEY_FINDINGS_LIST_IMG = encodeURI("/images/SaaS/key findings1.png");
+const HIGH_RISK_WORKERS_IMG = encodeURI("/images/SaaS/high risk worker.png");
+const SUGGESTED_PATROL_TIME_IMG = encodeURI("/images/SaaS/suggested patrol time.png");
+const COMPANY_SITES_MAP_IMG = encodeURI("/images/SaaS/company sites map.png");
 
 type WidgetSegment = {
   id: string;
@@ -18,6 +21,9 @@ type WidgetSegment = {
     width: number;
     height: number;
     sizes: string;
+    /* PNG/UI screenshots: skip optimizer for sharper edges; optional quality when optimized */
+    unoptimized?: boolean;
+    quality?: number;
   };
 };
 
@@ -40,7 +46,9 @@ const WIDGET_SEGMENTS: WidgetSegment[] = [
       alt: "Company-level key findings list in Astra",
       width: 569,
       height: 371,
-      sizes: "(max-width: 768px) 92vw, min(560px, 38vw)",
+      /* Layout width: see .saas-dashboard-widget-segment__media--key-findings */
+      sizes: "(max-width: 768px) 92vw, min(520px, 36vw)",
+      unoptimized: true,
     },
   },
   {
@@ -49,6 +57,15 @@ const WIDGET_SEGMENTS: WidgetSegment[] = [
     title: "High-Risk Workers",
     description:
       "Identifies workers with recurring safety issues, allowing site teams to address risks at an individual level. This helps prevent negative behavioral patterns from spreading and supports targeted interventions before issues escalate.",
+    mediaImage: {
+      src: HIGH_RISK_WORKERS_IMG,
+      alt: "High-Risk Workers dashboard widget in Astra",
+      width: 366,
+      height: 222,
+      /* Narrow column ≈ intrinsic width to limit upscale blur; layout: __media--high-risk-workers */
+      sizes: "(max-width: 768px) min(268px, 88vw), min(288px, 24vw)",
+      unoptimized: true,
+    },
   },
   {
     id: "suggested-patrol-time",
@@ -56,6 +73,15 @@ const WIDGET_SEGMENTS: WidgetSegment[] = [
     title: "Suggested Patrol Time",
     description:
       "Analyzes incident patterns to recommend optimal patrol times. This allows safety managers to align their presence with peak risk periods, improving efficiency and increasing the impact of on-site supervision.",
+    mediaImage: {
+      src: SUGGESTED_PATROL_TIME_IMG,
+      alt: "Suggested patrol time widget with zones and optimal time in Astra",
+      width: 600,
+      height: 222,
+      /* Wide bar widget; layout: __media--suggested-patrol-time */
+      sizes: "(max-width: 768px) 92vw, min(560px, 36vw)",
+      unoptimized: true,
+    },
   },
   {
     id: "company-sites-map",
@@ -63,6 +89,15 @@ const WIDGET_SEGMENTS: WidgetSegment[] = [
     title: "Company Sites Map",
     description:
       "A visual overview of all company sites, displaying their current status through clear state indicators - closed, active, or with live incidents. This provides leadership with an immediate understanding of operational conditions across locations.",
+    mediaImage: {
+      src: COMPANY_SITES_MAP_IMG,
+      alt: "Company sites map with open and closed site pins in Astra",
+      width: 589,
+      height: 737,
+      /* Portrait map; layout: __media--company-sites-map */
+      sizes: "(max-width: 768px) 92vw, 400px",
+      unoptimized: true,
+    },
   },
 ];
 
@@ -84,24 +119,14 @@ export function SaasDashboardWidgetsSection() {
           {WIDGET_SEGMENTS.map((segment, index) => {
             if (segment.id === "live-incident") {
               return (
-                <article
+                <SaasStackedMediaBlock
                   key={segment.id}
-                  className="saas-stacked-media-block"
-                  aria-labelledby={`saas-dashboard-widget-title-${segment.id}`}
-                >
-                  <header className="saas-stacked-media-block__header project-text-section-inner--prose">
-                    <p className="saas-stacked-media-block__label">{segment.label}</p>
-                    <h3
-                      id={`saas-dashboard-widget-title-${segment.id}`}
-                      className="saas-stacked-media-block__title"
-                    >
-                      {segment.title}
-                    </h3>
-                  </header>
-                  <div className="saas-stacked-media-block__description project-text-section-inner--prose">
-                    <p>{segment.description}</p>
-                  </div>
-                  <div className="saas-stacked-media-block__media-wrap">
+                  label={segment.label}
+                  title={segment.title}
+                  titleId={`saas-dashboard-widget-title-${segment.id}`}
+                  titleHeadingLevel={3}
+                  paragraphs={[segment.description]}
+                  media={
                     <div className="saas-dashboard-widget-live-incident__frame">
                       <video
                         className="saas-dashboard-widget-live-incident__video"
@@ -114,14 +139,46 @@ export function SaasDashboardWidgetsSection() {
                         aria-label="Live incident widget in Astra"
                       />
                     </div>
-                  </div>
-                </article>
+                  }
+                />
+              );
+            }
+
+            if (segment.id === "company-sites-map" && segment.mediaImage) {
+              const img = segment.mediaImage;
+              return (
+                <SaasStackedMediaBlock
+                  key={segment.id}
+                  label={segment.label}
+                  title={segment.title}
+                  titleId={`saas-dashboard-widget-title-${segment.id}`}
+                  titleHeadingLevel={3}
+                  align="center"
+                  paragraphs={[segment.description]}
+                  media={
+                    <div className="saas-dashboard-widget-company-map__frame">
+                      <Image
+                        className="saas-dashboard-widget-segment__media-img"
+                        src={img.src}
+                        alt={img.alt}
+                        width={img.width}
+                        height={img.height}
+                        sizes={img.sizes}
+                        unoptimized={img.unoptimized === true}
+                        quality={img.unoptimized ? undefined : (img.quality ?? 92)}
+                      />
+                    </div>
+                  }
+                />
               );
             }
 
             /* Key Findings only: image left, text right (row-reverse). Others: alternating by index */
             const reverse =
               segment.id === "key-findings" ? true : index % 2 === 1;
+            const mediaLayoutClass = segment.mediaImage
+              ? `saas-dashboard-widget-segment__media--${segment.id}`
+              : "saas-dashboard-widget-segment__media--default";
             return (
               <article
                 key={segment.id}
@@ -136,7 +193,7 @@ export function SaasDashboardWidgetsSection() {
                   <p className="saas-dashboard-widget-segment__description">{segment.description}</p>
                 </div>
 
-                <div className="saas-dashboard-widget-segment__media">
+                <div className={`saas-dashboard-widget-segment__media ${mediaLayoutClass}`}>
                   {segment.mediaImage ? (
                     <div className="saas-dashboard-widget-segment__media-frame">
                       <Image
@@ -146,6 +203,8 @@ export function SaasDashboardWidgetsSection() {
                         width={segment.mediaImage.width}
                         height={segment.mediaImage.height}
                         sizes={segment.mediaImage.sizes}
+                        unoptimized={segment.mediaImage.unoptimized === true}
+                        quality={segment.mediaImage.unoptimized ? undefined : (segment.mediaImage.quality ?? 92)}
                       />
                     </div>
                   ) : (

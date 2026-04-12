@@ -52,9 +52,22 @@
   height: auto;
 }
 
+/* Company Sites Map — stacked block; image capped and centered in media-wrap */
+.saas-dashboard-widget-company-map__frame {
+  width: 100%;
+  max-width: min(400px, 100%);
+  margin-inline: auto;
+  border-radius: var(--radius-8);
+  overflow: hidden;
+  line-height: 0;
+  box-shadow:
+    0 24px 48px rgba(0, 0, 0, 0.2),
+    0 8px 16px rgba(0, 0, 0, 0.12);
+}
+
 .saas-dashboard-widget-segment {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   gap: clamp(32px, 5vw, 48px);
 }
@@ -92,10 +105,34 @@
   color: var(--text-primary);
 }
 
+/*
+ * Media column: base + one modifier per segment (TSX: __media--{segment.id} or __media--default).
+ * Tune flex-basis / max-width per block; keep segment.sizes in TSX aligned with these widths.
+ */
 .saas-dashboard-widget-segment__media {
-  flex: 0 0 min(420px, 38vw);
-  max-width: min(560px, 96vw);
   min-width: 0;
+}
+
+.saas-dashboard-widget-segment__media--default {
+  flex: 0 0 min(360px, 32vw);
+  max-width: min(440px, 92vw);
+}
+
+.saas-dashboard-widget-segment__media--key-findings {
+  flex: 0 0 min(380px, 36vw);
+  max-width: min(520px, 92vw);
+}
+
+/* Wide horizontal widget (600×222 intrinsic); similar scale to key-findings column */
+.saas-dashboard-widget-segment__media--suggested-patrol-time {
+  flex: 0 0 min(400px, 36vw);
+  max-width: min(560px, 92vw);
+}
+
+/* Compact widget: stay near 366px intrinsic to avoid retina upscale blur */
+.saas-dashboard-widget-segment__media--high-risk-workers {
+  flex: 0 0 min(252px, 24vw);
+  max-width: min(288px, 88vw);
 }
 
 .saas-dashboard-widget-segment__media-placeholder {
@@ -134,9 +171,24 @@
     margin-bottom: 40px;
   }
 
-  .saas-dashboard-widget-segment__media {
-    flex-basis: min(380px, 40vw);
+  .saas-dashboard-widget-segment__media--default {
+    flex-basis: min(320px, 34vw);
   }
+
+  .saas-dashboard-widget-segment__media--key-findings {
+    flex-basis: min(340px, 36vw);
+  }
+
+  .saas-dashboard-widget-segment__media--suggested-patrol-time {
+    flex-basis: min(360px, 38vw);
+    max-width: min(520px, 92vw);
+  }
+
+  .saas-dashboard-widget-segment__media--high-risk-workers {
+    flex-basis: min(232px, 26vw);
+    max-width: min(276px, 88vw);
+  }
+
 }
 
 @media (max-width: 768px) {
@@ -174,8 +226,16 @@
     line-height: 1.55;
   }
 
-  .saas-dashboard-widget-segment__media {
+  .saas-dashboard-widget-segment__media--default,
+  .saas-dashboard-widget-segment__media--key-findings,
+  .saas-dashboard-widget-segment__media--suggested-patrol-time {
     flex: none;
     max-width: 100%;
+  }
+
+  .saas-dashboard-widget-segment__media--high-risk-workers {
+    flex: none;
+    align-self: center;
+    max-width: min(268px, 88vw);
   }
 }

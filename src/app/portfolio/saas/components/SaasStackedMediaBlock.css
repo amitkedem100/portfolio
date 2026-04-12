@@ -41,6 +41,16 @@
   margin-inline: auto;
 }
 
+.saas-stacked-media-block--align-center .saas-stacked-media-block__header,
+.saas-stacked-media-block--align-center .saas-stacked-media-block__description {
+  text-align: center;
+}
+
+.saas-stacked-media-block--align-center .saas-stacked-media-block__description p {
+  margin-inline: auto;
+  max-width: min(52ch, 100%);
+}
+
 @media (max-width: 768px) {
   .saas-stacked-media-block__title {
     font-size: 1.25rem;
