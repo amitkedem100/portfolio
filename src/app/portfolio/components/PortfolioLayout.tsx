@@ -12,15 +12,16 @@ type PortfolioLayoutProps = {
 
 export function PortfolioLayout({ children }: PortfolioLayoutProps) {
   return (
-    <div className="portfolio-layout layout-grid">
+    <div className="portfolio-layout">
       <CursorRouteReset />
       <PortfolioCursor />
       <PortfolioHeader />
-      <main className="portfolio-layout-main" role="main">
-        <ProjectPageLoader>{children}</ProjectPageLoader>
-      </main>
-      <PortfolioFooter />
+      <div className="portfolio-layout-grid layout-grid">
+        <main className="portfolio-layout-main" role="main">
+          <ProjectPageLoader>{children}</ProjectPageLoader>
+        </main>
+        <PortfolioFooter />
+      </div>
     </div>
   );
 }
-

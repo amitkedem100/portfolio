@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useLayoutEffect, useMemo, useRef, useState } from "react";
 import "./ProjectPageLoader.css";
 
 type ProjectPageLoaderProps = {
@@ -21,10 +21,11 @@ function isProjectRoute(pathname: string): boolean {
 export function ProjectPageLoader({ children }: ProjectPageLoaderProps) {
   const pathname = usePathname();
   const containerRef = useRef<HTMLDivElement>(null);
-  const [isLoading, setIsLoading] = useState(false);
   const showLoader = useMemo(() => isProjectRoute(pathname), [pathname]);
+  /* Start true on project routes so first paint matches overlay + scroll lock (no gap before useLayoutEffect). */
+  const [isLoading, setIsLoading] = useState(showLoader);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!showLoader) {
       setIsLoading(false);
       return;
@@ -109,17 +110,35 @@ export function ProjectPageLoader({ children }: ProjectPageLoaderProps) {
     };
   }, [pathname, showLoader]);
 
-  useEffect(() => {
+  /* Lock document scroll while overlay is up (html + body; body alone is not enough on some engines). */
+  useLayoutEffect(() => {
+    const html = document.documentElement;
+
     if (!(showLoader && isLoading)) {
+      html.style.removeProperty("overflow");
+      html.style.removeProperty("overscroll-behavior");
       document.body.style.removeProperty("overflow");
+      document.body.style.removeProperty("overscroll-behavior");
       return;
     }
 
-    const previousOverflow = document.body.style.overflow;
+    const prev = {
+      htmlOverflow: html.style.overflow,
+      htmlOverscroll: html.style.overscrollBehavior,
+      bodyOverflow: document.body.style.overflow,
+      bodyOverscroll: document.body.style.overscrollBehavior,
+    };
+
+    html.style.overflow = "hidden";
+    html.style.overscrollBehavior = "none";
     document.body.style.overflow = "hidden";
+    document.body.style.overscrollBehavior = "none";
 
     return () => {
-      document.body.style.overflow = previousOverflow;
+      html.style.overflow = prev.htmlOverflow;
+      html.style.overscrollBehavior = prev.htmlOverscroll;
+      document.body.style.overflow = prev.bodyOverflow;
+      document.body.style.overscrollBehavior = prev.bodyOverscroll;
     };
   }, [showLoader, isLoading]);
 

@@ -50,10 +50,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  /* flex-start: case-study layout uses zero header stack-gap — centering pulled title under fixed nav */
+  justify-content: flex-start;
   gap: 28px;
   min-height: 92vh;
-  padding: 56px 24px 48px;
+  padding: clamp(96px, 11vh, 140px) 24px clamp(48px, 6vh, 72px);
   box-sizing: border-box;
 }
 
@@ -94,7 +95,7 @@
   position: relative;
   z-index: 2;
   width: min(280px, 78vw);
-  margin-top: -8px;
+  margin-top: auto;
 }
 
 .project-video-hero-device {
@@ -116,9 +117,20 @@
   border-radius: inherit;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .project-video-hero-stack {
-    padding: 12px 20px 40px;
+    padding: clamp(88px, 10vh, 120px) 22px clamp(44px, 5.5vh, 64px);
+  }
+}
+
+@media (max-width: 768px) {
+  .project-video-hero,
+  .project-video-hero-stack {
+    min-height: auto;
+  }
+
+  .project-video-hero-stack {
+    padding: clamp(76px, 9vh, 104px) 16px 40px;
     gap: 24px;
   }
 

@@ -1,5 +1,31 @@
+/*
+ * Fixed top bar (not sticky): html/body overflow-x:hidden breaks sticky in common engines.
+ * Shell inset from --portfolio-shell-inline on .portfolio-layout.
+ */
 .portfolio-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
   display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  padding-inline: var(--portfolio-shell-inline, 64px);
+  background: var(--background);
+  /* Bottom-only stroke (border) in white according to design system variables */
+  border-bottom: 1px solid var(--icon-light);
+  transition: transform 0.22s ease;
+  will-change: transform;
+  box-shadow:
+  0 8px 16px rgba(0, 0, 32, 0.0.02);
+}
+
+.portfolio-header--retracted {
+  transform: translateY(-100%);
+  pointer-events: none;
 }
 
 /* Three equal columns so the middle one is the true center */
@@ -141,7 +167,7 @@
     display: block;
     position: fixed;
     inset: 0;
-    z-index: 100;
+    z-index: 200;
     background: color-mix(in srgb, var(--background-dark) 40%, transparent);
     opacity: 0;
     pointer-events: none;
@@ -162,7 +188,7 @@
     width: 280px;
     max-width: 85%;
     height: 100vh;
-    z-index: 101;
+    z-index: 201;
     background: var(--background);
     color: var(--text-primary);
     transform: translateX(100%);

@@ -1,14 +1,21 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import "./PortfolioHeader.css";
-import { usePortfolioContext } from "../context/PortfolioContext";
 import { CursorZone } from "./CursorZone";
 import { ThemeToggle } from "./ThemeToggle";
 
+/* Cumulative scroll deltas — short downward burst hides bar; shorter upward burst shows (any page depth). */
+const SCROLL_DOWN_TO_HIDE_PX = 56;
+const SCROLL_UP_TO_SHOW_PX = 28;
+const SCROLL_NEAR_TOP_PX = 12;
+
 export function PortfolioHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [retracted, setRetracted] = useState(false);
+  const lastScrollY = useRef(0);
+  const trendPx = useRef(0);
 
   const openMenu = () => setMenuOpen(true);
   const closeMenu = () => setMenuOpen(false);
@@ -37,6 +44,53 @@ export function PortfolioHeader() {
     document.documentElement.removeAttribute("data-cursor-global-accent");
   };
 
+  useEffect(() => {
+    if (menuOpen) {
+      setRetracted(false);
+      trendPx.current = 0;
+    }
+  }, [menuOpen]);
+
+  useEffect(() => {
+    lastScrollY.current = typeof window !== "undefined" ? window.scrollY : 0;
+
+    const onScroll = () => {
+      if (menuOpen) return;
+
+      const y = window.scrollY ?? document.documentElement.scrollTop;
+
+      if (y < SCROLL_NEAR_TOP_PX) {
+        setRetracted(false);
+        trendPx.current = 0;
+        lastScrollY.current = y;
+        return;
+      }
+
+      const dy = y - lastScrollY.current;
+      lastScrollY.current = y;
+      if (dy === 0) return;
+
+      if (dy > 0) {
+        if (trendPx.current >= 0) trendPx.current += dy;
+        else trendPx.current = dy;
+        if (trendPx.current >= SCROLL_DOWN_TO_HIDE_PX) {
+          setRetracted(true);
+          trendPx.current = 0;
+        }
+      } else {
+        if (trendPx.current <= 0) trendPx.current += dy;
+        else trendPx.current = dy;
+        if (trendPx.current <= -SCROLL_UP_TO_SHOW_PX) {
+          setRetracted(false);
+          trendPx.current = 0;
+        }
+      }
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [menuOpen]);
+
   const navLinks = (
     <>
       <li className="portfolio-header-nav-item">
@@ -64,7 +118,7 @@ export function PortfolioHeader() {
 
   return (
     <header
-      className="portfolio-header"
+      className={`portfolio-header${retracted ? " portfolio-header--retracted" : ""}`}
       onPointerEnter={handleHeaderPointerEnter}
       onPointerLeave={handleHeaderPointerLeave}
     >

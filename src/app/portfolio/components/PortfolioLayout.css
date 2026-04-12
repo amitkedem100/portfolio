@@ -1,87 +1,118 @@
+/* Shell: flex column — header is fixed (out of flow); padding-top reserves bar + gap under it. */
 .portfolio-layout {
-  grid-template-rows: auto 1fr auto;
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
+  /* Shared horizontal inset for header + content grid (matches former layout-grid padding). */
+  --portfolio-shell-inline: 64px;
+  /* Must match .portfolio-header-inner height in PortfolioHeader.css */
+  --portfolio-header-bar: 80px;
+  /* Mirrors former layout-grid row-gap below header on home; 0 on case-study routes */
+  --portfolio-header-stack-gap: 32px;
+  padding-top: calc(var(--portfolio-header-bar) + var(--portfolio-header-stack-gap));
 }
 
-/*
-  Portfolio shell: horizontal inset via padding (not margin) so main stretches full width
-  and children align with one consistent gutter — matches former .layout-grid breakpoints.
-*/
-.portfolio-layout.layout-grid {
-  margin-left: 0;
-  margin-right: 0;
-  padding-left: 64px;
-  padding-right: 64px;
-  column-gap: 32px;
-  width: 100%;
-  max-width: 100%;
-  box-sizing: border-box;
+.portfolio-layout:has(.basilar-page),
+.portfolio-layout:has(.command-center-page),
+.portfolio-layout:has(.saas-page),
+.portfolio-layout:has(.project-page) {
+  --portfolio-header-stack-gap: 0;
 }
 
 @media (max-width: 1024px) {
-  .portfolio-layout.layout-grid {
-    padding-left: 48px;
-    padding-right: 48px;
+  .portfolio-layout {
+    --portfolio-shell-inline: 48px;
+    --portfolio-header-bar: 64px;
+    --portfolio-header-stack-gap: 24px;
+  }
+
+  .portfolio-layout:has(.basilar-page),
+  .portfolio-layout:has(.command-center-page),
+  .portfolio-layout:has(.saas-page),
+  .portfolio-layout:has(.project-page) {
+    --portfolio-header-stack-gap: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .portfolio-layout {
+    --portfolio-shell-inline: 32px;
+    --portfolio-header-bar: 56px;
+    --portfolio-header-stack-gap: 20px;
+  }
+
+  .portfolio-layout:has(.basilar-page),
+  .portfolio-layout:has(.command-center-page),
+  .portfolio-layout:has(.saas-page),
+  .portfolio-layout:has(.project-page) {
+    --portfolio-header-stack-gap: 0;
+  }
+}
+
+/*
+ * Content grid: 8 columns + gutter — only main + footer. Padding uses the same shell token as header.
+ */
+.portfolio-layout-grid.layout-grid {
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: var(--portfolio-shell-inline);
+  padding-right: var(--portfolio-shell-inline);
+  column-gap: 32px;
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  grid-template-rows: 1fr auto;
+}
+
+@media (max-width: 1024px) {
+  .portfolio-layout-grid.layout-grid {
     column-gap: 24px;
   }
 }
 
 @media (max-width: 768px) {
-  .portfolio-layout.layout-grid {
-    padding-left: 32px;
-    padding-right: 32px;
+  .portfolio-layout-grid.layout-grid {
     column-gap: 20px;
   }
 }
 
-/*
-  Case-study pages only (not home): wider horizontal inset on large viewports so line length
-  stays readable on ultra-wide screens (e.g. 1920px). Home keeps shell padding above.
-*/
+/* Case-study pages: extra inset on main only (header keeps base shell). */
 @media (min-width: 1025px) {
-  .portfolio-layout.layout-grid:has(.basilar-page),
-  .portfolio-layout.layout-grid:has(.command-center-page),
-  .portfolio-layout.layout-grid:has(.saas-page),
-  .portfolio-layout.layout-grid:has(.project-page) {
-    padding-left: clamp(64px, 5vw + 40px, 180px);
-    padding-right: clamp(64px, 5vw + 40px, 180px);
+  .portfolio-layout:has(.basilar-page) .portfolio-layout-main,
+  .portfolio-layout:has(.command-center-page) .portfolio-layout-main,
+  .portfolio-layout:has(.saas-page) .portfolio-layout-main,
+  .portfolio-layout:has(.project-page) .portfolio-layout-main {
+    padding-left: calc(clamp(64px, 5vw + 40px, 180px) - 64px);
+    padding-right: calc(clamp(64px, 5vw + 40px, 180px) - 64px);
   }
 }
 
-/* Project pages only: hero meets header (home keeps default vertical gap from .layout-grid) */
-.portfolio-layout.layout-grid:has(.basilar-page),
-.portfolio-layout.layout-grid:has(.saas-page),
-.portfolio-layout.layout-grid:has(.project-page) {
+/* Project routes: no row gap between main and footer inside content grid */
+.portfolio-layout-grid.layout-grid:has(.basilar-page),
+.portfolio-layout-grid.layout-grid:has(.saas-page),
+.portfolio-layout-grid.layout-grid:has(.project-page) {
   row-gap: 0;
-}
-
-.portfolio-layout > .portfolio-cursor {
-  grid-column: 1 / -1;
-}
-
-.portfolio-layout .portfolio-header {
-  grid-column: 1 / -1;
 }
 
 .portfolio-layout-main {
   grid-column: 1 / -1;
+  min-width: 0;
 }
 
-.portfolio-layout .portfolio-footer {
+.portfolio-layout-grid .portfolio-footer {
   grid-column: 1 / -1;
 }
 
-/* Tablet */
 @media (max-width: 1024px) {
   .portfolio-layout {
     min-height: 100vh;
   }
 }
 
-/* Mobile: ensure main content uses mobile grid spacing */
 @media (max-width: 768px) {
   .portfolio-layout-main {
     min-height: 0;
   }
 }
-
