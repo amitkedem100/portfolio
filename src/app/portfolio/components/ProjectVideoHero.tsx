@@ -1,4 +1,5 @@
 import "./ProjectVideoHero.css";
+import { BadgeList, splitBadges } from "./BadgeList";
 
 export type ProjectVideoHeroProps = {
   title: string;
@@ -40,7 +41,9 @@ export function ProjectVideoHero({
             {title}
           </h1>
           <p className="project-video-hero-description">{description}</p>
-          <p className="project-video-hero-meta">{meta}</p>
+          <div className="project-video-hero-meta">
+            <BadgeList items={splitBadges(meta)} />
+          </div>
         </div>
 
         <div className="project-video-hero-device-wrap">

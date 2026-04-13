@@ -1,0 +1,27 @@
+.badge-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.badge-list__item {
+  margin: 0;
+}
+
+.badge-list__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--border) 82%, transparent);
+  background: color-mix(in srgb, var(--surface-subtle) 90%, transparent);
+  color: var(--text-primary);
+  text-shadow: none;
+  font: var(--portfolio-text-b3);
+  line-height: 1;
+  white-space: nowrap;
+}

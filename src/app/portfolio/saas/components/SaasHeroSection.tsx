@@ -1,5 +1,6 @@
 import "./SaasHeroSection.css";
 import "./saas-desktop-video.css";
+import { BadgeList } from "@/app/portfolio/components/BadgeList";
 
 const HERO_BACKGROUND_VIDEO = "/videos/Astra/background.mp4";
 const HERO_DESKTOP_VIDEO = "/videos/saas/hero-desktop.mp4";
@@ -34,7 +35,9 @@ export function SaasHeroSection() {
             A safety intelligence platform designed to monitor, analyze, and improve construction site safety
             through AI-driven insights and real-time reporting.
           </p>
-          <p className="saas-hero__tags">{HERO_TAGS.join(" \u00b7 ")}</p>
+          <div className="saas-hero__tags">
+            <BadgeList items={[...HERO_TAGS]} />
+          </div>
         </div>
 
         <div className="saas-hero__devices" role="group" aria-label="Desktop and mobile product previews">

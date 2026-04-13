@@ -75,10 +75,38 @@
 
 .saas-hero__tags {
   margin: 0;
-  font: var(--portfolio-text-b3);
   /* Brighter than --text-secondary-dark for legibility on busy video + scrim */
   color: rgba(255, 255, 255, 0.88);
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: center;
+}
+
+.saas-hero__tags .badge-list {
+  justify-content: center;
+}
+
+/* Desktop/tablet: place badges between title and description */
+@media (min-width: 769px) {
+  .saas-hero__text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .saas-hero__title {
+    order: 1;
+  }
+
+  .saas-hero__tags {
+    order: 2;
+    margin-bottom: 14px;
+  }
+
+  .saas-hero__description {
+    order: 3;
+    margin-bottom: 0;
+  }
 }
 
 .saas-hero__devices {

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import "./ProjectCard.css";
+import { BadgeList, splitBadges } from "./BadgeList";
 
 export type ProjectCardProps = {
   title: string;
@@ -43,7 +44,9 @@ export function ProjectCard({
             )}
           </div>
           <div className="project-card-text">
-            <p className="project-card-keywords">{keywords}</p>
+            <div className="project-card-keywords">
+              <BadgeList items={splitBadges(keywords)} />
+            </div>
             <h2 className="project-card-title">{title}</h2>
             <p className="project-card-description">{description}</p>
           </div>

@@ -54,10 +54,11 @@
 
 .project-card-keywords {
   margin: 0;
-  font: var(--portfolio-text-b3);
   color: var(--text-secondary);
-  text-transform: none;
-  letter-spacing: 0.02em;
+}
+
+.project-card-keywords .badge-list {
+  gap: 6px;
 }
 
 .project-card-title {
@@ -71,6 +72,21 @@
   font: var(--portfolio-text-b2);
   color: var(--text-secondary);
   line-height: 1.5;
+}
+
+/* Desktop/tablet: badges sit between title and description */
+@media (min-width: 769px) {
+  .project-card-title {
+    order: 1;
+  }
+
+  .project-card-keywords {
+    order: 2;
+  }
+
+  .project-card-description {
+    order: 3;
+  }
 }
 
 @media (max-width: 1024px) {
