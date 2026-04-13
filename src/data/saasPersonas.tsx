@@ -14,7 +14,7 @@ export const saasPersonasSectionProps: PersonasSectionProps = {
   personas: [
     {
       id: "project-manager",
-      name: "Project Manager",
+      name: "George",
       role: "Site Level",
       imageSrc: PERSONA_IMG_PM,
       imageAlt: "Project manager on a construction site",
@@ -47,7 +47,7 @@ export const saasPersonasSectionProps: PersonasSectionProps = {
     },
     {
       id: "head-of-safety",
-      name: "Head of Safety",
+      name: "John",
       role: "Executive Level",
       imageSrc: PERSONA_IMG_HEAD,
       imageAlt: "Head of safety in an executive context",
