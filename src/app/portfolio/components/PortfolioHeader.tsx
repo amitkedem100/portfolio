@@ -19,7 +19,6 @@ const SELECTED_WORK_ID = "selected-work";
 
 const WORK_PROJECTS = [
   { label: "Astra", href: "/portfolio/saas" },
-  { label: "Command Center", href: "/portfolio/command-center" },
   { label: "Basilar", href: "/portfolio/basilar" },
 ] as const;
 

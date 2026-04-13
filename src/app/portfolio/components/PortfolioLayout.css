@@ -13,7 +13,6 @@
 }
 
 .portfolio-layout:has(.basilar-page),
-.portfolio-layout:has(.command-center-page),
 .portfolio-layout:has(.saas-page),
 .portfolio-layout:has(.project-page) {
   --portfolio-header-stack-gap: 0;
@@ -27,7 +26,6 @@
   }
 
   .portfolio-layout:has(.basilar-page),
-  .portfolio-layout:has(.command-center-page),
   .portfolio-layout:has(.saas-page),
   .portfolio-layout:has(.project-page) {
     --portfolio-header-stack-gap: 0;
@@ -42,7 +40,6 @@
   }
 
   .portfolio-layout:has(.basilar-page),
-  .portfolio-layout:has(.command-center-page),
   .portfolio-layout:has(.saas-page),
   .portfolio-layout:has(.project-page) {
     --portfolio-header-stack-gap: 0;
@@ -81,7 +78,6 @@
 /* Case-study pages: extra inset on main only (header keeps base shell). */
 @media (min-width: 1025px) {
   .portfolio-layout:has(.basilar-page) .portfolio-layout-main,
-  .portfolio-layout:has(.command-center-page) .portfolio-layout-main,
   .portfolio-layout:has(.saas-page) .portfolio-layout-main,
   .portfolio-layout:has(.project-page) .portfolio-layout-main {
     padding-left: calc(clamp(64px, 5vw + 40px, 180px) - 64px);

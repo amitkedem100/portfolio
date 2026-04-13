@@ -3,6 +3,7 @@ import { CursorZone } from "@/app/portfolio/components/CursorZone";
 import { ProjectCard } from "@/app/portfolio/components/ProjectCard";
 import { HomeHero } from "./components/HomeHero";
 import { ScrollToSelectedWork } from "./ScrollToSelectedWork";
+import { AdditionalWorkSection } from "./components/AdditionalWorkSection";
 
 export default function PortfolioHomePage() {
   return (
@@ -28,25 +29,16 @@ export default function PortfolioHomePage() {
         </CursorZone>
         <CursorZone variant="viewProject">
           <ProjectCard
-            title="Command Center"
-            description="An operations and monitoring experience — clarity under load and scalable information architecture (content in progress)."
-            keywords="UX · Complex Systems · Dashboard"
-            imageAlt="Command Center project"
-            href="/portfolio/command-center"
-            imagePosition="left"
-          />
-        </CursorZone>
-        <CursorZone variant="viewProject">
-          <ProjectCard
             title="Basilar"
             description="A mobile product for multi-day festival logistics. Entry, transport, food, navigation, and real-time updates."
             keywords="Mobile UX · Festival Experience · Product"
             imageAlt="Basilar project"
             href="/portfolio/basilar"
-            imagePosition="right"
+            imagePosition="left"
           />
         </CursorZone>
       </section>
+      <AdditionalWorkSection />
     </div>
   );
 }

@@ -13,7 +13,6 @@ function isProjectRoute(pathname: string): boolean {
   return (
     pathname.startsWith("/portfolio/basilar") ||
     pathname.startsWith("/portfolio/saas") ||
-    pathname.startsWith("/portfolio/command-center") ||
     pathname.startsWith("/portfolio/project/")
   );
 }
