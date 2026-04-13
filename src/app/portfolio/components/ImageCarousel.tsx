@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import type { TouchEvent } from "react";
+import { useRef, useState } from "react";
 import "./ImageCarousel.css";
 
 type ImageCarouselSlide = {
@@ -29,6 +30,8 @@ export function ImageCarousel({
   quality = 92,
 }: ImageCarouselProps) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const touchStartX = useRef<number | null>(null);
+  const touchCurrentX = useRef<number | null>(null);
   const total = slides.length;
 
   const safeIndex = total === 0 ? 0 : Math.min(activeIndex, total - 1);
@@ -45,9 +48,45 @@ export function ImageCarousel({
     setActiveIndex((current) => (current + 1) % total);
   };
 
+  const handleTouchStart = (event: TouchEvent<HTMLDivElement>) => {
+    touchStartX.current = event.touches[0]?.clientX ?? null;
+    touchCurrentX.current = touchStartX.current;
+  };
+
+  const handleTouchMove = (event: TouchEvent<HTMLDivElement>) => {
+    touchCurrentX.current = event.touches[0]?.clientX ?? null;
+  };
+
+  const handleTouchEnd = () => {
+    if (touchStartX.current == null || touchCurrentX.current == null) {
+      touchStartX.current = null;
+      touchCurrentX.current = null;
+      return;
+    }
+
+    const deltaX = touchCurrentX.current - touchStartX.current;
+    const SWIPE_THRESHOLD_PX = 40;
+
+    if (Math.abs(deltaX) >= SWIPE_THRESHOLD_PX) {
+      if (deltaX < 0) {
+        handleNext();
+      } else {
+        handlePrev();
+      }
+    }
+
+    touchStartX.current = null;
+    touchCurrentX.current = null;
+  };
+
   return (
     <div className={`image-carousel ${className}`.trim()} aria-label="Image carousel">
-      <div className="image-carousel__viewport">
+      <div
+        className="image-carousel__viewport"
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      >
         <div
           className="image-carousel__track"
           style={{ transform: `translate3d(-${safeIndex * 100}%, 0, 0)` }}

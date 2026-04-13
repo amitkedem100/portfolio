@@ -37,4 +37,8 @@
   .saas-dashboard-dual-layouts {
     padding-block: 30px 40px;
   }
+
+  .saas-dashboard-dual-layouts__carousel .image-carousel__nav {
+    display: none;
+  }
 }

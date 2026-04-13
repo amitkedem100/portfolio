@@ -46,4 +46,8 @@
   .saas-access-settings {
     padding-block: 30px 40px;
   }
+
+  .saas-access-settings__carousel .image-carousel__nav {
+    display: none;
+  }
 }

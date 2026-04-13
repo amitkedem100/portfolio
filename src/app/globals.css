@@ -115,6 +115,17 @@
     margin-right: 32px;
     align-items: stretch;
   }
+
+  /*
+   * Mobile typography scale-up (DS-first):
+   * Increase readability globally without touching each section's local CSS.
+   * Keep headings unchanged for now to avoid layout regressions.
+   */
+  :root {
+    --portfolio-text-b1: 370 19px/1.55 var(--portfolio-font-body);
+    --portfolio-text-b2: 300 17px/1.55 var(--portfolio-font-body);
+    --portfolio-text-b3: 300 15px/1.55 var(--portfolio-font-body);
+  }
 }
 
 /* Basilar: project-scoped tokens (accent + band backgrounds; do not alter global DS tokens) */
