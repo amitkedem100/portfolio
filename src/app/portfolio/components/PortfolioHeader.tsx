@@ -296,6 +296,19 @@ export function PortfolioHeader() {
 
   const mobileMenuNav = (
     <ul className="portfolio-header-menu-list">
+      <li className="portfolio-header-nav-item">
+        <CursorZone variant="large">
+          <Link
+            href="/portfolio/home"
+            onClick={() => {
+              closeMenu();
+              closeWorkDropdown();
+            }}
+          >
+            Home
+          </Link>
+        </CursorZone>
+      </li>
       <li className="portfolio-header-menu-group portfolio-header-menu-group--work">
         <button
           type="button"
