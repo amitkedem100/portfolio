@@ -5,19 +5,30 @@
 }
 
 .saas-page-hero {
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-  max-width: 100vw;
+  width: auto;
+  max-width: none;
+  margin-left: calc(var(--portfolio-shell-inline, 64px) * -1);
+  margin-right: calc(var(--portfolio-shell-inline, 64px) * -1);
 }
 
 /* Full-bleed showcase — no outer vertical margin; inner .saas-product-showcase handles padding */
 .saas-page-showcase {
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-  max-width: 100vw;
+  width: auto;
+  max-width: none;
+  margin-left: calc(var(--portfolio-shell-inline, 64px) * -1);
+  margin-right: calc(var(--portfolio-shell-inline, 64px) * -1);
   margin-block: 0;
   padding-block: 0;
   box-sizing: border-box;
+}
+
+/* Desktop case-study pages add extra main inset (see PortfolioLayout.css); cancel it too for true full-bleed. */
+@media (min-width: 1025px) {
+  .saas-page-hero,
+  .saas-page-showcase {
+    margin-left: calc(clamp(64px, 5vw + 40px, 180px) * -1);
+    margin-right: calc(clamp(64px, 5vw + 40px, 180px) * -1);
+  }
 }
 
 .saas-page-overview {
@@ -253,12 +264,6 @@
 }
 
 @media (max-width: 1024px) {
-  .saas-page-hero {
-    width: 100vw;
-    margin-left: calc(50% - 50vw);
-    max-width: 100vw;
-  }
-
   .saas-page-overview {
     padding-block: 48px;
   }
@@ -273,12 +278,6 @@
 }
 
 @media (max-width: 768px) {
-  .saas-page-hero {
-    width: 100vw;
-    margin-left: calc(50% - 50vw);
-    max-width: 100vw;
-  }
-
   .saas-page-overview {
     padding-block: 40px;
   }
