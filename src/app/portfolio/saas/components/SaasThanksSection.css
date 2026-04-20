@@ -1,0 +1,53 @@
+.saas-thanks-section {
+  position: relative;
+  isolation: isolate;
+  padding-block: clamp(32px, 5vw, 52px);
+  padding-inline: clamp(20px, 4vw, 32px);
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.saas-thanks-section::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  top: 0;
+  bottom: 0;
+  background: var(--astra-background);
+  pointer-events: none;
+}
+
+.saas-thanks-section__text {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  max-width: min(40ch, 100%);
+  font: var(--portfolio-text-b1);
+  font-weight: 500;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+}
+
+@media (max-width: 1024px) {
+  .saas-thanks-section {
+    padding-block: clamp(32px, 5vw, 52px);
+  }
+}
+
+@media (max-width: 768px) {
+  .saas-thanks-section {
+    padding-block: clamp(28px, 4vw, 40px);
+  }
+
+  .saas-thanks-section__text {
+    font: var(--portfolio-text-b2);
+    font-weight: 500;
+  }
+}

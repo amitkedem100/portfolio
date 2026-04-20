@@ -17,11 +17,10 @@
 .saas-design-system__title {
   margin: 0;
   font-family: var(--font-saas-style-guide-archivo), sans-serif;
-  font-size: clamp(1.75rem, 4vw, 2rem);
+  font: var(--portfolio-text-h2);
   font-weight: 600;
   letter-spacing: -0.02em;
   color: var(--text-primary);
-  line-height: 1.2;
 }
 
 .saas-design-system__block {
@@ -66,15 +65,14 @@
 
 .saas-design-system__type-name {
   margin: 0 0 10px;
-  font-size: 1.0625rem;
+  font: var(--portfolio-text-b1);
   font-weight: 600;
   color: var(--text-primary);
 }
 
 .saas-design-system__charset {
   margin: 0 0 14px;
-  font-size: 0.9rem;
-  line-height: 1.55;
+  font: var(--portfolio-text-b3);
   letter-spacing: 0.02em;
   word-break: break-word;
   color: var(--text-primary);
@@ -86,7 +84,7 @@
   list-style: none;
   display: grid;
   gap: 4px;
-  font-size: 0.9rem;
+  font: var(--portfolio-text-b3);
   color: var(--text-primary);
 }
 
@@ -136,16 +134,14 @@
 }
 
 .saas-design-system__hex {
-  font-size: 0.75rem;
-  line-height: 1.35;
+  font: var(--portfolio-text-b3);
   letter-spacing: 0.04em;
   font-variant-numeric: tabular-nums;
   color: var(--text-secondary);
 }
 
 .saas-design-system__token-name {
-  font-size: 0.8125rem;
-  line-height: 1.4;
+  font: var(--portfolio-text-b3);
   letter-spacing: 0.01em;
   font-weight: 500;
   color: var(--text-primary);
@@ -163,16 +159,11 @@
   }
 
   .saas-design-system__title {
-    font-size: 1.5rem;
+    font: var(--portfolio-text-h2);
   }
 
   .saas-design-system__type-grid {
     grid-template-columns: 1fr;
-  }
-
-  .saas-design-system__charset {
-    font-size: 0.9375rem;
-    line-height: 1.55;
   }
 
   .saas-design-system__swatches {
