@@ -1,0 +1,185 @@
+.saas-design-system {
+  padding-block: 40px 44px;
+  padding-inline: clamp(20px, 4vw, 64px);
+  box-sizing: border-box;
+}
+
+.saas-design-system__inner {
+  max-width: min(1080px, 100%);
+  margin-inline: auto;
+}
+
+.saas-design-system__header {
+  margin: 0 0 clamp(28px, 4vw, 40px);
+  text-align: start;
+}
+
+.saas-design-system__title {
+  margin: 0;
+  font-family: var(--font-saas-style-guide-archivo), sans-serif;
+  font-size: clamp(1.75rem, 4vw, 2rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.saas-design-system__block {
+  margin-top: clamp(28px, 4vw, 40px);
+}
+
+.saas-design-system__block-title {
+  margin: 0 0 clamp(16px, 2.5vw, 22px);
+  font: var(--portfolio-text-b1);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.saas-design-system__type-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(16px, 2.2vw, 24px);
+}
+
+.saas-design-system__type-card {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-8);
+  padding: clamp(16px, 2.2vw, 24px);
+  background: color-mix(in srgb, var(--surface) 94%, transparent);
+}
+
+.saas-design-system__type-card--montserrat {
+  font-family: var(--font-saas-style-guide-montserrat), sans-serif;
+}
+
+.saas-design-system__type-card--hind {
+  font-family: var(--font-saas-style-guide-hind-madurai), sans-serif;
+}
+
+.saas-design-system__type-aa {
+  margin: 0 0 8px;
+  font-size: clamp(2.5rem, 5.8vw, 3.4rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+}
+
+.saas-design-system__type-name {
+  margin: 0 0 10px;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.saas-design-system__charset {
+  margin: 0 0 14px;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  letter-spacing: 0.02em;
+  word-break: break-word;
+  color: var(--text-primary);
+}
+
+.saas-design-system__weights {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 4px;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+}
+
+.saas-design-system__weight {
+  margin: 0;
+}
+
+.saas-design-system__weight--400 {
+  font-weight: 400;
+}
+
+.saas-design-system__weight--500 {
+  font-weight: 500;
+}
+
+.saas-design-system__weight--600 {
+  font-weight: 600;
+}
+
+.saas-design-system__weight--700 {
+  font-weight: 700;
+}
+
+.saas-design-system__swatches {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  justify-content: flex-start;
+}
+
+.saas-design-system__swatch-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  width: 100px;
+}
+
+.saas-design-system__swatch {
+  width: min(100px, 100%);
+  aspect-ratio: 1 / 1;
+  border-radius: var(--radius-20);
+  border: 1px solid color-mix(in srgb, var(--text-primary) 14%, transparent);
+}
+
+.saas-design-system__hex {
+  font-size: 0.75rem;
+  line-height: 1.35;
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-secondary);
+}
+
+.saas-design-system__token-name {
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+@media (max-width: 1024px) {
+  .saas-design-system {
+    padding-block: 36px 44px;
+  }
+}
+
+@media (max-width: 768px) {
+  .saas-design-system {
+    padding-block: 30px 40px;
+  }
+
+  .saas-design-system__title {
+    font-size: 1.5rem;
+  }
+
+  .saas-design-system__type-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .saas-design-system__charset {
+    font-size: 0.9375rem;
+    line-height: 1.55;
+  }
+
+  .saas-design-system__swatches {
+    gap: 14px;
+  }
+
+  .saas-design-system__swatch-item {
+    width: 94px;
+  }
+}
