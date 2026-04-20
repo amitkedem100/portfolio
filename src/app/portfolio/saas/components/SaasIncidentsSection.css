@@ -25,7 +25,7 @@
 
 .saas-incidents-section__video-frame {
   width: 100%;
-  aspect-ratio: 2 / 1;
+  aspect-ratio: 2.12 / 1;
   overflow: hidden;
   border-radius: var(--radius-8);
   background: #0a0a0a;
