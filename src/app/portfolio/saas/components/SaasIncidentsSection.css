@@ -1,0 +1,55 @@
+.saas-incidents-section {
+  position: relative;
+  isolation: isolate;
+  padding-block: 40px 44px;
+  box-sizing: border-box;
+}
+
+.saas-incidents-section::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  top: 0;
+  bottom: 0;
+  background: var(--astra-background);
+  pointer-events: none;
+}
+
+.saas-incidents-section__inner {
+  position: relative;
+  z-index: 1;
+}
+
+.saas-incidents-section__video-frame {
+  width: 100%;
+  aspect-ratio: 2 / 1;
+  overflow: hidden;
+  border-radius: var(--radius-8);
+  background: #0a0a0a;
+  box-shadow:
+    0 30px 56px rgba(0, 0, 0, 0.22),
+    0 12px 22px rgba(0, 0, 0, 0.14);
+}
+
+.saas-incidents-section__video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center center;
+}
+
+@media (max-width: 1024px) {
+  .saas-incidents-section {
+    padding-block: 36px 44px;
+  }
+}
+
+@media (max-width: 768px) {
+  .saas-incidents-section {
+    padding-block: 30px 40px;
+  }
+}
