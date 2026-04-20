@@ -1,10 +1,9 @@
-import "./SaasHeroSection.css";
 import "./saas-desktop-video.css";
+import "./SaasHeroSection.css";
 import { BadgeList } from "@/app/portfolio/components/BadgeList";
 
 const HERO_BACKGROUND_VIDEO = "/videos/Astra/background.mp4";
-const HERO_DESKTOP_VIDEO = "/videos/saas/hero-desktop.mp4";
-const HERO_MOBILE_VIDEO = "/videos/saas/hero-mobile.mp4";
+const HERO_LOGO = encodeURI("/images/SaaS/Astra Logo.svg");
 
 const HERO_TAGS = ["SaaS Platform", "Safety Analytics", "AI Monitoring", "2026"] as const;
 
@@ -40,30 +39,23 @@ export function SaasHeroSection() {
           </div>
         </div>
 
-        <div className="saas-hero__devices" role="group" aria-label="Desktop and mobile product previews">
+        <div className="saas-hero__devices" role="group" aria-label="Astra hero visual">
           <div className="saas-hero__desktop-frame">
             <video
-              className="saas-hero__desktop-video"
-              src={HERO_DESKTOP_VIDEO}
+              className="saas-hero__desktop-blur-bg"
+              src={HERO_BACKGROUND_VIDEO}
               autoPlay
               muted
               loop
               playsInline
               preload="metadata"
-              aria-label="Astra desktop product preview"
+              aria-hidden
             />
-          </div>
-
-          <div className="saas-hero__mobile-frame">
-            <video
-              className="saas-hero__mobile-video"
-              src={HERO_MOBILE_VIDEO}
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="metadata"
-              aria-label="Astra mobile product preview"
+            <img
+              className="saas-hero__desktop-video"
+              src={HERO_LOGO}
+              alt="Astra logo"
+              decoding="async"
             />
           </div>
         </div>
