@@ -181,6 +181,8 @@
   .personas-persona-image {
     max-height: min(72vw, 400px);
     aspect-ratio: 4 / 5;
+    /* Move image framing down slightly so more head/top area remains visible */
+    object-position: center 18%;
   }
 
   .personas-persona-name {
