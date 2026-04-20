@@ -90,7 +90,7 @@ export function SaasDesignSystemSection() {
       <div className="project-text-section-inner saas-design-system__inner">
         <header className="saas-design-system__header">
           <h2 id="saas-design-system-title" className="saas-design-system__title">
-            Style Guide
+            Design System
           </h2>
         </header>
 
