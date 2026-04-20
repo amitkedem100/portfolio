@@ -11,57 +11,56 @@ type AdditionalWorkItem = {
   description: string;
   mediaType: "image" | "video";
   mediaSrc: string;
-  thumbnailSrc?: string;
   thumbnailAlt: string;
+  slides: Array<{
+    id: string;
+    mediaType: "image" | "video";
+    src: string;
+    alt: string;
+  }>;
   tags?: string[];
 };
 
 const ADDITIONAL_WORK_ITEMS: AdditionalWorkItem[] = [
   {
-    id: "astra-live-incident",
-    title: "Astra - Live Incident Signal",
+    id: "tech-tasks",
+    title: "Task Management for Field Technicians",
     description:
-      "A focused exploration of incident prioritization states and urgency communication in the dashboard context.",
-    mediaType: "video",
-    mediaSrc: encodeURI("/videos/Astra/Live Incident example.mp4"),
-    thumbnailAlt: "Astra live incident dashboard preview",
-    tags: ["Dashboard", "Safety Ops", "Signal Design"],
-  },
-  {
-    id: "astra-key-findings",
-    title: "Astra - Key Findings Snapshot",
-    description:
-      "Compact insight card layout iteration balancing readability, severity ranking, and scan speed for executives.",
+      "A system designed for a security services company to manage technician tasks with clarity and control.\n\nThe goal was to reduce missed assignments and improve daily operations through a structured, real-time workflow. A bottom panel provides quick access to task details, while a map-based schedule view allows tracking routes, timing, and on-site activity, supporting efficient, day-to-day technician management.",
     mediaType: "image",
-    mediaSrc: encodeURI("/images/SaaS/key findings1.png"),
-    thumbnailAlt: "Astra key findings card preview",
-    tags: ["Data UI", "Executive View"],
-  },
-  {
-    id: "basilar-map",
-    title: "Basilar - Festival Map Motion",
-    description:
-      "Navigation behavior exploration for map-centric flows, emphasizing quick orientation in high-noise festival environments.",
-    mediaType: "video",
-    mediaSrc: "/videos/basilar/map.mp4",
-    thumbnailAlt: "Basilar map feature preview",
-    tags: ["Mobile UX", "Navigation"],
-  },
-  {
-    id: "basilar-screens",
-    title: "Basilar - Screen Set",
-    description:
-      "A compact collection of product surfaces demonstrating visual consistency across lineup, food, and movement-related tasks.",
-    mediaType: "image",
-    mediaSrc: "/images/basilar/screenshots/02-lineup.png",
-    thumbnailAlt: "Basilar lineup screen",
-    tags: ["Design System", "Mobile UI"],
+    mediaSrc: encodeURI("/images/Additional work/Tech Tasks tab.png"),
+    thumbnailAlt: "Tech Tasks dashboard preview",
+    slides: [
+      {
+        id: "tech-tasks-video",
+        mediaType: "video",
+        src: encodeURI("/videos/Additional work/tech task video.mp4"),
+        alt: "Tech Tasks walkthrough video",
+      },
+      {
+        id: "tech-tasks-tab",
+        mediaType: "image",
+        src: encodeURI("/images/Additional work/Tech Tasks tab.png"),
+        alt: "Tech Tasks table view in Tasks tab",
+      },
+      {
+        id: "tech-schedule-tab",
+        mediaType: "image",
+        src: encodeURI("/images/Additional work/tech tasks schedule tab.png"),
+        alt: "Tech Tasks schedule tab with map and route",
+      },
+    ],
+    tags: ["Cursor", "Front-End", "CSS", "React", "TypeScript", "Figma"],
   },
 ];
 
 export function AdditionalWorkSection() {
   const [activeId, setActiveId] = useState<string | null>(null);
-  const railRef = useRef<HTMLDivElement>(null);
+  const [activeSlideIndex, setActiveSlideIndex] = useState(0);
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isMobileViewport, setIsMobileViewport] = useState(false);
+  const mediaFrameRef = useRef<HTMLDivElement>(null);
 
   const activeItem = useMemo(
     () => ADDITIONAL_WORK_ITEMS.find((item) => item.id === activeId) ?? null,
@@ -82,11 +81,88 @@ export function AdditionalWorkSection() {
     };
   }, [activeItem]);
 
-  const scrollRailBy = (direction: "prev" | "next") => {
-    const rail = railRef.current;
-    if (!rail) return;
-    const delta = Math.max(260, rail.clientWidth * 0.8);
-    rail.scrollBy({ left: direction === "next" ? delta : -delta, behavior: "smooth" });
+  useEffect(() => {
+    setActiveSlideIndex(0);
+  }, [activeId]);
+
+  useEffect(() => {
+    const onFullscreenChange = () => {
+      setIsFullscreen(Boolean(document.fullscreenElement));
+    };
+    document.addEventListener("fullscreenchange", onFullscreenChange);
+    return () => {
+      document.removeEventListener("fullscreenchange", onFullscreenChange);
+    };
+  }, []);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 768px)");
+    const updateMobileState = () => {
+      setIsMobileViewport(mediaQuery.matches);
+    };
+
+    updateMobileState();
+    mediaQuery.addEventListener("change", updateMobileState);
+    return () => {
+      mediaQuery.removeEventListener("change", updateMobileState);
+    };
+  }, []);
+
+  const activeSlides = activeItem?.slides ?? [];
+  const safeSlideIndex =
+    activeSlides.length === 0 ? 0 : Math.min(activeSlideIndex, activeSlides.length - 1);
+  const activeSlide = activeSlides[safeSlideIndex] ?? null;
+  const showFullscreenButton =
+    activeSlide?.mediaType === "image" || (isMobileViewport && activeSlide?.mediaType === "video");
+
+  const goToPrevSlide = () => {
+    if (activeSlides.length <= 1) return;
+    setActiveSlideIndex((current) =>
+      current === 0 ? activeSlides.length - 1 : current - 1
+    );
+  };
+
+  const goToNextSlide = () => {
+    if (activeSlides.length <= 1) return;
+    setActiveSlideIndex((current) =>
+      current === activeSlides.length - 1 ? 0 : current + 1
+    );
+  };
+
+  const onMediaTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
+    setTouchStartX(event.changedTouches[0]?.clientX ?? null);
+  };
+
+  const onMediaTouchEnd = (event: React.TouchEvent<HTMLDivElement>) => {
+    if (touchStartX === null || activeSlides.length <= 1) return;
+    const touchEndX = event.changedTouches[0]?.clientX ?? touchStartX;
+    const deltaX = touchEndX - touchStartX;
+    const SWIPE_THRESHOLD = 44;
+
+    if (Math.abs(deltaX) < SWIPE_THRESHOLD) {
+      setTouchStartX(null);
+      return;
+    }
+
+    if (deltaX < 0) {
+      goToNextSlide();
+    } else {
+      goToPrevSlide();
+    }
+
+    setTouchStartX(null);
+  };
+
+  const toggleFullscreen = async () => {
+    const target = mediaFrameRef.current;
+    if (!target) return;
+
+    if (document.fullscreenElement) {
+      await document.exitFullscreen();
+      return;
+    }
+
+    await target.requestFullscreen();
   };
 
   return (
@@ -101,27 +177,22 @@ export function AdditionalWorkSection() {
       </header>
 
       <div className="additional-work__rail-wrap">
-        <button
-          type="button"
-          className="additional-work__nav additional-work__nav--prev"
-          aria-label="Previous additional work items"
-          onClick={() => scrollRailBy("prev")}
-        >
-          ‹
-        </button>
-        <div className="additional-work__rail" ref={railRef}>
+        <div className="additional-work__rail">
           {ADDITIONAL_WORK_ITEMS.map((item) => (
             <button
               key={item.id}
               type="button"
               className="additional-work__card"
-              onClick={() => setActiveId(item.id)}
+              onClick={() => {
+                setActiveId(item.id);
+                setActiveSlideIndex(0);
+              }}
               aria-label={`Open additional work item: ${item.title}`}
             >
               <div className="additional-work__thumb">
                 {item.mediaType === "image" ? (
                   <Image
-                    src={item.thumbnailSrc ?? item.mediaSrc}
+                    src={item.mediaSrc}
                     alt={item.thumbnailAlt}
                     fill
                     sizes="(max-width: 768px) 78vw, (max-width: 1200px) 38vw, 29vw"
@@ -130,7 +201,7 @@ export function AdditionalWorkSection() {
                 ) : (
                   <video
                     className="additional-work__thumb-media"
-                    src={item.thumbnailSrc ?? item.mediaSrc}
+                    src={item.mediaSrc}
                     muted
                     loop
                     playsInline
@@ -146,14 +217,6 @@ export function AdditionalWorkSection() {
             </button>
           ))}
         </div>
-        <button
-          type="button"
-          className="additional-work__nav additional-work__nav--next"
-          aria-label="Next additional work items"
-          onClick={() => scrollRailBy("next")}
-        >
-          ›
-        </button>
       </div>
 
       {activeItem ? (
@@ -165,42 +228,115 @@ export function AdditionalWorkSection() {
           onClick={() => setActiveId(null)}
         >
           <div className="additional-work-modal__panel" onClick={(event) => event.stopPropagation()}>
-            <button
-              type="button"
-              className="additional-work-modal__close"
-              aria-label="Close additional work modal"
-              onClick={() => setActiveId(null)}
-            >
-              ×
-            </button>
-
-            <div className="additional-work-modal__media">
-              {activeItem.mediaType === "image" ? (
-                <Image
-                  src={activeItem.mediaSrc}
-                  alt={activeItem.thumbnailAlt}
-                  fill
-                  sizes="(max-width: 1200px) 90vw, 72vw"
-                  className="additional-work-modal__media-item"
-                />
-              ) : (
-                <video
-                  className="additional-work-modal__media-item"
-                  src={activeItem.mediaSrc}
-                  controls
-                  playsInline
-                  preload="metadata"
-                  autoPlay
-                />
-              )}
+            <div className="additional-work-modal__topbar">
+              <button
+                type="button"
+                className="additional-work-modal__close"
+                aria-label="Close additional work modal"
+                onClick={() => setActiveId(null)}
+              >
+                ×
+              </button>
             </div>
 
-            <div className="additional-work-modal__content">
-              <h3 className="additional-work-modal__title">{activeItem.title}</h3>
-              <p className="additional-work-modal__description">{activeItem.description}</p>
-              {activeItem.tags && activeItem.tags.length > 0 ? (
-                <BadgeList items={activeItem.tags} className="additional-work-modal__tags" />
-              ) : null}
+            <div className="additional-work-modal__body">
+              <div className="additional-work-modal__content">
+                <h3 className="additional-work-modal__title">{activeItem.title}</h3>
+                {activeItem.description.trim() ? (
+                  <p className="additional-work-modal__description">{activeItem.description}</p>
+                ) : null}
+                {activeItem.tags && activeItem.tags.length > 0 ? (
+                  <BadgeList items={activeItem.tags} className="additional-work-modal__tags" />
+                ) : null}
+              </div>
+
+              <div className="additional-work-modal__media-area">
+                <div
+                  className="additional-work-modal__media-carousel"
+                  onTouchStart={onMediaTouchStart}
+                  onTouchEnd={onMediaTouchEnd}
+                >
+                  <div className="additional-work-modal__media" ref={mediaFrameRef}>
+                    {activeSlide?.mediaType === "image" ? (
+                      <Image
+                        src={activeSlide.src}
+                        alt={activeSlide.alt}
+                        fill
+                        sizes="(max-width: 1200px) 90vw, 72vw"
+                        className="additional-work-modal__media-item"
+                      />
+                    ) : activeSlide ? (
+                      <video
+                        className="additional-work-modal__media-item"
+                        src={activeSlide.src}
+                        controls
+                        muted
+                        playsInline
+                        preload="metadata"
+                        autoPlay
+                      />
+                    ) : null}
+                  </div>
+
+                  {showFullscreenButton ? (
+                    <button
+                      type="button"
+                      className="additional-work-modal__fullscreen"
+                      onClick={toggleFullscreen}
+                      aria-label={isFullscreen ? "Exit fullscreen" : "Open fullscreen"}
+                    >
+                      <span className="additional-work-modal__fullscreen-label">
+                        {isFullscreen ? "Exit Full Screen" : "Full Screen"}
+                      </span>
+                      <img
+                        className="additional-work-modal__fullscreen-icon"
+                        src="/arrows-angle-expand.svg"
+                        alt=""
+                        aria-hidden
+                      />
+                    </button>
+                  ) : null}
+
+                  {activeSlides.length > 1 ? (
+                    <>
+                      <button
+                        type="button"
+                        className="additional-work-modal__media-nav additional-work-modal__media-nav--prev"
+                        aria-label="Previous media"
+                        onClick={goToPrevSlide}
+                      >
+                        ‹
+                      </button>
+                      <button
+                        type="button"
+                        className="additional-work-modal__media-nav additional-work-modal__media-nav--next"
+                        aria-label="Next media"
+                        onClick={goToNextSlide}
+                      >
+                        ›
+                      </button>
+                    </>
+                  ) : null}
+                </div>
+
+                {activeSlides.length > 1 ? (
+                  <div className="additional-work-modal__dots" role="tablist" aria-label="Media slides">
+                    {activeSlides.map((slide, index) => (
+                      <button
+                        key={slide.id}
+                        type="button"
+                        role="tab"
+                        aria-label={`Go to media ${index + 1}`}
+                        aria-selected={index === safeSlideIndex}
+                        className={`additional-work-modal__dot${
+                          index === safeSlideIndex ? " additional-work-modal__dot--active" : ""
+                        }`}
+                        onClick={() => setActiveSlideIndex(index)}
+                      />
+                    ))}
+                  </div>
+                ) : null}
+              </div>
             </div>
           </div>
         </div>
