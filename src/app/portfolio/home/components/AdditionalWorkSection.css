@@ -1,28 +1,35 @@
 .additional-work {
+  position: relative;
+  z-index: 0;
   display: flex;
   flex-direction: column;
-  gap: 22px;
-  padding-block: 16px 8px;
+  gap: 16px;
+  padding-block: clamp(20px, 3.2vw, 32px);
+}
+
+.additional-work::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  top: 0;
+  bottom: 0;
+  background: var(--surface);
+  pointer-events: none;
 }
 
 .additional-work__header {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 0;
 }
 
 .additional-work__title {
   margin: 0;
-  font: var(--portfolio-text-h2);
-  font-weight: 600;
+  font: var(--portfolio-text-h1);
   color: var(--text-primary);
-}
-
-.additional-work__subtitle {
-  margin: 0;
-  max-width: 72ch;
-  font: var(--portfolio-text-b2);
-  color: var(--text-secondary);
 }
 
 .additional-work__rail-wrap {
@@ -31,12 +38,14 @@
 
 .additional-work__rail {
   display: grid;
-  grid-template-columns: minmax(280px, 420px);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
   padding-bottom: 4px;
 }
 
 .additional-work__card {
+  display: block;
+  width: 100%;
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-20);
   background: var(--surface);
@@ -52,6 +61,11 @@
   transform: translateY(-2px);
   border-color: var(--border);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+}
+
+.additional-work__card:focus,
+.additional-work__card:focus-visible {
+  outline: none;
 }
 
 .additional-work__thumb {
@@ -77,11 +91,23 @@
 
 .additional-work__card-body {
   padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: var(--background);
+  border-radius: 0 0 var(--radius-20) var(--radius-20);
+overflow: hidden;
+}
+
+.additional-work__card-tags {
+  order: 2;
+  gap: 6px;
 }
 
 .additional-work__card-title {
+  order: 1;
   margin: 0;
-  font: var(--portfolio-text-b2);
+  font: var(--portfolio-text-h2);
   color: var(--text-primary);
 }
 
@@ -305,17 +331,29 @@
 
 @media (max-width: 1024px) {
   .additional-work__rail {
-    grid-template-columns: minmax(280px, 420px);
+    grid-template-columns: repeat(2, minmax(240px, 1fr));
   }
 }
 
 @media (max-width: 768px) {
   .additional-work {
-    gap: 18px;
+    gap: 14px;
   }
 
   .additional-work__rail {
     grid-template-columns: minmax(240px, 100%);
+  }
+
+  .additional-work__card-body {
+    gap: 8px;
+  }
+
+  .additional-work__card-tags {
+    order: -1;
+  }
+
+  .additional-work__card-title {
+    order: 0;
   }
 
   .additional-work__nav {

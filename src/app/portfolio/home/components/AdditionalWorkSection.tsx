@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import { BadgeList } from "@/app/portfolio/components/BadgeList";
+import { CursorZone } from "@/app/portfolio/components/CursorZone";
 import "./AdditionalWorkSection.css";
 
 type AdditionalWorkItem = {
@@ -24,7 +25,7 @@ type AdditionalWorkItem = {
 const ADDITIONAL_WORK_ITEMS: AdditionalWorkItem[] = [
   {
     id: "tech-tasks",
-    title: "Task Management for Field Technicians",
+    title: "Tech Tasks",
     description:
       "A system designed for a security services company to manage technician tasks with clarity and control.\n\nThe goal was to reduce missed assignments and improve daily operations through a structured, real-time workflow. A bottom panel provides quick access to task details, while a map-based schedule view allows tracking routes, timing, and on-site activity, supporting efficient, day-to-day technician management.",
     mediaType: "image",
@@ -51,6 +52,41 @@ const ADDITIONAL_WORK_ITEMS: AdditionalWorkItem[] = [
       },
     ],
     tags: ["Cursor", "Front-End", "CSS", "React", "TypeScript", "Figma"],
+  },
+  {
+    id: "project-management-system",
+    title: "Project Management System",
+    description:
+      "A custom internal system designed for a construction company to manage large-scale projects and complex workflows.\n\nThe platform addresses the challenge of fragmented information and poor coordination across teams. By centralizing data, improving visibility, and enabling structured collaboration, it transforms an otherwise chaotic process into a controlled and efficient operation.\n\nThe result is better tracking, clearer decision-making, and more effective teamwork across ongoing projects.",
+    mediaType: "image",
+    mediaSrc: encodeURI("/images/Additional work/Project Management cover.png"),
+    thumbnailAlt: "Construction project planning cover image",
+    slides: [
+      {
+        id: "project-management-system-main",
+        mediaType: "image",
+        src: encodeURI("/images/Additional work/Project Management system.png"),
+        alt: "Project management system task table interface",
+      },
+    ],
+    tags: ["UX", "SaaS", "Internal System", "B2B"],
+  },
+  {
+    id: "elder-care",
+    title: "Elder Care",
+    description:
+      "A mobile app designed to support daily coordination between families and caregivers.\n\nIn emotionally sensitive environments, where communication gaps and blurred responsibilities are common, the system creates clarity through structured task management, shared updates, and clear expectations. It helps reduce friction, ensure critical information is not missed, and maintain a balanced, respectful relationship between all sides involved in care.",
+    mediaType: "image",
+    mediaSrc: encodeURI("/images/Additional work/Elder Care Cover.png"),
+    thumbnailAlt: "Elder Care project placeholder cover",
+    slides: [],
+    tags: [
+      "Mobile App",
+      "Healthcare",
+      "B2C",
+      "Task Management",
+      "Human-Centered Design",
+    ],
   },
 ];
 
@@ -169,52 +205,56 @@ export function AdditionalWorkSection() {
     <section className="home-page-section additional-work" aria-labelledby="additional-work-title">
       <header className="additional-work__header">
         <h2 id="additional-work-title" className="additional-work__title">
-          Additional Work
+          More Projects
         </h2>
-        <p className="additional-work__subtitle">
-          A curated selection of additional interfaces, flows, and product explorations.
-        </p>
       </header>
 
       <div className="additional-work__rail-wrap">
         <div className="additional-work__rail">
           {ADDITIONAL_WORK_ITEMS.map((item) => (
-            <button
-              key={item.id}
-              type="button"
-              className="additional-work__card"
-              onClick={() => {
-                setActiveId(item.id);
-                setActiveSlideIndex(0);
-              }}
-              aria-label={`Open additional work item: ${item.title}`}
-            >
-              <div className="additional-work__thumb">
-                {item.mediaType === "image" ? (
-                  <Image
-                    src={item.mediaSrc}
-                    alt={item.thumbnailAlt}
-                    fill
-                    sizes="(max-width: 768px) 78vw, (max-width: 1200px) 38vw, 29vw"
-                    className="additional-work__thumb-media"
-                  />
-                ) : (
-                  <video
-                    className="additional-work__thumb-media"
-                    src={item.mediaSrc}
-                    muted
-                    loop
-                    playsInline
-                    preload="metadata"
-                    autoPlay
-                    aria-hidden
-                  />
-                )}
-              </div>
-              <div className="additional-work__card-body">
-                <h3 className="additional-work__card-title">{item.title}</h3>
-              </div>
-            </button>
+            <CursorZone key={item.id} variant="viewProject">
+              <button
+                type="button"
+                className="additional-work__card"
+                onClick={() => {
+                  setActiveId(item.id);
+                  setActiveSlideIndex(0);
+                }}
+                aria-label={`Open additional work item: ${item.title}`}
+              >
+                <div className="additional-work__thumb">
+                  {item.mediaType === "image" ? (
+                    <Image
+                      src={item.mediaSrc}
+                      alt={item.thumbnailAlt}
+                      fill
+                      sizes="(max-width: 768px) 78vw, (max-width: 1200px) 38vw, 29vw"
+                      className="additional-work__thumb-media"
+                    />
+                  ) : (
+                    <video
+                      className="additional-work__thumb-media"
+                      src={item.mediaSrc}
+                      muted
+                      loop
+                      playsInline
+                      preload="metadata"
+                      autoPlay
+                      aria-hidden
+                    />
+                  )}
+                </div>
+                <div className="additional-work__card-body">
+                  {item.tags && item.tags.length > 0 ? (
+                    <BadgeList
+                      items={item.tags.slice(0, 3)}
+                      className="additional-work__card-tags"
+                    />
+                  ) : null}
+                  <h3 className="additional-work__card-title">{item.title}</h3>
+                </div>
+              </button>
+            </CursorZone>
           ))}
         </div>
       </div>
