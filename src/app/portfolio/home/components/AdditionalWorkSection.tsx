@@ -29,7 +29,7 @@ const ADDITIONAL_WORK_ITEMS: AdditionalWorkItem[] = [
     description:
       "A system designed for a security services company to manage technician tasks with clarity and control.\n\nThe goal was to reduce missed assignments and improve daily operations through a structured, real-time workflow. A bottom panel provides quick access to task details, while a map-based schedule view allows tracking routes, timing, and on-site activity, supporting efficient, day-to-day technician management.",
     mediaType: "image",
-    mediaSrc: encodeURI("/images/Additional work/TechTasks Cover.png"),
+    mediaSrc: encodeURI("/images/Additional work/TechTasks Cover cb1.png"),
     thumbnailAlt: "Tech Tasks dashboard preview",
     slides: [
       {
@@ -41,13 +41,13 @@ const ADDITIONAL_WORK_ITEMS: AdditionalWorkItem[] = [
       {
         id: "tech-tasks-tab",
         mediaType: "image",
-        src: encodeURI("/images/Additional work/Tech Tasks tab.png"),
+        src: encodeURI("/images/Additional work/Tech Tasks tab cb1.png"),
         alt: "Tech Tasks table view in Tasks tab",
       },
       {
         id: "tech-schedule-tab",
         mediaType: "image",
-        src: encodeURI("/images/Additional work/tech tasks schedule tab.png"),
+        src: encodeURI("/images/Additional work/tech tasks schedule tab cb1.png"),
         alt: "Tech Tasks schedule tab with map and route",
       },
     ],
@@ -59,13 +59,13 @@ const ADDITIONAL_WORK_ITEMS: AdditionalWorkItem[] = [
     description:
       "A custom internal system designed for a construction company to manage large-scale projects and complex workflows.\n\nThe platform addresses the challenge of fragmented information and poor coordination across teams. By centralizing data, improving visibility, and enabling structured collaboration, it transforms an otherwise chaotic process into a controlled and efficient operation.\n\nThe result is better tracking, clearer decision-making, and more effective teamwork across ongoing projects.",
     mediaType: "image",
-    mediaSrc: encodeURI("/images/Additional work/Project Management cover.png"),
+    mediaSrc: encodeURI("/images/Additional work/Project Management cover cb1.png"),
     thumbnailAlt: "Construction project planning cover image",
     slides: [
       {
         id: "project-management-system-main",
         mediaType: "image",
-        src: encodeURI("/images/Additional work/Project Management system v3.png"),
+        src: encodeURI("/images/Additional work/Project Management system v3 cb1.png"),
         alt: "Project management system task table interface",
       },
     ],
@@ -77,7 +77,7 @@ const ADDITIONAL_WORK_ITEMS: AdditionalWorkItem[] = [
     description:
       "A mobile app designed to support daily coordination between families and caregivers.\n\nIn emotionally sensitive environments, where communication gaps and blurred responsibilities are common, the system creates clarity through structured task management, shared updates, and clear expectations. It helps reduce friction, ensure critical information is not missed, and maintain a balanced, respectful relationship between all sides involved in care.",
     mediaType: "image",
-    mediaSrc: encodeURI("/images/Additional work/Elder Care Cover.png"),
+    mediaSrc: encodeURI("/images/Additional work/Elder Care Cover cb1.png"),
     thumbnailAlt: "Elder Care project placeholder cover",
     slides: [
       {
@@ -89,7 +89,7 @@ const ADDITIONAL_WORK_ITEMS: AdditionalWorkItem[] = [
       {
         id: "elder-care-screens",
         mediaType: "image",
-        src: encodeURI("/images/Additional work/Elder Care screens v2.png"),
+        src: encodeURI("/images/Additional work/Elder Care screens v2 cb1.png"),
         alt: "Elder Care mobile app screens overview",
       },
     ],
