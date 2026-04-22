@@ -29,7 +29,7 @@ const ADDITIONAL_WORK_ITEMS: AdditionalWorkItem[] = [
     description:
       "A system designed for a security services company to manage technician tasks with clarity and control.\n\nThe goal was to reduce missed assignments and improve daily operations through a structured, real-time workflow. A bottom panel provides quick access to task details, while a map-based schedule view allows tracking routes, timing, and on-site activity, supporting efficient, day-to-day technician management.",
     mediaType: "image",
-    mediaSrc: encodeURI("/images/Additional work/Tech Tasks tab.png"),
+    mediaSrc: encodeURI("/images/Additional work/TechTasks Cover.png"),
     thumbnailAlt: "Tech Tasks dashboard preview",
     slides: [
       {
@@ -65,7 +65,7 @@ const ADDITIONAL_WORK_ITEMS: AdditionalWorkItem[] = [
       {
         id: "project-management-system-main",
         mediaType: "image",
-        src: encodeURI("/images/Additional work/Project Management system.png"),
+        src: encodeURI("/images/Additional work/Project Management system v3.png"),
         alt: "Project management system task table interface",
       },
     ],
@@ -79,7 +79,20 @@ const ADDITIONAL_WORK_ITEMS: AdditionalWorkItem[] = [
     mediaType: "image",
     mediaSrc: encodeURI("/images/Additional work/Elder Care Cover.png"),
     thumbnailAlt: "Elder Care project placeholder cover",
-    slides: [],
+    slides: [
+      {
+        id: "elder-care-video",
+        mediaType: "video",
+        src: encodeURI("/videos/Additional work/Elder Care  video.mp4"),
+        alt: "Elder Care mobile app walkthrough video",
+      },
+      {
+        id: "elder-care-screens",
+        mediaType: "image",
+        src: encodeURI("/images/Additional work/Elder Care screens v2.png"),
+        alt: "Elder Care mobile app screens overview",
+      },
+    ],
     tags: [
       "Mobile App",
       "Healthcare",
@@ -228,7 +241,9 @@ export function AdditionalWorkSection() {
                       src={item.mediaSrc}
                       alt={item.thumbnailAlt}
                       fill
-                      sizes="(max-width: 768px) 78vw, (max-width: 1200px) 38vw, 29vw"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    quality={100}
+                    unoptimized
                       className="additional-work__thumb-media"
                     />
                   ) : (
@@ -303,6 +318,8 @@ export function AdditionalWorkSection() {
                         alt={activeSlide.alt}
                         fill
                         sizes="(max-width: 1200px) 90vw, 72vw"
+                        quality={100}
+                        unoptimized
                         className="additional-work-modal__media-item"
                       />
                     ) : activeSlide ? (
