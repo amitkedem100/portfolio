@@ -63,6 +63,12 @@ const ADDITIONAL_WORK_ITEMS: AdditionalWorkItem[] = [
     thumbnailAlt: "Construction project planning cover image",
     slides: [
       {
+        id: "project-management-system-video",
+        mediaType: "video",
+        src: encodeURI("/videos/Additional work/Efrati Video.mp4"),
+        alt: "Project management system walkthrough video",
+      },
+      {
         id: "project-management-system-main",
         mediaType: "image",
         src: encodeURI("/images/Additional work/Project Management system v3 cb1.png"),
@@ -81,16 +87,16 @@ const ADDITIONAL_WORK_ITEMS: AdditionalWorkItem[] = [
     thumbnailAlt: "Elder Care project placeholder cover",
     slides: [
       {
-        id: "elder-care-video",
-        mediaType: "video",
-        src: encodeURI("/videos/Additional work/Elder Care  video.mp4"),
-        alt: "Elder Care mobile app walkthrough video",
-      },
-      {
         id: "elder-care-screens",
         mediaType: "image",
         src: encodeURI("/images/Additional work/Elder Care screens v2 cb1.png"),
         alt: "Elder Care mobile app screens overview",
+      },
+      {
+        id: "elder-care-video",
+        mediaType: "video",
+        src: encodeURI("/videos/Additional work/Elder Care  video.mp4"),
+        alt: "Elder Care mobile app walkthrough video",
       },
     ],
     tags: [
@@ -308,10 +314,11 @@ export function AdditionalWorkSection() {
               <div className="additional-work-modal__media-area">
                 <div
                   className="additional-work-modal__media-carousel"
+                  ref={mediaFrameRef}
                   onTouchStart={onMediaTouchStart}
                   onTouchEnd={onMediaTouchEnd}
                 >
-                  <div className="additional-work-modal__media" ref={mediaFrameRef}>
+                  <div className="additional-work-modal__media">
                     {activeSlide?.mediaType === "image" ? (
                       <Image
                         src={activeSlide.src}
@@ -351,6 +358,17 @@ export function AdditionalWorkSection() {
                         alt=""
                         aria-hidden
                       />
+                    </button>
+                  ) : null}
+
+                  {isMobileViewport ? (
+                    <button
+                      type="button"
+                      className="additional-work-modal__fullscreen-close"
+                      onClick={toggleFullscreen}
+                      aria-label="Exit fullscreen"
+                    >
+                      ×
                     </button>
                   ) : null}
 
