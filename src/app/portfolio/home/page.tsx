@@ -22,7 +22,7 @@ export default function PortfolioHomePage() {
             title="Astra"
             description="A safety intelligence platform designed to monitor, analyze, and improve construction site safety through AI-driven insights and real-time reporting."
             keywords="SaaS Platform · Safety Analytics · AI Monitoring · 2026"
-            imageSrc="/images/SaaS/astra-card-cover.png"
+            imageSrc="/images/SaaS/astra-card-cover-v2.png"
             imageAlt="Astra project"
             href="/portfolio/saas"
             imagePosition="right"
