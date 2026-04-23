@@ -8,6 +8,9 @@ const DESKTOP_MEDIA = "(min-width: 769px)";
 const REDUCED_MOTION_MEDIA = "(prefers-reduced-motion: reduce)";
 const LERP_FACTOR = 0.18;
 const VIEW_PROJECT_CONTENT_DELAY = 180;
+const HERO_GIANT_SCALE = 1.78;
+const HERO_GIANT_RADIUS = 120;
+const HERO_GIANT_X_OFFSET = 0;
 
 export function PortfolioCursor() {
   const { variant } = useCursorContext();
@@ -16,9 +19,12 @@ export function PortfolioCursor() {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isViewProjectContentVisible, setIsViewProjectContentVisible] =
     useState(false);
+  const [heroRect, setHeroRect] = useState<DOMRect | null>(null);
   const targetRef = useRef({ x: 0, y: 0 });
   const displayRef = useRef({ x: 0, y: 0 });
   const hasInitialPositionRef = useRef(false);
+  const heroSourceRef = useRef<HTMLElement | null>(null);
+  const heroLensSceneRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const mq = window.matchMedia(DESKTOP_MEDIA);
@@ -71,6 +77,7 @@ export function PortfolioCursor() {
   }, [isDesktop]);
 
   const isViewProject = variant === "viewProject";
+  const isHeroGiant = variant === "heroGiant";
 
   useEffect(() => {
     let timeoutId: number | undefined;
@@ -91,7 +98,45 @@ export function PortfolioCursor() {
     };
   }, [isViewProject]);
 
+  useEffect(() => {
+    if (!isDesktop || !isHeroGiant) return;
+
+    const hero = document.querySelector(".home-hero-inner") as HTMLElement | null;
+    heroSourceRef.current = hero;
+    if (!hero) return;
+
+    const updateRect = () => {
+      setHeroRect(hero.getBoundingClientRect());
+    };
+
+    updateRect();
+    window.addEventListener("resize", updateRect);
+    window.addEventListener("scroll", updateRect, { passive: true });
+    return () => {
+      window.removeEventListener("resize", updateRect);
+      window.removeEventListener("scroll", updateRect);
+    };
+  }, [isDesktop, isHeroGiant]);
+
+  useEffect(() => {
+    if (!isHeroGiant) return;
+    const source = heroSourceRef.current;
+    const scene = heroLensSceneRef.current;
+    if (!source || !scene) return;
+
+    scene.innerHTML = "";
+    const clone = source.cloneNode(true) as HTMLElement;
+    clone.classList.add("portfolio-cursor-hero-clone");
+    scene.appendChild(clone);
+  }, [isHeroGiant, heroRect]);
+
   if (!isDesktop || prefersReducedMotion) return null;
+
+  const heroLocalX = heroRect ? position.x - heroRect.left : 0;
+  const heroLocalY = heroRect ? position.y - heroRect.top : 0;
+  const heroSceneTranslateX =
+    HERO_GIANT_RADIUS - heroLocalX * HERO_GIANT_SCALE + HERO_GIANT_X_OFFSET;
+  const heroSceneTranslateY = HERO_GIANT_RADIUS - heroLocalY * HERO_GIANT_SCALE;
 
   return (
     <div
@@ -102,6 +147,19 @@ export function PortfolioCursor() {
       }}
       aria-hidden
     >
+      {isHeroGiant && heroRect && (
+        <div className="portfolio-cursor-hero-lens" aria-hidden>
+          <div
+            ref={heroLensSceneRef}
+            className="portfolio-cursor-hero-lens-scene"
+            style={{
+              width: `${heroRect.width}px`,
+              height: `${heroRect.height}px`,
+              transform: `translate(${heroSceneTranslateX}px, ${heroSceneTranslateY}px) scale(${HERO_GIANT_SCALE})`,
+            }}
+          />
+        </div>
+      )}
       {isViewProject && isViewProjectContentVisible && (
         <div className="portfolio-cursor-view-inner">
           <span className="portfolio-cursor-view-label">VIEW PROJECT</span>

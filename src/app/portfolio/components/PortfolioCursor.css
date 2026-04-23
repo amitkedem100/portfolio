@@ -48,6 +48,66 @@
     opacity 0.16s ease;
 }
 
+.portfolio-cursor[data-variant="heroGiant"] {
+  width: 240px;
+  height: 240px;
+  margin-left: -120px;
+  margin-top: -120px;
+  background: color-mix(in srgb, var(--background) 18%, transparent);
+  border: 0px solid color-mix(in srgb, #ffffff 48%, transparent);
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.45),
+    inset 0 -20px 32px rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px) saturate(1.35) contrast(1.1);
+  -webkit-backdrop-filter: blur(12px) saturate(1.35) contrast(1.1);
+  overflow: hidden;
+  opacity: 1;
+}
+
+.portfolio-cursor-hero-lens {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--background);
+}
+
+.portfolio-cursor-hero-lens-scene {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: top left;
+  will-change: transform;
+}
+
+.portfolio-cursor-hero-clone {
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background: var(--accent);
+  text-align: center;
+}
+
+.portfolio-cursor-hero-clone .home-hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.portfolio-cursor[data-variant="heroGiant"]::before {
+  content: "";
+  position: absolute;
+  inset: -12%;
+  border-radius: 50%;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 34% 30%, rgba(255, 255, 255, 0.36), rgba(255, 255, 255, 0) 48%),
+    radial-gradient(circle at 68% 70%, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0) 54%);
+  mix-blend-mode: screen;
+  transform: scale(1.06);
+}
+
 .portfolio-cursor-view-inner {
   display: flex;
   flex-direction: column;

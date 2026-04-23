@@ -6,6 +6,11 @@
   max-height: 100vh;
   text-align: center;
   justify-content: flex-start;
+  cursor: default;
+}
+
+.home-hero * {
+  cursor: default;
 }
 
 .home-hero-inner {

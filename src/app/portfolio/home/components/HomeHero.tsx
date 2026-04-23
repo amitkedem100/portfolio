@@ -1,11 +1,20 @@
+"use client";
+
 import "./HomeHero.css";
+import { useCursorContext } from "@/app/portfolio/context/CursorContext";
 
 /* Subtitle: replace with intro from content/CMS when available */
 const HERO_SUBTITLE = "Creative Product Designer blending UX, UI and system thinking. I turn complex ideas into clear, functional digital products.";
 export function HomeHero() {
+  const { setVariant } = useCursorContext();
+
   return (
     <header className="home-hero">
-      <div className="home-hero-inner">
+      <div
+        className="home-hero-inner"
+        onMouseEnter={() => setVariant("heroGiant")}
+        onMouseLeave={() => setVariant("default")}
+      >
         <div className="home-hero-spacer" aria-hidden />
         <div className="home-hero-content">
           <h1 className="home-hero-title">Hi! I&apos;m Amit</h1>
