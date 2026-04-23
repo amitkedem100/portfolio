@@ -84,7 +84,7 @@
 /* Desktop/tablet: badges sit between title and description */
 @media (min-width: 769px) {
   .project-card-link[href="/portfolio/basilar"] .project-card-image {
-    object-position: center 18%;
+    object-position: center 70%;
   }
 
   .project-card-title {

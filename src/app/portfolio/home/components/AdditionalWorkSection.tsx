@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -11,7 +12,8 @@ type AdditionalWorkItem = {
   title: string;
   description: string;
   mediaType: "image" | "video";
-  mediaSrc: string;
+  mediaSrcLight: string;
+  mediaSrcDark: string;
   thumbnailAlt: string;
   slides: Array<{
     id: string;
@@ -29,7 +31,8 @@ const ADDITIONAL_WORK_ITEMS: AdditionalWorkItem[] = [
     description:
       "A system designed for a security services company to manage technician tasks with clarity and control.\n\nThe goal was to reduce missed assignments and improve daily operations through a structured, real-time workflow. A bottom panel provides quick access to task details, while a map-based schedule view allows tracking routes, timing, and on-site activity, supporting efficient, day-to-day technician management.",
     mediaType: "image",
-    mediaSrc: encodeURI("/images/Additional work/TechTasks Cover cb1.png"),
+    mediaSrcLight: encodeURI("/images/Additional work/TechTasks Cover light.png"),
+    mediaSrcDark: encodeURI("/images/Additional work/TechTasks Cover dark.png"),
     thumbnailAlt: "Tech Tasks dashboard preview",
     slides: [
       {
@@ -59,7 +62,8 @@ const ADDITIONAL_WORK_ITEMS: AdditionalWorkItem[] = [
     description:
       "A custom internal system designed for a construction company to manage large-scale projects and complex workflows.\n\nThe platform addresses the challenge of fragmented information and poor coordination across teams. By centralizing data, improving visibility, and enabling structured collaboration, it transforms an otherwise chaotic process into a controlled and efficient operation.\n\nThe result is better tracking, clearer decision-making, and more effective teamwork across ongoing projects.",
     mediaType: "image",
-    mediaSrc: encodeURI("/images/Additional work/Project Management cover cb1.png"),
+    mediaSrcLight: encodeURI("/images/Additional work/Project Management cover light.png"),
+    mediaSrcDark: encodeURI("/images/Additional work/Project Management cover dark.png"),
     thumbnailAlt: "Construction project planning cover image",
     slides: [
       {
@@ -83,7 +87,8 @@ const ADDITIONAL_WORK_ITEMS: AdditionalWorkItem[] = [
     description:
       "A mobile app designed to support daily coordination between families and caregivers.\n\nIn emotionally sensitive environments, where communication gaps and blurred responsibilities are common, the system creates clarity through structured task management, shared updates, and clear expectations. It helps reduce friction, ensure critical information is not missed, and maintain a balanced, respectful relationship between all sides involved in care.",
     mediaType: "image",
-    mediaSrc: encodeURI("/images/Additional work/Elder Care Cover cb1.png"),
+    mediaSrcLight: encodeURI("/images/Additional work/Elder Care cover light.png"),
+    mediaSrcDark: encodeURI("/images/Additional work/Elder Care cover dark.png"),
     thumbnailAlt: "Elder Care project placeholder cover",
     slides: [
       {
@@ -115,6 +120,7 @@ export function AdditionalWorkSection() {
   const [touchStartX, setTouchStartX] = useState<number | null>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isMobileViewport, setIsMobileViewport] = useState(false);
+  const [isDarkTheme, setIsDarkTheme] = useState(false);
   const mediaFrameRef = useRef<HTMLDivElement>(null);
 
   const activeItem = useMemo(
@@ -148,6 +154,18 @@ export function AdditionalWorkSection() {
     return () => {
       document.removeEventListener("fullscreenchange", onFullscreenChange);
     };
+  }, []);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    const updateThemeState = () => {
+      setIsDarkTheme(root.dataset.theme === "dark");
+    };
+
+    updateThemeState();
+    const observer = new MutationObserver(updateThemeState);
+    observer.observe(root, { attributes: true, attributeFilter: ["data-theme"] });
+    return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
@@ -230,7 +248,9 @@ export function AdditionalWorkSection() {
 
       <div className="additional-work__rail-wrap">
         <div className="additional-work__rail">
-          {ADDITIONAL_WORK_ITEMS.map((item) => (
+          {ADDITIONAL_WORK_ITEMS.map((item) => {
+            const cardMediaSrc = isDarkTheme ? item.mediaSrcDark : item.mediaSrcLight;
+            return (
             <CursorZone key={item.id} variant="viewProject">
               <button
                 type="button"
@@ -244,7 +264,7 @@ export function AdditionalWorkSection() {
                 <div className="additional-work__thumb">
                   {item.mediaType === "image" ? (
                     <Image
-                      src={item.mediaSrc}
+                      src={cardMediaSrc}
                       alt={item.thumbnailAlt}
                       fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
@@ -255,7 +275,7 @@ export function AdditionalWorkSection() {
                   ) : (
                     <video
                       className="additional-work__thumb-media"
-                      src={item.mediaSrc}
+                      src={cardMediaSrc}
                       muted
                       loop
                       playsInline
@@ -276,7 +296,7 @@ export function AdditionalWorkSection() {
                 </div>
               </button>
             </CursorZone>
-          ))}
+          )})}
         </div>
       </div>
 
