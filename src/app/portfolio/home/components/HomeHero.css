@@ -148,6 +148,7 @@ html[data-theme="dark"] .hero-rulers__indicator--y {
 @media (max-width: 1024px) {
   .home-hero-inner {
     margin-top: 64px;
+    overflow: hidden;
   }
   .home-hero-title {
     font-size: 40px;
@@ -161,6 +162,7 @@ html[data-theme="dark"] .hero-rulers__indicator--y {
 @media (max-width: 768px) {
   .home-hero-inner {
     margin-top: 40px;
+    overflow: hidden;
   }
   .home-hero-title {
     font-size: 28px;
@@ -168,6 +170,7 @@ html[data-theme="dark"] .hero-rulers__indicator--y {
   }
   .home-hero-subtitle {
     font-size: 16px;
+  max-width: 80vw;
   }
   .home-hero-arrow {
     padding-bottom: 12px;

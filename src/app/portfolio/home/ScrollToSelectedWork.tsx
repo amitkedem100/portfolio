@@ -37,6 +37,13 @@ function clearWorkNavScrollFlag() {
 export function ScrollToSelectedWork() {
   const pathname = usePathname();
 
+  useLayoutEffect(() => {
+    if (pathname !== HOME_PATH) return;
+    if (readWorkNavScrollFlag()) return;
+    if (window.location.hash.replace(/^#/, "") === SELECTED_WORK_ID) return;
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  }, [pathname]);
+
   /* Drop stale flag when leaving home (user navigated away before delayed scroll). */
   useEffect(() => {
     if (pathname === HOME_PATH) return;

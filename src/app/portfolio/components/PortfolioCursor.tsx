@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import { useCursorContext } from "../context/CursorContext";
 import "./PortfolioCursor.css";
 
@@ -13,12 +14,19 @@ const HERO_GIANT_SCALE = 1.78;
 const HERO_GIANT_RADIUS_DESKTOP = 120;
 const HERO_GIANT_RADIUS_MOBILE = 72;
 const HERO_GIANT_X_OFFSET = 0;
-const MOBILE_HERO_LERP_FACTOR = 0.16;
-const MOBILE_HERO_INITIAL_X_RATIO = 0.58;
-const MOBILE_HERO_INITIAL_Y_RATIO = 0.56;
+const MOBILE_HERO_LERP_FACTOR = 0.05;
+const MOBILE_HERO_AUTOPLAY_START_DELAY_MS = 3000;
+const MOBILE_HERO_AUTOPLAY_STEP_MS = 2300;
+const MOBILE_HERO_AUTOPLAY_POINTS = [
+  { x: 129, y: 224 }, // first
+  { x: 290, y: 273 }, // second
+  { x: 345, y: 100 }, // third (last)
+] as const;
+const HOME_PATH = "/portfolio/home";
 
 export function PortfolioCursor() {
   const { variant } = useCursorContext();
+  const pathname = usePathname();
   const [isDesktop, setIsDesktop] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
@@ -33,6 +41,7 @@ export function PortfolioCursor() {
   const hasInitialPositionRef = useRef(false);
   const mobileDisplayRef = useRef<{ x: number; y: number } | null>(null);
   const mobileTargetRef = useRef<{ x: number; y: number } | null>(null);
+  const mobileAutoPlayTimeoutsRef = useRef<number[]>([]);
   const heroSourceRef = useRef<HTMLElement | null>(null);
   const heroLensSceneRef = useRef<HTMLDivElement | null>(null);
 
@@ -96,7 +105,8 @@ export function PortfolioCursor() {
 
   const isViewProject = variant === "viewProject";
   const isHeroGiant = variant === "heroGiant";
-  const isMobileHeroLensActive = isMobile && mobileHeroPosition !== null;
+  const isHomePath = pathname === HOME_PATH;
+  const isMobileHeroLensActive = isMobile && isHomePath && mobileHeroPosition !== null;
   const isHeroLensActive = isHeroGiant || isMobileHeroLensActive;
 
   const updateHeroLensCssVars = (localPosition: { x: number; y: number } | null) => {
@@ -151,61 +161,106 @@ export function PortfolioCursor() {
   }, [isDesktop, isMobile, isHeroLensActive]);
 
   useEffect(() => {
-    if (!isMobile) return;
-    const hero = document.querySelector(".home-hero-inner") as HTMLElement | null;
-    if (!hero) {
-      mobileDisplayRef.current = null;
-      mobileTargetRef.current = null;
-      setMobileHeroPosition(null);
-      setMobileHeroTarget(null);
-      updateHeroLensCssVars(null);
-      return;
-    }
-
-    const setInitialLensPoint = () => {
-      const rect = hero.getBoundingClientRect();
-      const next = {
-        x: rect.width * MOBILE_HERO_INITIAL_X_RATIO,
-        y: rect.height * MOBILE_HERO_INITIAL_Y_RATIO,
-      };
-      mobileDisplayRef.current = next;
-      mobileTargetRef.current = next;
-      setMobileHeroPosition(next);
-      setMobileHeroTarget(next);
-      updateHeroLensCssVars(next);
-    };
-
-    setInitialLensPoint();
-    window.addEventListener("resize", setInitialLensPoint);
-    return () => {
-      window.removeEventListener("resize", setInitialLensPoint);
-      updateHeroLensCssVars(null);
-    };
-  }, [isMobile]);
+    if (isHomePath) return;
+    mobileAutoPlayTimeoutsRef.current.forEach((id) => window.clearTimeout(id));
+    mobileAutoPlayTimeoutsRef.current = [];
+    mobileDisplayRef.current = null;
+    mobileTargetRef.current = null;
+    setMobileHeroPosition(null);
+    setMobileHeroTarget(null);
+    updateHeroLensCssVars(null);
+  }, [isHomePath]);
 
   useEffect(() => {
-    if (!isMobile) return;
+    if (!isMobile || !isHomePath) return;
+
+    let rafId = 0;
+    mobileAutoPlayTimeoutsRef.current.forEach((id) => window.clearTimeout(id));
+    mobileAutoPlayTimeoutsRef.current = [];
+
+    const clampToHero = (
+      rect: DOMRect,
+      point: { x: number; y: number },
+    ) => ({
+      x: Math.max(0, Math.min(rect.width, point.x)),
+      y: Math.max(0, Math.min(rect.height, point.y)),
+    });
+
+    const setLensTarget = (point: { x: number; y: number }) => {
+      mobileTargetRef.current = point;
+      setMobileHeroTarget(point);
+    };
+
+    const setInitialLensPoint = () => {
+      const mountedHero = document.querySelector(".home-hero-inner") as HTMLElement | null;
+      if (!mountedHero) return false;
+      if (!isHomePath) return false;
+      const rect = mountedHero.getBoundingClientRect();
+      const [firstRaw, secondRaw, thirdRaw] = MOBILE_HERO_AUTOPLAY_POINTS;
+      const first = clampToHero(rect, firstRaw);
+      const second = clampToHero(rect, secondRaw);
+      const third = clampToHero(rect, thirdRaw);
+
+      mobileDisplayRef.current = first;
+      setMobileHeroPosition(first);
+      updateHeroLensCssVars(first);
+      setLensTarget(first);
+
+      const t1 = window.setTimeout(
+        () => setLensTarget(second),
+        MOBILE_HERO_AUTOPLAY_START_DELAY_MS,
+      );
+      const t2 = window.setTimeout(
+        () => setLensTarget(third),
+        MOBILE_HERO_AUTOPLAY_START_DELAY_MS + MOBILE_HERO_AUTOPLAY_STEP_MS,
+      );
+      mobileAutoPlayTimeoutsRef.current = [t1, t2];
+      return true;
+    };
+
+    const initWhenReady = () => {
+      const done = setInitialLensPoint();
+      if (!done) {
+        rafId = requestAnimationFrame(initWhenReady);
+      }
+    };
+
+    initWhenReady();
+    window.addEventListener("resize", initWhenReady);
+    return () => {
+      cancelAnimationFrame(rafId);
+      mobileAutoPlayTimeoutsRef.current.forEach((id) => window.clearTimeout(id));
+      mobileAutoPlayTimeoutsRef.current = [];
+      window.removeEventListener("resize", initWhenReady);
+      updateHeroLensCssVars(null);
+    };
+  }, [isMobile, isHomePath]);
+
+  useEffect(() => {
+    if (!isMobile || !isHomePath) return;
     const hero = document.querySelector(".home-hero-inner") as HTMLElement | null;
     if (!hero) return;
 
     const onTap = (event: PointerEvent) => {
+      mobileAutoPlayTimeoutsRef.current.forEach((id) => window.clearTimeout(id));
+      mobileAutoPlayTimeoutsRef.current = [];
       const rect = hero.getBoundingClientRect();
-      const nextTarget = {
+      const next = {
         x: Math.max(0, Math.min(rect.width, event.clientX - rect.left)),
         y: Math.max(0, Math.min(rect.height, event.clientY - rect.top)),
       };
-      mobileTargetRef.current = nextTarget;
-      setMobileHeroTarget(nextTarget);
+      mobileTargetRef.current = next;
+      setMobileHeroTarget(next);
       if (!mobileDisplayRef.current) {
-        mobileDisplayRef.current = nextTarget;
-        setMobileHeroPosition(nextTarget);
-        updateHeroLensCssVars(nextTarget);
+        mobileDisplayRef.current = next;
+        setMobileHeroPosition(next);
+        updateHeroLensCssVars(next);
       }
     };
 
     hero.addEventListener("pointerdown", onTap, { passive: true });
     return () => hero.removeEventListener("pointerdown", onTap);
-  }, [isMobile]);
+  }, [isMobile, isHomePath]);
 
   useEffect(() => {
     if (!isMobile || !mobileHeroTarget) return;
