@@ -41,6 +41,7 @@ export function PortfolioHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [workDropdownOpen, setWorkDropdownOpen] = useState(false);
   const [retracted, setRetracted] = useState(false);
+  const [isAdditionalWorkModalOpen, setIsAdditionalWorkModalOpen] = useState(false);
   const [menuPortalEl, setMenuPortalEl] = useState<HTMLElement | null>(null);
   const lastScrollY = useRef(0);
   const trendPx = useRef(0);
@@ -124,6 +125,17 @@ export function PortfolioHeader() {
   const closeMenu = () => setMenuOpen(false);
 
   useEffect(() => {
+    const updateModalState = () => {
+      setIsAdditionalWorkModalOpen(Boolean(document.querySelector(".additional-work-modal")));
+    };
+
+    updateModalState();
+    const observer = new MutationObserver(updateModalState);
+    observer.observe(document.body, { childList: true, subtree: true });
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
     if (!menuOpen) return;
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape") closeMenu();
@@ -177,10 +189,16 @@ export function PortfolioHeader() {
   }, [menuOpen]);
 
   useEffect(() => {
+    if (!isAdditionalWorkModalOpen) return;
+    setRetracted(true);
+    trendPx.current = 0;
+  }, [isAdditionalWorkModalOpen]);
+
+  useEffect(() => {
     lastScrollY.current = typeof window !== "undefined" ? window.scrollY : 0;
 
     const onScroll = () => {
-      if (menuOpen) return;
+      if (menuOpen || isAdditionalWorkModalOpen) return;
 
       const y = window.scrollY ?? document.documentElement.scrollTop;
 
@@ -214,7 +232,7 @@ export function PortfolioHeader() {
 
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, [menuOpen]);
+  }, [menuOpen, isAdditionalWorkModalOpen]);
 
   const desktopWorkNav = (
     <li className="portfolio-header-nav-item portfolio-header-nav-item--work">

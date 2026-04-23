@@ -289,6 +289,10 @@ html[data-theme="dark"] .additional-work-modal__media-carousel::before {
   image-rendering: crisp-edges;
 }
 
+.additional-work-modal__media-carousel:fullscreen .additional-work-modal__fullscreen {
+  display: none;
+}
+
 .additional-work-modal__media-carousel:-webkit-full-screen {
   width: 100vw;
   height: 100vh;
@@ -316,6 +320,10 @@ html[data-theme="dark"] .additional-work-modal__media-carousel::before {
   object-fit: contain;
   image-rendering: -webkit-optimize-contrast;
   image-rendering: crisp-edges;
+}
+
+.additional-work-modal__media-carousel:-webkit-full-screen .additional-work-modal__fullscreen {
+  display: none;
 }
 
 .additional-work-modal__media-nav {

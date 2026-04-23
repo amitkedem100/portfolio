@@ -15,7 +15,7 @@ const HERO_GIANT_RADIUS_DESKTOP = 120;
 const HERO_GIANT_RADIUS_MOBILE = 72;
 const HERO_GIANT_X_OFFSET = 0;
 const MOBILE_HERO_LERP_FACTOR = 0.05;
-const MOBILE_HERO_AUTOPLAY_START_DELAY_MS = 3000;
+const MOBILE_HERO_AUTOPLAY_START_DELAY_MS = 2200;
 const MOBILE_HERO_AUTOPLAY_STEP_MS = 2300;
 const MOBILE_HERO_AUTOPLAY_POINTS = [
   { x: 129, y: 224 }, // first
@@ -238,13 +238,14 @@ export function PortfolioCursor() {
 
   useEffect(() => {
     if (!isMobile || !isHomePath) return;
-    const hero = document.querySelector(".home-hero-inner") as HTMLElement | null;
-    if (!hero) return;
+    let mountedHero: HTMLElement | null = null;
+    let rafId = 0;
 
     const onTap = (event: PointerEvent) => {
+      if (!mountedHero) return;
       mobileAutoPlayTimeoutsRef.current.forEach((id) => window.clearTimeout(id));
       mobileAutoPlayTimeoutsRef.current = [];
-      const rect = hero.getBoundingClientRect();
+      const rect = mountedHero.getBoundingClientRect();
       const next = {
         x: Math.max(0, Math.min(rect.width, event.clientX - rect.left)),
         y: Math.max(0, Math.min(rect.height, event.clientY - rect.top)),
@@ -258,8 +259,21 @@ export function PortfolioCursor() {
       }
     };
 
-    hero.addEventListener("pointerdown", onTap, { passive: true });
-    return () => hero.removeEventListener("pointerdown", onTap);
+    const tryAttach = () => {
+      const hero = document.querySelector(".home-hero-inner") as HTMLElement | null;
+      if (!hero) {
+        rafId = requestAnimationFrame(tryAttach);
+        return;
+      }
+      mountedHero = hero;
+      mountedHero.addEventListener("pointerdown", onTap, { passive: true });
+    };
+
+    tryAttach();
+    return () => {
+      cancelAnimationFrame(rafId);
+      mountedHero?.removeEventListener("pointerdown", onTap);
+    };
   }, [isMobile, isHomePath]);
 
   useEffect(() => {
