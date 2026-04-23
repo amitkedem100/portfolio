@@ -135,4 +135,13 @@ html.saas-project:not([data-cursor-global-accent]) .portfolio-cursor {
   background: var(--cursor-accent, var(--accent));
 }
 
+@media (max-width: 768px) {
+  .portfolio-cursor[data-variant="heroGiant"] {
+    width: 144px;
+    height: 144px;
+    margin-left: -72px;
+    margin-top: -72px;
+  }
+}
+
 

@@ -74,6 +74,13 @@
   --theme-toggle-sun-bg: #F6C945;
   --theme-toggle-moon-bg: #4C6FFF;
 
+  /* Hero ruler tokens (light defaults) */
+  --hero-ruler-bg: #e9e9e9;
+  --hero-ruler-border: #cfcfcf;
+  --hero-ruler-tick: #a3a3a3;
+  --hero-ruler-label: #8d8d8d;
+  --hero-ruler-indicator: #ff5722;
+
   /* Project page textual sections — intro line measure (inner wrapper is width: 100%) */
   --project-text-intro-max-width: 760px;
   /* Dense body copy — opt-in via .project-text-section-inner--prose or local max-width */
@@ -174,6 +181,11 @@ html[data-theme="dark"] {
   --ia-interaction-hint-icon-mobile: url("/swipe%20inverted.svg");
   --text-primary: var(--text-primary-dark);
   --text-secondary: var(--text-secondary-dark);
+  --hero-ruler-bg: #1e1e1e;
+  --hero-ruler-border: #333333;
+  --hero-ruler-tick: #666666;
+  --hero-ruler-label: #888888;
+  --hero-ruler-indicator: #ff5722;
 }
 
 html[data-theme="dark"] {

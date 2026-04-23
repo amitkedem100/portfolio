@@ -25,9 +25,19 @@ export function HeroRulers({ hostRef }: HeroRulersProps) {
   const topCanvasRef = useRef<HTMLCanvasElement | null>(null);
   const leftCanvasRef = useRef<HTMLCanvasElement | null>(null);
   const [cursorPosition, setCursorPosition] = useState<{ x: number; y: number } | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 768px)");
+    const handler = () => setIsMobile(mq.matches);
+    handler();
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
 
   useEffect(() => {
     const host = hostRef.current;
+    const root = document.documentElement;
     const topCanvas = topCanvasRef.current;
     const leftCanvas = leftCanvasRef.current;
     if (!host || !topCanvas || !leftCanvas) return;
@@ -36,22 +46,27 @@ export function HeroRulers({ hostRef }: HeroRulersProps) {
       const rect = host.getBoundingClientRect();
       const topWidth = Math.max(0, rect.width - RULER_SIZE);
       const leftHeight = Math.max(0, rect.height - RULER_SIZE);
+      const styles = getComputedStyle(root);
+      const rulerBg = styles.getPropertyValue("--hero-ruler-bg").trim() || "#1e1e1e";
+      const rulerBorder = styles.getPropertyValue("--hero-ruler-border").trim() || "#333333";
+      const rulerTick = styles.getPropertyValue("--hero-ruler-tick").trim() || "#666666";
+      const rulerLabel = styles.getPropertyValue("--hero-ruler-label").trim() || "#888888";
 
       const topCtx = setupHiDpiCanvas(topCanvas, topWidth, RULER_SIZE);
       const leftCtx = setupHiDpiCanvas(leftCanvas, RULER_SIZE, leftHeight);
       if (!topCtx || !leftCtx) return;
 
       topCtx.clearRect(0, 0, topWidth, RULER_SIZE);
-      topCtx.fillStyle = "#1E1E1E";
+      topCtx.fillStyle = rulerBg;
       topCtx.fillRect(0, 0, topWidth, RULER_SIZE);
-      topCtx.strokeStyle = "#333333";
+      topCtx.strokeStyle = rulerBorder;
       topCtx.beginPath();
       topCtx.moveTo(0, RULER_SIZE - 0.5);
       topCtx.lineTo(topWidth, RULER_SIZE - 0.5);
       topCtx.stroke();
 
-      topCtx.strokeStyle = "#666666";
-      topCtx.fillStyle = "#888888";
+      topCtx.strokeStyle = rulerTick;
+      topCtx.fillStyle = rulerLabel;
       topCtx.font = "9px monospace";
       topCtx.textBaseline = "top";
       for (let x = 0; x <= topWidth; x += STEP) {
@@ -68,16 +83,16 @@ export function HeroRulers({ hostRef }: HeroRulersProps) {
       }
 
       leftCtx.clearRect(0, 0, RULER_SIZE, leftHeight);
-      leftCtx.fillStyle = "#1E1E1E";
+      leftCtx.fillStyle = rulerBg;
       leftCtx.fillRect(0, 0, RULER_SIZE, leftHeight);
-      leftCtx.strokeStyle = "#333333";
+      leftCtx.strokeStyle = rulerBorder;
       leftCtx.beginPath();
       leftCtx.moveTo(RULER_SIZE - 0.5, 0);
       leftCtx.lineTo(RULER_SIZE - 0.5, leftHeight);
       leftCtx.stroke();
 
-      leftCtx.strokeStyle = "#666666";
-      leftCtx.fillStyle = "#888888";
+      leftCtx.strokeStyle = rulerTick;
+      leftCtx.fillStyle = rulerLabel;
       leftCtx.font = "9px monospace";
       for (let y = 0; y <= leftHeight; y += STEP) {
         const is100 = y % 100 === 0;
@@ -101,8 +116,14 @@ export function HeroRulers({ hostRef }: HeroRulersProps) {
     const resizeObserver = new ResizeObserver(drawRulers);
     resizeObserver.observe(host);
     window.addEventListener("resize", drawRulers);
+    const themeObserver = new MutationObserver(drawRulers);
+    themeObserver.observe(root, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    });
 
     const onPointerMove = (event: PointerEvent) => {
+      if (isMobile) return;
       const rect = host.getBoundingClientRect();
       const x = event.clientX - rect.left - RULER_SIZE;
       const y = event.clientY - rect.top - RULER_SIZE;
@@ -119,11 +140,37 @@ export function HeroRulers({ hostRef }: HeroRulersProps) {
 
     return () => {
       resizeObserver.disconnect();
+      themeObserver.disconnect();
       window.removeEventListener("resize", drawRulers);
       host.removeEventListener("pointermove", onPointerMove);
       host.removeEventListener("pointerleave", onPointerLeave);
     };
-  }, [hostRef]);
+  }, [hostRef, isMobile]);
+
+  useEffect(() => {
+    const host = hostRef.current;
+    if (!host || !isMobile) return;
+
+    let rafId = 0;
+    const syncFromHeroLens = () => {
+      const styles = getComputedStyle(host);
+      const lensX = parseFloat(styles.getPropertyValue("--hero-lens-x"));
+      const lensY = parseFloat(styles.getPropertyValue("--hero-lens-y"));
+      if (Number.isFinite(lensX) && Number.isFinite(lensY)) {
+        const rect = host.getBoundingClientRect();
+        setCursorPosition({
+          x: Math.max(0, Math.min(rect.width - RULER_SIZE, lensX - RULER_SIZE)),
+          y: Math.max(0, Math.min(rect.height - RULER_SIZE, lensY - RULER_SIZE)),
+        });
+      } else {
+        setCursorPosition(null);
+      }
+      rafId = requestAnimationFrame(syncFromHeroLens);
+    };
+
+    rafId = requestAnimationFrame(syncFromHeroLens);
+    return () => cancelAnimationFrame(rafId);
+  }, [hostRef, isMobile]);
 
   return (
     <div className="hero-rulers" aria-hidden>

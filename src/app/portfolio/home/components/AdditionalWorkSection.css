@@ -408,7 +408,7 @@ html[data-theme="dark"] .additional-work-modal__media-carousel::before {
   }
 
   .additional-work__card:hover .additional-work__thumb-media {
-    transform: scale(1.22);
+    transform: scale(1.52);
   }
 
   .additional-work__card-tags {

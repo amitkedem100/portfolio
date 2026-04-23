@@ -33,6 +33,9 @@
   inset: 0;
   z-index: 2;
   pointer-events: none;
+  --hero-ruler-bg-local: var(--hero-ruler-bg);
+  --hero-ruler-border-local: var(--hero-ruler-border);
+  --hero-ruler-indicator-local: var(--hero-ruler-indicator);
 }
 
 .hero-rulers__corner {
@@ -41,9 +44,9 @@
   left: 0;
   width: 25px;
   height: 25px;
-  background: #1e1e1e;
-  border-right: 1px solid #333333;
-  border-bottom: 1px solid #333333;
+  background: var(--hero-ruler-bg-local);
+  border-right: 1px solid var(--hero-ruler-border-local);
+  border-bottom: 1px solid var(--hero-ruler-border-local);
 }
 
 .hero-rulers__top {
@@ -53,8 +56,8 @@
   right: 0;
   height: 25px;
   overflow: hidden;
-  background: #1e1e1e;
-  border-bottom: 1px solid #333333;
+  background: var(--hero-ruler-bg-local);
+  border-bottom: 1px solid var(--hero-ruler-border-local);
 }
 
 .hero-rulers__left {
@@ -64,8 +67,8 @@
   bottom: 0;
   width: 25px;
   overflow: hidden;
-  background: #1e1e1e;
-  border-right: 1px solid #333333;
+  background: var(--hero-ruler-bg-local);
+  border-right: 1px solid var(--hero-ruler-border-local);
 }
 
 .hero-rulers__top canvas,
@@ -75,19 +78,26 @@
 
 .hero-rulers__indicator {
   position: absolute;
-  background: #ff5722;
-  box-shadow: 0 0 8px rgba(255, 87, 34, 0.6);
+  background: var(--hero-ruler-indicator-local);
 }
 
 .hero-rulers__indicator--x {
   top: 0;
-  width: 1px;
+  width: 2px;
   height: 100%;
 }
 
 .hero-rulers__indicator--y {
   left: 0;
   width: 100%;
+  height: 2px;
+}
+
+html[data-theme="dark"] .hero-rulers__indicator--x {
+  width: 1px;
+}
+
+html[data-theme="dark"] .hero-rulers__indicator--y {
   height: 1px;
 }
 
