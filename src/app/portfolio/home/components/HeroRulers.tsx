@@ -8,6 +8,7 @@ type HeroRulersProps = {
 
 const RULER_SIZE = 25;
 const STEP = 10;
+const MOBILE_VERTICAL_RULER_MARKER_Y_OFFSET = +40;
 
 function setupHiDpiCanvas(canvas: HTMLCanvasElement, width: number, height: number) {
   const ratio = window.devicePixelRatio || 1;
@@ -160,7 +161,13 @@ export function HeroRulers({ hostRef }: HeroRulersProps) {
         const rect = host.getBoundingClientRect();
         setCursorPosition({
           x: Math.max(0, Math.min(rect.width - RULER_SIZE, lensX - RULER_SIZE)),
-          y: Math.max(0, Math.min(rect.height - RULER_SIZE, lensY - RULER_SIZE)),
+          y: Math.max(
+            0,
+            Math.min(
+              rect.height - RULER_SIZE,
+              lensY - RULER_SIZE + MOBILE_VERTICAL_RULER_MARKER_Y_OFFSET
+            )
+          ),
         });
       } else {
         setCursorPosition(null);

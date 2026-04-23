@@ -14,6 +14,7 @@ import { SaasDashboardWidgetsSection } from "@/app/portfolio/saas/components/Saa
 import { SaasIncidentsSection } from "@/app/portfolio/saas/components/SaasIncidentsSection";
 import { SaasDesignSystemSection } from "@/app/portfolio/saas/components/SaasDesignSystemSection";
 import { SaasThanksSection } from "@/app/portfolio/saas/components/SaasThanksSection";
+import { ViewOtherProjectSection } from "@/app/portfolio/components/ViewOtherProjectSection";
 import "./page.css";
 
 export const metadata: Metadata = {
@@ -183,6 +184,8 @@ export default function SaasProjectPage() {
       <SaasDesignSystemSection />
 
       <SaasThanksSection />
+
+      <ViewOtherProjectSection currentProject="saas" />
     </div>
   );
 }

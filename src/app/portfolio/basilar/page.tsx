@@ -24,6 +24,7 @@ import { BasilarUserInterfaceSection } from "@/app/portfolio/basilar/components/
 import { BasilarWaveAFriendSection } from "@/app/portfolio/basilar/components/BasilarWaveAFriendSection";
 import { BasilarProductShowcase } from "@/app/portfolio/components/BasilarProductShowcase";
 import { ProjectVideoHero } from "@/app/portfolio/components/ProjectVideoHero";
+import { ViewOtherProjectSection } from "@/app/portfolio/components/ViewOtherProjectSection";
 
 export const metadata: Metadata = {
   title: "Basilar | Portfolio",
@@ -163,6 +164,8 @@ export default function BasilarProjectPage() {
       <BasilarStyleGuideSection />
 
       <BasilarThanksSection />
+
+      <ViewOtherProjectSection currentProject="basilar" />
     </div>
   );
 }

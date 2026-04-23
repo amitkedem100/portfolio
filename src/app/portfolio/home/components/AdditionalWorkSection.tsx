@@ -201,8 +201,7 @@ export function AdditionalWorkSection() {
   const safeSlideIndex =
     activeSlides.length === 0 ? 0 : Math.min(activeSlideIndex, activeSlides.length - 1);
   const activeSlide = activeSlides[safeSlideIndex] ?? null;
-  const showFullscreenButton =
-    activeSlide?.mediaType === "image" || (isMobileViewport && activeSlide?.mediaType === "video");
+  const showFullscreenButton = activeSlide?.mediaType === "image";
 
   const goToPrevSlide = () => {
     if (activeSlides.length <= 1) return;
@@ -255,7 +254,11 @@ export function AdditionalWorkSection() {
   };
 
   return (
-    <section className="home-page-section additional-work" aria-labelledby="additional-work-title">
+    <section
+      id="more-projects"
+      className="home-page-section additional-work"
+      aria-labelledby="additional-work-title"
+    >
       <header className="additional-work__header">
         <h2 id="additional-work-title" className="additional-work__title">
           More Projects

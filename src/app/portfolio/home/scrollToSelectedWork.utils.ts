@@ -1,9 +1,18 @@
 "use client";
 
 export const SELECTED_WORK_ID = "selected-work";
+export const MORE_PROJECTS_ID = "more-projects";
 
 export function scrollToSelectedWorkWithAnimation(durationMs = 1050) {
-  const target = document.getElementById(SELECTED_WORK_ID);
+  scrollToElementWithAnimation(SELECTED_WORK_ID, durationMs);
+}
+
+export function scrollToMoreProjectsWithAnimation(durationMs = 1050) {
+  scrollToElementWithAnimation(MORE_PROJECTS_ID, durationMs);
+}
+
+function scrollToElementWithAnimation(targetId: string, durationMs: number) {
+  const target = document.getElementById(targetId);
   if (!target) return;
 
   const startY = window.scrollY;
