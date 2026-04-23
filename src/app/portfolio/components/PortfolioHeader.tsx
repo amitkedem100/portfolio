@@ -8,6 +8,7 @@ import "./PortfolioHeader.css";
 import { CursorZone } from "./CursorZone";
 import { ThemeToggle } from "./ThemeToggle";
 import { SELECTED_WORK_SCROLL_FLAG_KEY } from "@/app/portfolio/home/ScrollToSelectedWork";
+import { scrollToSelectedWorkWithAnimation } from "@/app/portfolio/home/scrollToSelectedWork.utils";
 
 /* Cumulative scroll deltas — short downward burst hides bar; shorter upward burst shows (any page depth). */
 const SCROLL_DOWN_TO_HIDE_PX = 56;
@@ -15,16 +16,11 @@ const SCROLL_UP_TO_SHOW_PX = 28;
 const SCROLL_NEAR_TOP_PX = 12;
 
 const HOME_PATH = "/portfolio/home";
-const SELECTED_WORK_ID = "selected-work";
 
 const WORK_PROJECTS = [
   { label: "Astra", href: "/portfolio/saas" },
   { label: "Basilar", href: "/portfolio/basilar" },
 ] as const;
-
-function scrollToSelectedWorkSection() {
-  document.getElementById(SELECTED_WORK_ID)?.scrollIntoView({ behavior: "smooth", block: "start" });
-}
 
 function isWorkProjectPathActive(pathname: string, projectHref: string) {
   return pathname === projectHref || pathname.startsWith(`${projectHref}/`);
@@ -108,7 +104,7 @@ export function PortfolioHeader() {
 
   const handleWorkNavClick = () => {
     if (pathname === HOME_PATH) {
-      scrollToSelectedWorkSection();
+      scrollToSelectedWorkWithAnimation(1050);
       return;
     }
     try {

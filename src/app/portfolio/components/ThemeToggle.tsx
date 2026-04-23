@@ -12,24 +12,21 @@ export function ThemeToggle() {
   const handleClick = () => setTheme(isLight ? "dark" : "light");
 
   return (
-    <div
+    <button
+      type="button"
       className="theme-toggle-track"
       data-state={isLight ? "light" : "dark"}
-      role="presentation"
+      onClick={handleClick}
+      aria-label={isLight ? "Switch to dark mode" : "Switch to light mode"}
+      title={isLight ? "Switch to dark mode" : "Switch to light mode"}
     >
-      <button
-        type="button"
-        className="theme-toggle"
-        onClick={handleClick}
-        aria-label={isLight ? "Switch to dark mode" : "Switch to light mode"}
-        title={isLight ? "Switch to dark mode" : "Switch to light mode"}
-      >
+      <span className="theme-toggle" aria-hidden>
         {isLight ? (
           <span className="theme-toggle-icon theme-toggle-sun" aria-hidden />
         ) : (
           <span className="theme-toggle-icon theme-toggle-moon" aria-hidden />
         )}
-      </button>
-    </div>
+      </span>
+    </button>
   );
 }

@@ -27,6 +27,7 @@
 
 .home-page {
   margin-inline: 0;
+  margin-top: 32px;
 }
 
 .home-page-section {
@@ -70,6 +71,7 @@
 @media (max-width: 1024px) {
   .home-page {
     margin-inline: 0;
+    margin-top: 24px;
   }
 
   .home-page-section {
@@ -85,6 +87,7 @@
 @media (max-width: 768px) {
   .home-page {
     margin-inline: unset;
+    margin-top: 20px;
     gap: 32px;
   }
 

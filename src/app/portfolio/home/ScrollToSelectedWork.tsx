@@ -2,19 +2,16 @@
 
 import { useEffect, useLayoutEffect } from "react";
 import { usePathname } from "next/navigation";
+import { SELECTED_WORK_ID, scrollToSelectedWorkWithAnimation } from "./scrollToSelectedWork.utils";
 
 export const SELECTED_WORK_SCROLL_FLAG_KEY = "portfolio-scroll-to-selected-work-v1";
-
-const SELECTED_WORK_ID = "selected-work";
 const HOME_PATH = "/portfolio/home";
 
 /* Pause at top of home before scrolling so orientation is visible, then one smooth scroll. */
 const SCROLL_TO_CARDS_AFTER_MS = 450;
 
 function scrollSelectedWorkIntoViewSmooth() {
-  const el = document.getElementById(SELECTED_WORK_ID);
-  if (!el) return;
-  const run = () => el.scrollIntoView({ behavior: "smooth", block: "start" });
+  const run = () => scrollToSelectedWorkWithAnimation(1050);
   requestAnimationFrame(() => requestAnimationFrame(run));
 }
 

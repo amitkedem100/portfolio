@@ -1,41 +1,23 @@
 "use client";
 
+import { useRef } from "react";
 import "./HomeHero.css";
 import { useCursorContext } from "@/app/portfolio/context/CursorContext";
+import { HeroRulers } from "./HeroRulers";
+import { scrollToSelectedWorkWithAnimation } from "../scrollToSelectedWork.utils";
 
 /* Subtitle: replace with intro from content/CMS when available */
 const HERO_SUBTITLE = "Creative Product Designer blending UX, UI and system thinking. I turn complex ideas into clear, functional digital products.";
 export function HomeHero() {
   const { setVariant } = useCursorContext();
+  const heroRef = useRef<HTMLElement | null>(null);
   const handleArrowClick = () => {
-    const target = document.getElementById("selected-work");
-    if (!target) return;
-
-    const startY = window.scrollY;
-    const targetY = window.scrollY + target.getBoundingClientRect().top;
-    const distance = targetY - startY;
-    const durationMs = 1050;
-    const startTime = performance.now();
-
-    const easeInOutCubic = (t: number) =>
-      t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-
-    const step = (now: number) => {
-      const elapsed = now - startTime;
-      const progress = Math.min(elapsed / durationMs, 1);
-      const easedProgress = easeInOutCubic(progress);
-      window.scrollTo(0, startY + distance * easedProgress);
-
-      if (progress < 1) {
-        requestAnimationFrame(step);
-      }
-    };
-
-    requestAnimationFrame(step);
+    scrollToSelectedWorkWithAnimation(1050);
   };
 
   return (
-    <header className="home-hero">
+    <header ref={heroRef} className="home-hero">
+      <HeroRulers hostRef={heroRef} />
       <div
         className="home-hero-inner"
         onMouseEnter={() => setVariant("heroGiant")}

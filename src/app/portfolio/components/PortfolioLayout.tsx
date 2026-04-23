@@ -16,6 +16,7 @@ export function PortfolioLayout({ children }: PortfolioLayoutProps) {
       <CursorRouteReset />
       <PortfolioCursor />
       <PortfolioHeader />
+      <div id="portfolio-fullbleed-slot" className="portfolio-layout-fullbleed" />
       <div className="portfolio-layout-grid layout-grid">
         <main className="portfolio-layout-main" role="main">
           <ProjectPageLoader>{children}</ProjectPageLoader>

@@ -5,10 +5,17 @@
   width: 80px;
   height: 44px;
   padding: 0 3px;
+  margin: 0;
   border-radius: var(--radius-8);
   background: var(--surface-subtle);
   border: 1px solid var(--border-subtle);
+  cursor: pointer;
   transition: border-color 0.2s ease;
+}
+
+.theme-toggle-track:focus-visible {
+  outline: 2px solid var(--text-primary);
+  outline-offset: 2px;
 }
 
 /* Thumb slides: left (light) ↔ right (dark) */
@@ -31,18 +38,14 @@
   border: none;
   margin: 0;
   border-radius: var(--radius-8);
-  cursor: pointer;
+  cursor: inherit;
+  pointer-events: none;
   background: var(--theme-toggle-sun-bg);
   transition: background 0.2s ease, transform 0.25s ease;
 }
 
 .theme-toggle:hover {
 /*blank*/
-}
-
-.theme-toggle:focus-visible {
-  outline: 2px solid var(--text-primary);
-  outline-offset: 2px;
 }
 
 /* Icon from assets: mask + accent-contrast fill */
