@@ -2,15 +2,52 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import "./page.css";
 
-const TOOLS = [
-  "Figma",
-  "Cursor",
-  "Claude",
-  "React",
-  "TypeScript",
-  "CSS",
-  "Git",
-  "Next.js",
+type ToolCategory = "ux" | "systems" | "ai" | "code";
+
+type ToolItem = {
+  label: string;
+};
+
+type ToolGroup = {
+  category: ToolCategory;
+  items: ToolItem[];
+};
+
+const TOOL_GROUPS: ToolGroup[] = [
+  {
+    category: "ux",
+    items: [{ label: "Figma" }, { label: "UX Pilot" }],
+  },
+  {
+    category: "ai",
+    items: [
+      { label: "ChatGPT" },
+      { label: "Claude" },
+      { label: "Claude CLI" },
+      { label: "Cursor" },
+      { label: "Stitch" },
+      { label: "Base44" },
+    ],
+  },
+  {
+    category: "code",
+    items: [
+      { label: "React" },
+      { label: "Next.js" },
+      { label: "TypeScript" },
+      { label: "CSS" },
+    ],
+  },
+  {
+    category: "systems",
+    items: [
+      { label: "Design Systems" },
+      { label: "React Query" },
+      { label: "Git" },
+      { label: "DevTools" },
+      { label: "Command Line" },
+    ],
+  },
 ] as const;
 
 export const metadata: Metadata = {
@@ -20,7 +57,7 @@ export const metadata: Metadata = {
 };
 
 export default function PortfolioAboutPage() {
-  const marqueeItems = [...TOOLS, ...TOOLS];
+  const marqueeGroups = [...TOOL_GROUPS, ...TOOL_GROUPS];
 
   return (
     <div className="about-page portfolio-page-inner-grid">
@@ -50,7 +87,8 @@ export default function PortfolioAboutPage() {
             </p>
             <p className="about-section__body">
               I focus on balancing visual clarity with practical thinking and business logic,
-              while staying curious and continuously learning, especially around AI.
+              while staying curious and continuously learning, especially{" "}
+              <span className="about-no-wrap">around AI.</span>
             </p>
           </article>
 
@@ -90,28 +128,30 @@ export default function PortfolioAboutPage() {
           </h2>
           <div className="about-tools__marquee" aria-label="Tools marquee">
             <div className="about-tools__track">
-              {marqueeItems.map((tool, index) => (
-                <span className="about-tools__item" key={`${tool}-${index}`}>
-                  {tool}
+                <span
+                  className="about-tools__sequence"
+                >
+                {marqueeGroups.map((group, groupIndex) => (
+                  <span
+                    className={`about-tools__group about-tools__group--${group.category}`}
+                    key={`${group.category}-${groupIndex}`}
+                  >
+                    {group.items.map((tool, toolIndex) => (
+                      <span
+                        className="about-tools__item"
+                        key={`${group.category}-${tool.label}-${toolIndex}`}
+                      >
+                        {tool.label}
+                      </span>
+                    ))}
+                  </span>
+                ))}
                 </span>
-              ))}
             </div>
           </div>
         </section>
       </div>
 
-      <aside className="about-right-column" aria-label="About portrait">
-        <div className="about-hero__media">
-          <Image
-            src="/images/about/amit-portrait.png"
-            alt="Portrait of Amit"
-            className="about-hero__portrait-image"
-            width={840}
-            height={1120}
-            priority
-          />
-        </div>
-      </aside>
     </div>
   );
 }
