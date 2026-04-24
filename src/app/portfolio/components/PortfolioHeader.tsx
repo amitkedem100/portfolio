@@ -285,7 +285,7 @@ export function PortfolioHeader() {
     <>
       <li className="portfolio-header-nav-item">
         <CursorZone variant="large">
-          <Link href="#about" onClick={closeMenu}>
+          <Link href="/portfolio/about" onClick={closeMenu}>
             About
           </Link>
         </CursorZone>
@@ -358,7 +358,7 @@ export function PortfolioHeader() {
       </li>
       <li className="portfolio-header-nav-item">
         <CursorZone variant="large">
-          <Link href="#about" onClick={closeMenu}>
+          <Link href="/portfolio/about" onClick={closeMenu}>
             About
           </Link>
         </CursorZone>
