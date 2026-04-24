@@ -1,0 +1,110 @@
+.portfolio-toast {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 1200;
+  width: min(92vw, 520px);
+  transform: translateY(20px);
+  opacity: 0;
+  pointer-events: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-8);
+  background: color-mix(in srgb, var(--background) 96%, transparent);
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.16);
+  transition:
+    opacity 200ms ease,
+    transform 200ms ease;
+}
+
+.portfolio-toast--visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.portfolio-toast__row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 14px 12px;
+  border-radius: 8px;
+}
+
+.portfolio-toast__check {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  background: var(--accent);
+  mask-image: url("/icons/contact/check-circle-fill.svg");
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  -webkit-mask-image: url("/icons/contact/check-circle-fill.svg");
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+}
+
+.portfolio-toast__message {
+  flex: 1 1 auto;
+  min-width: 0;
+  font: var(--portfolio-text-b2);
+  color: var(--text-primary);
+}
+
+.portfolio-toast__close {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.portfolio-toast__progress {
+  grid-column: 1 / -1;
+  margin-top: 4px;
+  height: 4px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--border-subtle) 66%, transparent);
+}
+
+.portfolio-toast__progress-fill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform-origin: left center;
+  background: var(--accent);
+  animation-name: portfolio-toast-progress;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+@keyframes portfolio-toast-progress {
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .portfolio-toast {
+    bottom: 12px;
+    right: 12px;
+    width: min(94vw, 520px);
+  }
+
+  .portfolio-toast__row {
+    gap: 10px;
+    padding: 12px 12px 10px;
+    border-radius: 6px;
+  }
+}
