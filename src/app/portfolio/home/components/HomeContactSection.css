@@ -1,0 +1,109 @@
+.home-contact {
+  padding-block: clamp(28px, 4.8vw, 56px);
+}
+
+.home-contact__inner {
+  max-width: 760px;
+  text-align: left;
+}
+
+.home-contact__title {
+  margin: 0 0 10px;
+  font: var(--portfolio-text-h1);
+  color: var(--text-primary);
+}
+
+.home-contact__subtitle {
+  margin: 0;
+  max-width: 62ch;
+  font: var(--portfolio-text-b1);
+  color: var(--text-secondary);
+}
+
+.home-contact__actions {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.home-contact__primary,
+.home-contact__secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 42px;
+  border-radius: var(--radius-20);
+  border: 1px solid transparent;
+  text-decoration: none;
+  font: var(--portfolio-text-b2);
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease,
+    color 160ms ease;
+}
+
+.home-contact__primary {
+  padding: 9px 16px;
+  background: var(--accent);
+  color: var(--accent-contrast);
+}
+
+.home-contact__primary:hover {
+  background: color-mix(in srgb, var(--accent) 86%, var(--background));
+}
+
+.home-contact__secondary-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.home-contact__secondary {
+  padding: 8px 14px;
+  background: transparent;
+  border-color: var(--border-subtle);
+  color: var(--text-primary);
+}
+
+.home-contact__secondary:hover {
+  border-color: var(--border);
+  background: color-mix(in srgb, var(--surface-subtle) 82%, transparent);
+}
+
+.home-contact__icon-slot {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  border: 1px dashed color-mix(in srgb, currentColor 44%, transparent);
+  border-radius: 4px;
+}
+
+.home-contact__phone {
+  margin: 12px 0 0;
+  font: var(--portfolio-text-b3);
+  color: var(--text-secondary);
+}
+
+@media (max-width: 768px) {
+  .home-contact {
+    padding-block: 24px 36px;
+  }
+
+  .home-contact__actions {
+    margin-top: 16px;
+    width: 100%;
+  }
+
+  .home-contact__primary,
+  .home-contact__secondary {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .home-contact__secondary-list {
+    width: 100%;
+    flex-direction: column;
+  }
+}

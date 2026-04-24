@@ -4,6 +4,7 @@ import { ProjectCard } from "@/app/portfolio/components/ProjectCard";
 import { HomeHeroFullBleed } from "./components/HomeHeroFullBleed";
 import { ScrollToSelectedWork } from "./ScrollToSelectedWork";
 import { AdditionalWorkSection } from "./components/AdditionalWorkSection";
+import { HomeContactSection } from "./components/HomeContactSection";
 
 export default function PortfolioHomePage() {
   return (
@@ -40,6 +41,7 @@ export default function PortfolioHomePage() {
           </CursorZone>
         </section>
         <AdditionalWorkSection />
+        <HomeContactSection />
       </div>
     </>
   );
