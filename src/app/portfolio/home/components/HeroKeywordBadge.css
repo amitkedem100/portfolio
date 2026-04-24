@@ -38,6 +38,18 @@
   --hero-keyword-accent: var(--hero-keyword-code);
 }
 
+.hero-keyword-badge--yellow {
+  --hero-keyword-accent: var(--semantic-accent-yellow);
+}
+
+.hero-keyword-badge--orange {
+  --hero-keyword-accent: var(--semantic-accent-orange);
+}
+
+.hero-keyword-badge--red {
+  --hero-keyword-accent: var(--semantic-accent-red);
+}
+
 .hero-keyword-badge::before {
   content: "";
   position: absolute;

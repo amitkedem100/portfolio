@@ -51,6 +51,9 @@
   --hero-keyword-systems: #6C5CE7;
   --hero-keyword-ai: #3AB0FF;
   --hero-keyword-code: #2ECC71;
+  --semantic-accent-yellow: #F6C945;
+  --semantic-accent-orange: var(--accent-light);
+  --semantic-accent-red: #C44545;
 
   /* Icon tokens */
   --icon-light: #757575;

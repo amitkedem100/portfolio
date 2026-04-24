@@ -3,8 +3,19 @@
 }
 
 .home-contact__inner {
-  max-width: 760px;
+  max-width: 100%;
   text-align: left;
+}
+
+.home-contact__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 34%);
+  align-items: stretch;
+  gap: 22px;
+}
+
+.home-contact__content {
+  min-width: 0;
 }
 
 .home-contact__title {
@@ -27,6 +38,76 @@
   flex-wrap: nowrap;
   gap: 14px;
   align-items: flex-start;
+}
+
+.home-contact__visual {
+  position: relative;
+  justify-self: end;
+  width: 100%;
+  min-height: 230px;
+  border-radius: var(--radius-20);
+  overflow: hidden;
+  background: transparent;
+  border: 0;
+}
+
+.home-contact__visual::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(
+      to right,
+      color-mix(in srgb, var(--border) 68%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--border) 68%, transparent) 1px,
+      transparent 1px
+    );
+  background-size: 22px 22px;
+  opacity: 0.58;
+  pointer-events: none;
+}
+
+.home-contact__visual-keywords {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.home-contact__visual-keyword {
+  position: absolute;
+  --hero-keyword-font-size: 20px;
+}
+
+.home-contact__visual-keyword .hero-keyword-badge {
+  height: 36px;
+}
+
+.home-contact__visual-keyword--lets {
+  top: 13%;
+  left: 10%;
+  transform: rotate(-1.3deg);
+}
+
+.home-contact__visual-keyword--connect {
+  top: 34%;
+  right: 8%;
+  transform: rotate(1.6deg);
+}
+
+.home-contact__visual-keyword--and {
+  top: 56%;
+  left: 22%;
+  transform: rotate(-0.8deg);
+}
+
+.home-contact__visual-keyword--build {
+  bottom: 12%;
+  right: 18%;
+  transform: rotate(1.1deg);
 }
 
 .home-contact__icon-button {
@@ -94,9 +175,63 @@
   background: var(--accent-contrast-light);
 }
 
+@media (min-width: 1025px) {
+  .home-contact__layout {
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 40%);
+  }
+
+  .home-contact__visual {
+    width: 115%;
+    max-width: none;
+  }
+
+  .home-contact__visual-keyword--lets {
+    left: 16%;
+    top: 16%;
+  }
+
+  .home-contact__visual-keyword--connect {
+    right: 15%;
+    top: 33%;
+  }
+
+  .home-contact__visual-keyword--and {
+    left: 30%;
+    top: 52%;
+  }
+
+  .home-contact__visual-keyword--build {
+    right: 24%;
+    bottom: 15%;
+  }
+
+  .home-contact__visual-connector--lets-connect {
+    left: 34%;
+    top: 25%;
+    width: 25%;
+  }
+
+  .home-contact__visual-connector--connect-and {
+    left: 44%;
+    top: 45%;
+    width: 22%;
+  }
+
+  .home-contact__visual-connector--and-build {
+    left: 41%;
+    top: 64%;
+    width: 26%;
+  }
+}
+
 @media (max-width: 768px) {
   .home-contact {
     padding-block: 24px 36px;
+  }
+
+  .home-contact__layout {
+    grid-template-columns: 1fr;
+    gap: 16px;
   }
 
   .home-contact__actions {
@@ -117,5 +252,14 @@
   .home-contact__icon-button {
     width: 62px;
     height: 62px;
+  }
+
+  .home-contact__visual {
+    justify-self: stretch;
+    min-height: 210px;
+  }
+
+  .home-contact__visual-keyword {
+    --hero-keyword-font-size: 18px;
   }
 }

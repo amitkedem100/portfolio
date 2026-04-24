@@ -3,7 +3,7 @@ import "./HeroKeywordBadge.css";
 
 type HeroKeywordBadgeProps = {
   children: ReactNode;
-  tone?: "ux" | "systems" | "ai" | "code";
+  tone?: "ux" | "systems" | "ai" | "code" | "yellow" | "orange" | "red";
 };
 
 export function HeroKeywordBadge({
