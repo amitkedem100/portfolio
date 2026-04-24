@@ -5,9 +5,8 @@ import "./HomeHero.css";
 import { useCursorContext } from "@/app/portfolio/context/CursorContext";
 import { HeroRulers } from "./HeroRulers";
 import { scrollToSelectedWorkWithAnimation } from "../scrollToSelectedWork.utils";
+import { HeroKeywordBadge } from "./HeroKeywordBadge";
 
-/* Subtitle: replace with intro from content/CMS when available */
-const HERO_SUBTITLE = "Creative Product Designer blending UX, UI and system thinking. I turn complex ideas into clear, functional digital products.";
 export function HomeHero() {
   const { setVariant } = useCursorContext();
   const heroRef = useRef<HTMLElement | null>(null);
@@ -26,7 +25,13 @@ export function HomeHero() {
         <div className="home-hero-spacer" aria-hidden />
         <div className="home-hero-content">
           <h1 className="home-hero-title">Hi! I&apos;m Amit</h1>
-          <p className="home-hero-subtitle">{HERO_SUBTITLE}</p>
+          <p className="home-hero-subtitle">
+            Product Designer bridging <HeroKeywordBadge>UX</HeroKeywordBadge> and{" "}
+            <HeroKeywordBadge>Systems</HeroKeywordBadge>, as a hands-on team member,
+            alongside <HeroKeywordBadge>AI</HeroKeywordBadge>.{" "}
+            I design structured, scalable products from concept to{" "}
+            <HeroKeywordBadge>Code</HeroKeywordBadge>.
+          </p>
         </div>
         <div className="home-hero-spacer" aria-hidden />
         <button

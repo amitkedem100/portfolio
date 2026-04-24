@@ -95,6 +95,23 @@
   align-items: center;
 }
 
+.portfolio-cursor-hero-clone .hero-keyword-badge {
+  border-color: color-mix(in srgb, var(--accent-contrast) 72%, transparent);
+  --hero-keyword-corner-color: color-mix(
+    in srgb,
+    var(--accent-contrast) 78%,
+    transparent
+  );
+}
+
+.portfolio-cursor-hero-clone .hero-keyword-badge::before {
+  background-image: repeating-linear-gradient(
+    -55deg,
+    color-mix(in srgb, var(--accent-contrast) 18%, transparent) 0 2px,
+    transparent 2px 6px
+  );
+}
+
 .portfolio-cursor[data-variant="heroGiant"]::before {
   content: "";
   position: absolute;
