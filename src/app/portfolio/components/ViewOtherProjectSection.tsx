@@ -61,7 +61,7 @@ export function ViewOtherProjectSection({
 
   return (
     <section
-      className="project-other-work home-page-section"
+      className={`project-other-work ${currentProject}-page-section project-other-work--${currentProject}`}
       aria-labelledby="view-other-project-title"
       onPointerEnter={handleSectionPointerEnter}
       onPointerLeave={handleSectionPointerLeave}

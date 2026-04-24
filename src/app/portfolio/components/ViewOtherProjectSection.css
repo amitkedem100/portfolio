@@ -6,11 +6,22 @@
   --cursor-accent: var(--accent);
 }
 
+/* Keep SaaS section structurally aligned with Basilar */
+.project-other-work--saas {
+  gap: 28px;
+  padding-block: 40px 28px;
+}
+
 .project-other-work__topbar {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
   gap: 16px;  
+}
+
+.project-other-work--saas .project-other-work__topbar {
+  align-items: flex-end;
+  gap: 16px;
 }
 
 .project-other-work__title {
@@ -48,6 +59,11 @@
 
 @media (max-width: 768px) {
   .project-other-work {
+    gap: 16px;
+    padding-block: 32px 22px;
+  }
+
+  .project-other-work--saas {
     gap: 16px;
     padding-block: 32px 22px;
   }
