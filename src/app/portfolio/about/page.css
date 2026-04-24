@@ -7,7 +7,11 @@
 }
 
 .about-left-column {
-  grid-column: 1 / -1;
+  grid-column: 1 / span 6;
+}
+
+.about-right-column {
+  grid-column: 7 / -1;
 }
 
 .about-section__label {
@@ -245,6 +249,10 @@
     grid-column: 1 / -1;
     display: flex;
     flex-direction: column;
+  }
+
+  .about-right-column {
+    display: none;
   }
 
   .about-hero__media {

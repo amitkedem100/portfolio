@@ -152,6 +152,19 @@ export default function PortfolioAboutPage() {
         </section>
       </div>
 
+      <aside className="about-right-column" aria-label="About portrait">
+        <div className="about-hero__media">
+          <Image
+            src="/images/about/amit-portrait.png"
+            alt="Portrait of Amit"
+            className="about-hero__portrait-image"
+            width={840}
+            height={1120}
+            priority
+          />
+        </div>
+      </aside>
+
     </div>
   );
 }
