@@ -7,14 +7,35 @@
   margin-inline: 0.08em;
   padding-inline: 0.42em;
   padding-block: 0;
-  border: 1px solid color-mix(in srgb, var(--accent) 78%, transparent);
+  --hero-keyword-accent: var(--hero-keyword-ux);
+  border: 1px solid color-mix(in srgb, var(--hero-keyword-accent) 78%, transparent);
   border-radius: 0;
   line-height: 1;
   color: inherit;
   vertical-align: baseline;
   white-space: nowrap;
   isolation: isolate;
-  --hero-keyword-corner-color: color-mix(in srgb, var(--accent) 76%, transparent);
+  --hero-keyword-corner-color: color-mix(
+    in srgb,
+    var(--hero-keyword-accent) 76%,
+    transparent
+  );
+}
+
+.hero-keyword-badge--ux {
+  --hero-keyword-accent: var(--hero-keyword-ux);
+}
+
+.hero-keyword-badge--systems {
+  --hero-keyword-accent: var(--hero-keyword-systems);
+}
+
+.hero-keyword-badge--ai {
+  --hero-keyword-accent: var(--hero-keyword-ai);
+}
+
+.hero-keyword-badge--code {
+  --hero-keyword-accent: var(--hero-keyword-code);
 }
 
 .hero-keyword-badge::before {
@@ -24,7 +45,7 @@
   z-index: -2;
   background-image: repeating-linear-gradient(
     -55deg,
-    color-mix(in srgb, var(--accent) 14%, transparent) 0 2px,
+    color-mix(in srgb, var(--hero-keyword-accent) 14%, transparent) 0 2px,
     transparent 2px 6px
   );
   pointer-events: none;

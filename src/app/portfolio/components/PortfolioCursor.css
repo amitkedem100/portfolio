@@ -86,6 +86,7 @@
   height: 100%;
   pointer-events: none;
   background: var(--accent);
+  color: #111111;
   text-align: center;
 }
 
@@ -96,20 +97,8 @@
 }
 
 .portfolio-cursor-hero-clone .hero-keyword-badge {
-  border-color: color-mix(in srgb, var(--accent-contrast) 72%, transparent);
-  --hero-keyword-corner-color: color-mix(
-    in srgb,
-    var(--accent-contrast) 78%,
-    transparent
-  );
-}
-
-.portfolio-cursor-hero-clone .hero-keyword-badge::before {
-  background-image: repeating-linear-gradient(
-    -55deg,
-    color-mix(in srgb, var(--accent-contrast) 18%, transparent) 0 2px,
-    transparent 2px 6px
-  );
+  --hero-keyword-accent: #111111;
+  border-color: color-mix(in srgb, #111111 84%, transparent);
 }
 
 .portfolio-cursor[data-variant="heroGiant"]::before {

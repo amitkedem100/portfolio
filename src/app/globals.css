@@ -47,6 +47,10 @@
   --accent-contrast-light: #000000;
   --accent-contrast-dark: #FFFFFF;
   --accent-contrast: var(--accent-contrast-light);
+  --hero-keyword-ux: var(--accent-light);
+  --hero-keyword-systems: #6C5CE7;
+  --hero-keyword-ai: #3AB0FF;
+  --hero-keyword-code: #2ECC71;
 
   /* Icon tokens */
   --icon-light: #757575;

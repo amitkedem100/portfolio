@@ -26,11 +26,11 @@ export function HomeHero() {
         <div className="home-hero-content">
           <h1 className="home-hero-title">Hi! I&apos;m Amit</h1>
           <p className="home-hero-subtitle">
-            Product Designer bridging <HeroKeywordBadge>UX</HeroKeywordBadge> and{" "}
-            <HeroKeywordBadge>Systems</HeroKeywordBadge>, as a hands-on team member,
-            alongside <HeroKeywordBadge>AI</HeroKeywordBadge>.{" "}
+            Product Designer bridging <HeroKeywordBadge tone="ux">UX</HeroKeywordBadge> and{" "}
+            <HeroKeywordBadge tone="systems">Systems</HeroKeywordBadge>, as a hands-on team member,
+            alongside <HeroKeywordBadge tone="ai">AI</HeroKeywordBadge>.{" "}
             I design structured, scalable products from concept to{" "}
-            <HeroKeywordBadge>Code</HeroKeywordBadge>.
+            <HeroKeywordBadge tone="code">Code</HeroKeywordBadge>.
           </p>
         </div>
         <div className="home-hero-spacer" aria-hidden />
