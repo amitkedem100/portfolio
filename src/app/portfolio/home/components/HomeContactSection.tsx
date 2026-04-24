@@ -14,8 +14,7 @@ export function HomeContactSection() {
           Let&apos;s talk
         </h2>
         <p className="home-contact__subtitle">
-          If you&apos;re building something interesting or just want to connect, feel free to
-          reach out.
+        Open to opportunities within product teams. Happy to connect.
         </p>
 
         <div className="home-contact__actions" aria-label="Contact actions">
