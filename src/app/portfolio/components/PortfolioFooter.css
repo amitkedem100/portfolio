@@ -35,7 +35,7 @@
   cursor: pointer;
   font: var(--portfolio-text-b3);
   line-height: 1.5;
-  color: inherit;
+  color: color-mix(in srgb, var(--text-secondary) 86%, transparent);
   -webkit-appearance: none;
   appearance: none;
 }
