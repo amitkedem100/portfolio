@@ -14,7 +14,7 @@ const FOOTER_NAV_LINKS = [
   { label: "Work", href: "/portfolio/home#selected-work" },
   { label: "About", href: "/portfolio/about" },
   { label: "Contact", href: "/portfolio/contact" },
-  { label: "CV", href: "/portfolio/home#cv" },
+  { label: "CV", href: "/portfolio/cv" },
 ] as const;
 
 type FooterContactLink = {
