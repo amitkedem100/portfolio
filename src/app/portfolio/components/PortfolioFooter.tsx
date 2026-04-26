@@ -10,6 +10,13 @@ const FOOTER_NAV_LINKS = [
   { label: "CV", href: "/portfolio/home#cv" },
 ] as const;
 
+type FooterContactLink = {
+  label: string;
+  href: string;
+  iconSrc: string;
+  openInNewTab?: boolean;
+};
+
 const FOOTER_CONTACT_LINKS = [
   {
     label: "WhatsApp",
@@ -27,13 +34,15 @@ const FOOTER_CONTACT_LINKS = [
     label: "Email",
     href: "mailto:kedemami2@gmail.com",
     iconSrc: "/icons/contact/envelope.svg",
+    openInNewTab: false,
   },
   {
     label: "Phone",
     href: "tel:+972546338868",
     iconSrc: "/icons/contact/telephone.svg",
+    openInNewTab: false,
   },
-] as const;
+] as const satisfies readonly FooterContactLink[];
 
 export function PortfolioFooter() {
   return (
