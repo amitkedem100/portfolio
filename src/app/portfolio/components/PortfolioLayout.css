@@ -18,7 +18,8 @@
 
 .portfolio-layout:has(.basilar-page),
 .portfolio-layout:has(.saas-page),
-.portfolio-layout:has(.project-page) {
+.portfolio-layout:has(.project-page),
+.portfolio-layout:has(.contact-page) {
   --portfolio-header-stack-gap: 0;
 }
 
@@ -35,7 +36,8 @@
 
   .portfolio-layout:has(.basilar-page),
   .portfolio-layout:has(.saas-page),
-  .portfolio-layout:has(.project-page) {
+  .portfolio-layout:has(.project-page),
+  .portfolio-layout:has(.contact-page) {
     --portfolio-header-stack-gap: 0;
   }
 }
@@ -53,7 +55,8 @@
 
   .portfolio-layout:has(.basilar-page),
   .portfolio-layout:has(.saas-page),
-  .portfolio-layout:has(.project-page) {
+  .portfolio-layout:has(.project-page),
+  .portfolio-layout:has(.contact-page) {
     --portfolio-header-stack-gap: 0;
   }
 }

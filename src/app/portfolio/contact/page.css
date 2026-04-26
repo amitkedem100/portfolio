@@ -1,0 +1,24 @@
+.contact-page {
+  grid-column: 1 / -1;
+  height: calc(100svh - var(--portfolio-header-bar, 80px) - 80px);
+  min-height: 0;
+  display: grid;
+  align-items: center;
+}
+
+.contact-page .contact-page-contact {
+  width: 100%;
+}
+
+@media (max-width: 1024px) {
+  .contact-page {
+    height: calc(100svh - var(--portfolio-header-bar, 64px) - 80px);
+  }
+}
+
+@media (max-width: 768px) {
+  .contact-page {
+    height: auto;
+    align-items: start;
+  }
+}
