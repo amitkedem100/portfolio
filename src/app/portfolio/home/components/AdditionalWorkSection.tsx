@@ -120,9 +120,11 @@ export function AdditionalWorkSection() {
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
   const [touchStartX, setTouchStartX] = useState<number | null>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isPseudoFullscreen, setIsPseudoFullscreen] = useState(false);
   const [isMobileViewport, setIsMobileViewport] = useState(false);
   const [isDarkTheme, setIsDarkTheme] = useState(false);
   const mediaFrameRef = useRef<HTMLDivElement>(null);
+  const activeVideoRef = useRef<HTMLVideoElement | null>(null);
 
   const activeItem = useMemo(
     () => ADDITIONAL_WORK_ITEMS.find((item) => item.id === activeId) ?? null,
@@ -160,18 +162,44 @@ export function AdditionalWorkSection() {
   }, [activeItem]);
 
   useEffect(() => {
+    if (activeItem) return;
+    setIsPseudoFullscreen(false);
+    setIsFullscreen(false);
+  }, [activeItem]);
+
+  useEffect(() => {
     setActiveSlideIndex(0);
   }, [activeId]);
 
   useEffect(() => {
     const onFullscreenChange = () => {
-      setIsFullscreen(Boolean(document.fullscreenElement));
+      const active = Boolean(document.fullscreenElement);
+      setIsFullscreen(active);
+      if (active) {
+        setIsPseudoFullscreen(false);
+      }
     };
     document.addEventListener("fullscreenchange", onFullscreenChange);
     return () => {
       document.removeEventListener("fullscreenchange", onFullscreenChange);
     };
   }, []);
+
+  useEffect(() => {
+    const video = activeVideoRef.current;
+    if (!video) return;
+
+    const onWebkitBegin = () => setIsFullscreen(true);
+    const onWebkitEnd = () => setIsFullscreen(false);
+
+    video.addEventListener("webkitbeginfullscreen", onWebkitBegin as EventListener);
+    video.addEventListener("webkitendfullscreen", onWebkitEnd as EventListener);
+
+    return () => {
+      video.removeEventListener("webkitbeginfullscreen", onWebkitBegin as EventListener);
+      video.removeEventListener("webkitendfullscreen", onWebkitEnd as EventListener);
+    };
+  }, [activeId, activeSlideIndex]);
 
   useEffect(() => {
     const root = document.documentElement;
@@ -202,7 +230,14 @@ export function AdditionalWorkSection() {
   const safeSlideIndex =
     activeSlides.length === 0 ? 0 : Math.min(activeSlideIndex, activeSlides.length - 1);
   const activeSlide = activeSlides[safeSlideIndex] ?? null;
-  const showFullscreenButton = activeSlide?.mediaType === "image";
+  const showFullscreenButton = Boolean(activeSlide);
+
+  useEffect(() => {
+    setIsPseudoFullscreen(false);
+    if (activeSlide?.mediaType !== "video") {
+      activeVideoRef.current = null;
+    }
+  }, [activeSlide?.id, activeSlide?.mediaType]);
 
   const goToPrevSlide = () => {
     if (activeSlides.length <= 1) return;
@@ -244,14 +279,49 @@ export function AdditionalWorkSection() {
 
   const toggleFullscreen = async () => {
     const target = mediaFrameRef.current;
-    if (!target) return;
+    if (!target || !activeSlide) return;
+
+    if (isPseudoFullscreen) {
+      setIsPseudoFullscreen(false);
+      return;
+    }
 
     if (document.fullscreenElement) {
       await document.exitFullscreen();
       return;
     }
 
-    await target.requestFullscreen();
+    if (activeSlide.mediaType === "video") {
+      const video = activeVideoRef.current;
+      if (!video) return;
+
+      const webkitEnterFullscreen = (
+        video as HTMLVideoElement & { webkitEnterFullscreen?: () => void }
+      ).webkitEnterFullscreen;
+
+      if (typeof webkitEnterFullscreen === "function") {
+        webkitEnterFullscreen.call(video);
+        return;
+      }
+
+      if (typeof video.requestFullscreen === "function") {
+        await video.requestFullscreen();
+        return;
+      }
+
+      return;
+    }
+
+    try {
+      if (typeof target.requestFullscreen === "function") {
+        await target.requestFullscreen();
+        return;
+      }
+    } catch {
+      /* iPhone Safari fallback below */
+    }
+
+    setIsPseudoFullscreen(true);
   };
 
   const canUsePortal = typeof document !== "undefined";
@@ -290,7 +360,9 @@ export function AdditionalWorkSection() {
 
                 <div className="additional-work-modal__media-area">
                   <div
-                    className="additional-work-modal__media-carousel"
+                    className={`additional-work-modal__media-carousel${
+                      isPseudoFullscreen ? " additional-work-modal__media-carousel--pseudo-fullscreen" : ""
+                    }`}
                     ref={mediaFrameRef}
                     onTouchStart={onMediaTouchStart}
                     onTouchEnd={onMediaTouchEnd}
@@ -308,6 +380,13 @@ export function AdditionalWorkSection() {
                         />
                       ) : activeSlide ? (
                         <video
+                          ref={(node) => {
+                            activeVideoRef.current = node;
+                            if (node) {
+                              node.setAttribute("playsinline", "true");
+                              node.setAttribute("webkit-playsinline", "true");
+                            }
+                          }}
                           className="additional-work-modal__media-item"
                           src={activeSlide.src}
                           controls
@@ -343,7 +422,7 @@ export function AdditionalWorkSection() {
                         type="button"
                         className="additional-work-modal__fullscreen-close"
                         onClick={toggleFullscreen}
-                        aria-label="Exit fullscreen"
+                        aria-label={isPseudoFullscreen ? "Exit fullscreen" : "Close fullscreen"}
                       >
                         ×
                       </button>
