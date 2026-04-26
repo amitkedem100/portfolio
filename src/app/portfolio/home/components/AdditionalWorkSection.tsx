@@ -27,13 +27,13 @@ type AdditionalWorkItem = {
 const ADDITIONAL_WORK_ITEMS: AdditionalWorkItem[] = [
   {
     id: "tech-tasks",
-    title: "Tech Tasks",
+    title: "Technician Tasks",
     description:
       "A system designed for a security services company to manage technician tasks with clarity and control.\n\nThe goal was to reduce missed assignments and improve daily operations through a structured, real-time workflow. A bottom panel provides quick access to task details, while a map-based schedule view allows tracking routes, timing, and on-site activity, supporting efficient, day-to-day technician management.",
     mediaType: "image",
     mediaSrcLight: encodeURI("/images/Additional work/TechTasks Cover light.png"),
     mediaSrcDark: encodeURI("/images/Additional work/TechTasks Cover dark.png"),
-    thumbnailAlt: "Tech Tasks dashboard preview",
+    thumbnailAlt: "Technician Tasks dashboard preview",
     slides: [
       {
         id: "tech-tasks-video",
