@@ -60,11 +60,15 @@
 .home-page-selected-work {
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 0;
   /*
    * Work nav / hash scroll: header + row gap under hero + hero arrow row + extra nudge down.
    */
   scroll-margin-top: calc(var(--portfolio-header-bar, 80px) + 32px + 56px + 80px);
+}
+
+.home-page-selected-work > * + * {
+  margin-top: clamp(20px, 3vw, 32px);
 }
 
 /* Tablet: use grid margin */
