@@ -39,7 +39,7 @@ export function ContactPageSection() {
 
   return (
     <section
-      className="contact-page-contact home-page-section"
+      className="contact-page-contact"
       aria-labelledby="contact-page-contact-title"
     >
       <div className="contact-page-contact__inner">

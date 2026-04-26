@@ -5,13 +5,15 @@
 .contact-page-contact__inner {
   max-width: 100%;
   text-align: left;
+  min-width: 0;
 }
 
 .contact-page-contact__layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(320px, 40%);
+  grid-template-columns: minmax(420px, 1fr) minmax(360px, 40%);
   align-items: stretch;
   gap: 22px;
+  min-width: 0;
 }
 
 .contact-page-contact__content {
@@ -146,13 +148,21 @@
 .contact-page-contact__visual {
   position: relative;
   justify-self: end;
-  width: 115%;
-  max-width: none;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   min-height: clamp(300px, 48vh, 420px);
   border-radius: var(--radius-20);
   overflow: hidden;
   background: transparent;
   border: 0;
+}
+
+@media (min-width: 1400px) {
+  .contact-page-contact__visual {
+    width: 112%;
+    max-width: none;
+  }
 }
 
 .contact-page-contact__visual::before {
