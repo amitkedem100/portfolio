@@ -20,6 +20,7 @@ type AdditionalWorkItem = {
     id: string;
     mediaType: "image" | "video";
     src: string;
+    modalSrc?: string;
     alt: string;
   }>;
   tags?: string[];
@@ -46,12 +47,14 @@ const ADDITIONAL_WORK_ITEMS: AdditionalWorkItem[] = [
         id: "tech-tasks-tab",
         mediaType: "image",
         src: encodeURI("/images/Additional work/Tech Tasks tab cb1.png"),
+        modalSrc: encodeURI("/images/Additional work/tasks_full_screen_high_res.png"),
         alt: "Tech Tasks table view in Tasks tab",
       },
       {
         id: "tech-schedule-tab",
         mediaType: "image",
         src: encodeURI("/images/Additional work/tech tasks schedule tab cb1.png"),
+        modalSrc: encodeURI("/images/Additional work/map_full_screen_high_res.png"),
         alt: "Tech Tasks schedule tab with map and route",
       },
     ],
@@ -77,6 +80,7 @@ const ADDITIONAL_WORK_ITEMS: AdditionalWorkItem[] = [
         id: "project-management-system-main",
         mediaType: "image",
         src: encodeURI("/images/Additional work/Project Management system v3 cb1.png"),
+        modalSrc: encodeURI("/images/Additional work/efrati tasks.png"),
         alt: "Project management system task table interface",
       },
     ],
@@ -96,6 +100,7 @@ const ADDITIONAL_WORK_ITEMS: AdditionalWorkItem[] = [
         id: "elder-care-screens",
         mediaType: "image",
         src: encodeURI("/images/Additional work/Elder Care screens v2 cb1.png"),
+        modalSrc: encodeURI("/images/Additional work/elder screens.png"),
         alt: "Elder Care mobile app screens overview",
       },
       {
@@ -370,13 +375,13 @@ export function AdditionalWorkSection() {
                     <div className="additional-work-modal__media">
                       {activeSlide?.mediaType === "image" ? (
                         <Image
-                          src={activeSlide.src}
+                          src={activeSlide.modalSrc ?? activeSlide.src}
                           alt={activeSlide.alt}
                           fill
                           sizes="(max-width: 1200px) 90vw, 72vw"
                           quality={100}
                           unoptimized
-                          className="additional-work-modal__media-item"
+                          className="additional-work-modal__media-item additional-work-modal__media-item--image"
                         />
                       ) : activeSlide ? (
                         <video
@@ -387,7 +392,7 @@ export function AdditionalWorkSection() {
                               node.setAttribute("webkit-playsinline", "true");
                             }
                           }}
-                          className="additional-work-modal__media-item"
+                          className="additional-work-modal__media-item additional-work-modal__media-item--video"
                           src={activeSlide.src}
                           controls
                           muted

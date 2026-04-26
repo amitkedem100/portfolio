@@ -274,8 +274,15 @@ html[data-theme="dark"] .additional-work-modal__media-carousel::before {
 .additional-work-modal__media-item {
   width: 100%;
   height: 100%;
-  object-fit: cover;
   object-position: center center;
+}
+
+.additional-work-modal__media-item--video {
+  object-fit: cover;
+}
+
+.additional-work-modal__media-item--image {
+  object-fit: contain;
 }
 
 .additional-work-modal__media-carousel:fullscreen {
