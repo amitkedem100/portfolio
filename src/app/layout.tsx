@@ -15,8 +15,8 @@ const figtree = Figtree({
 });
 
 export const metadata: Metadata = {
-  title: "Portfolio",
-  description: "Product Designer portfolio",
+  title: "Amit Kedem | Portfolio",
+  description: "Product Designer portfolio by Amit Kedem",
 };
 
 export default function RootLayout({
