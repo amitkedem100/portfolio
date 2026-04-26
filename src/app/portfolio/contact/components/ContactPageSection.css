@@ -98,7 +98,7 @@
   width: 24px;
   height: 24px;
   display: block;
-  background: currentColor;
+  background: var(--accent);
   mask-image: var(--contact-icon);
   mask-repeat: no-repeat;
   mask-position: center;
@@ -107,17 +107,23 @@
   -webkit-mask-repeat: no-repeat;
   -webkit-mask-position: center;
   -webkit-mask-size: contain;
+  transition: background-color var(--contact-fill-duration) ease;
+  transition-delay: 70ms;
 }
 
 .contact-page-contact__action-label {
   font: var(--portfolio-text-b2);
-  color: currentColor;
+  color: var(--accent);
+  transition: color var(--contact-fill-duration) ease;
+  transition-delay: 70ms;
 }
 
 .contact-page-contact__action-detail {
   font: var(--portfolio-text-b3);
-  color: color-mix(in srgb, currentColor 84%, transparent);
+  color: color-mix(in srgb, var(--accent) 82%, transparent);
   word-break: break-word;
+  transition: color var(--contact-fill-duration) ease;
+  transition-delay: 70ms;
 }
 
 .contact-page-contact__action-card:hover::before {
@@ -125,6 +131,15 @@
 }
 
 .contact-page-contact__action-card:hover {
+  color: var(--accent);
+}
+
+.contact-page-contact__action-card:hover .contact-page-contact__action-icon {
+  background: var(--accent-contrast-light);
+}
+
+.contact-page-contact__action-card:hover .contact-page-contact__action-label,
+.contact-page-contact__action-card:hover .contact-page-contact__action-detail {
   color: var(--accent-contrast-light);
 }
 
