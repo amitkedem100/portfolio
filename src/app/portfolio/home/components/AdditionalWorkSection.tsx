@@ -230,7 +230,7 @@ export function AdditionalWorkSection() {
   const safeSlideIndex =
     activeSlides.length === 0 ? 0 : Math.min(activeSlideIndex, activeSlides.length - 1);
   const activeSlide = activeSlides[safeSlideIndex] ?? null;
-  const showFullscreenButton = activeSlide?.mediaType === "image";
+  const showFullscreenButton = Boolean(activeSlide);
 
   useEffect(() => {
     setIsPseudoFullscreen(false);
