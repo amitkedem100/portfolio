@@ -27,6 +27,7 @@ export default function AboutToolsMarquee({ groups }: AboutToolsMarqueeProps) {
   const sequenceRef = useRef<HTMLSpanElement | null>(null);
   const isTouchingRef = useRef(false);
   const isHoveringRef = useRef(false);
+  const scrollAccumulatorRef = useRef(0);
 
   useEffect(() => {
     const marqueeEl = marqueeRef.current;
@@ -68,10 +69,17 @@ export default function AboutToolsMarquee({ groups }: AboutToolsMarqueeProps) {
           : DESKTOP_AUTO_SCROLL_SPEED;
         const deltaPx = (speedPxPerSecond * deltaMs) / 1000;
 
-        marqueeEl.scrollLeft += deltaPx;
+        scrollAccumulatorRef.current += deltaPx;
+        const wholePixels = Math.floor(scrollAccumulatorRef.current);
+
+        if (wholePixels > 0) {
+          marqueeEl.scrollLeft += wholePixels;
+          scrollAccumulatorRef.current -= wholePixels;
+        }
 
         if (cycleDistance > 0 && marqueeEl.scrollLeft >= cycleDistance) {
           marqueeEl.scrollLeft -= cycleDistance;
+          scrollAccumulatorRef.current = 0;
         }
       }
 
@@ -82,12 +90,14 @@ export default function AboutToolsMarquee({ groups }: AboutToolsMarqueeProps) {
 
     return () => {
       isDisposed = true;
+      scrollAccumulatorRef.current = 0;
       window.cancelAnimationFrame(animationFrameId);
     };
   }, []);
 
   const handleTouchStart = () => {
     isTouchingRef.current = true;
+    scrollAccumulatorRef.current = 0;
   };
 
   const handleTouchEnd = () => {
