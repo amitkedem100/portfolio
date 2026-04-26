@@ -127,6 +127,14 @@
 }
 
 @media (max-width: 768px) {
+  .basilar-page-hero,
+  .basilar-page-showcase {
+    width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
   .basilar-page-overview {
     padding-block: 40px 40px;
   }

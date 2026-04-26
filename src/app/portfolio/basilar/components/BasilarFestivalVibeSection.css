@@ -25,6 +25,13 @@
 }
 
 @media (max-width: 768px) {
+  .basilar-page-vibe-photo {
+    width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
   .basilar-page-vibe-photo-inner {
     height: clamp(240px, 36vh, 420px);
   }
