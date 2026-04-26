@@ -145,6 +145,35 @@
   color: var(--accent-contrast-light);
 }
 
+.contact-page-contact__action-card--copied {
+  border-color: var(--accent);
+}
+
+.contact-page-contact__action-card--copied::before {
+  background: var(--accent);
+  transform: scaleY(1);
+}
+
+.contact-page-contact__action-card--copied .contact-page-contact__action-icon,
+.contact-page-contact__action-card--copied .contact-page-contact__action-label,
+.contact-page-contact__action-card--copied .contact-page-contact__action-detail {
+  color: #000000;
+}
+
+.contact-page-contact__action-card--copied .contact-page-contact__action-icon {
+  background: #000000;
+}
+
+.contact-page-contact__action-card--copied:hover .contact-page-contact__action-icon,
+.contact-page-contact__action-card--copied:hover .contact-page-contact__action-label,
+.contact-page-contact__action-card--copied:hover .contact-page-contact__action-detail {
+  color: #000000;
+}
+
+.contact-page-contact__action-card--copied:hover .contact-page-contact__action-icon {
+  background: #000000;
+}
+
 .contact-page-contact__visual {
   position: relative;
   justify-self: end;

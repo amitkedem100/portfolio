@@ -1,6 +1,6 @@
 "use client";
 
-import type { CSSProperties } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import "./ContactPageSection.css";
 import { CursorZone } from "@/app/portfolio/components/CursorZone";
 import { PortfolioToast } from "@/app/portfolio/components/PortfolioToast";
@@ -17,9 +17,55 @@ const EMAIL_VALUE = "kedemami2@gmail.com";
 const PHONE_VALUE = "+972546338868";
 const WHATSAPP_VALUE = "+972546338868";
 const LINKEDIN_VALUE = "amitkedemuiux";
+const COPIED_STATE_MS = 1800;
+
+type CopiedAction = "email" | "phone" | null;
 
 export function ContactPageSection() {
   const { copyToClipboard, toastProps, closeToast } = useClipboardToast();
+  const [copiedAction, setCopiedAction] = useState<CopiedAction>(null);
+  const copiedTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(
+    () => () => {
+      if (copiedTimeoutRef.current) {
+        clearTimeout(copiedTimeoutRef.current);
+      }
+    },
+    []
+  );
+
+  const activateCopiedState = (action: Exclude<CopiedAction, null>) => {
+    setCopiedAction(action);
+    if (copiedTimeoutRef.current) {
+      clearTimeout(copiedTimeoutRef.current);
+    }
+    copiedTimeoutRef.current = setTimeout(() => {
+      setCopiedAction(null);
+      copiedTimeoutRef.current = null;
+    }, COPIED_STATE_MS);
+  };
+
+  const handleEmailCopy = () => {
+    copyToClipboard({
+      value: EMAIL_VALUE,
+      desktopMessage: "Email copied to clipboard.",
+      mobileMessage: "Email copied. Tap and hold to paste.",
+    });
+    activateCopiedState("email");
+  };
+
+  const handlePhoneCopy = () => {
+    copyToClipboard({
+      value: PHONE_VALUE,
+      desktopMessage: "Phone copied to clipboard.",
+      mobileMessage: "Phone copied. Tap and hold to paste.",
+    });
+    activateCopiedState("phone");
+  };
+
+  const isEmailCopied = copiedAction === "email";
+  const isPhoneCopied = copiedAction === "phone";
   const visualKeywords = (
     <>
       <span className="contact-page-contact__visual-keyword contact-page-contact__visual-keyword--lets">
@@ -90,44 +136,52 @@ export function ContactPageSection() {
 
               <button
                 type="button"
-                className="contact-page-contact__action-card"
+                className={`contact-page-contact__action-card${isEmailCopied ? " contact-page-contact__action-card--copied" : ""}`}
                 aria-label="Email"
-                onClick={() =>
-                  copyToClipboard({
-                    value: EMAIL_VALUE,
-                    desktopMessage: "Email copied to clipboard.",
-                    mobileMessage: "Email copied. Tap and hold to paste.",
-                  })
-                }
+                onClick={handleEmailCopy}
               >
                 <span
                   className="contact-page-contact__action-icon"
                   aria-hidden
-                  style={{ "--contact-icon": "url(/icons/contact/envelope.svg)" } as CSSProperties}
+                  style={
+                    {
+                      "--contact-icon": isEmailCopied
+                        ? "url(/icons/contact/check-circle-fill.svg)"
+                        : "url(/icons/contact/envelope.svg)",
+                    } as CSSProperties
+                  }
                 />
-                <span className="contact-page-contact__action-label">Email</span>
-                <span className="contact-page-contact__action-detail">{EMAIL_VALUE}</span>
+                <span className="contact-page-contact__action-label">
+                  {isEmailCopied ? "Copied" : "Email"}
+                </span>
+                <span className="contact-page-contact__action-detail">
+                  {isEmailCopied ? "Email copied." : EMAIL_VALUE}
+                </span>
               </button>
 
               <button
                 type="button"
-                className="contact-page-contact__action-card"
+                className={`contact-page-contact__action-card${isPhoneCopied ? " contact-page-contact__action-card--copied" : ""}`}
                 aria-label="Call"
-                onClick={() =>
-                  copyToClipboard({
-                    value: PHONE_VALUE,
-                    desktopMessage: "Phone copied to clipboard.",
-                    mobileMessage: "Phone copied. Tap and hold to paste.",
-                  })
-                }
+                onClick={handlePhoneCopy}
               >
                 <span
                   className="contact-page-contact__action-icon"
                   aria-hidden
-                  style={{ "--contact-icon": "url(/icons/contact/telephone.svg)" } as CSSProperties}
+                  style={
+                    {
+                      "--contact-icon": isPhoneCopied
+                        ? "url(/icons/contact/check-circle-fill.svg)"
+                        : "url(/icons/contact/telephone.svg)",
+                    } as CSSProperties
+                  }
                 />
-                <span className="contact-page-contact__action-label">Phone</span>
-                <span className="contact-page-contact__action-detail">{PHONE_VALUE}</span>
+                <span className="contact-page-contact__action-label">
+                  {isPhoneCopied ? "Copied" : "Phone"}
+                </span>
+                <span className="contact-page-contact__action-detail">
+                  {isPhoneCopied ? "Phone copied." : PHONE_VALUE}
+                </span>
               </button>
             </div>
 
