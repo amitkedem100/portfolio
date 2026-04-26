@@ -286,10 +286,24 @@
     overflow: hidden;
   }
 
+  .about-hero__media--mobile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    top: auto;
+    max-width: 220px;
+    margin-inline: 0;
+    margin-bottom: 0;
+    overflow: hidden;
+    height: 100%; /* Make sure the container can center vertically */
+  }
   .about-hero__media--mobile .about-hero__portrait-image {
     width: calc(100% - 4px);
-    height: calc(100% - 4px);
-    margin: 2px;
+    height: calc(100% - 8px);
+    margin: 4px;
+    display: block;
+    object-fit: contain;
   }
 
   .about-tools__marquee {
