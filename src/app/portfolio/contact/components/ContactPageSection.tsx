@@ -1,9 +1,9 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
 import "./ContactPageSection.css";
 import { CursorZone } from "@/app/portfolio/components/CursorZone";
 import { PortfolioToast } from "@/app/portfolio/components/PortfolioToast";
+import { useClipboardToast } from "@/app/portfolio/components/useClipboardToast";
 import { HeroKeywordBadge } from "@/app/portfolio/home/components/HeroKeywordBadge";
 import { HomeContactIconButton } from "@/app/portfolio/home/components/HomeContactIconButton";
 
@@ -14,55 +14,9 @@ const EMAIL_HREF = "mailto:kedemami2@gmail.com";
 const PHONE_HREF = "tel:+972546338868";
 const EMAIL_VALUE = "kedemami2@gmail.com";
 const PHONE_VALUE = "+972546338868";
-const TOAST_DURATION_MS = 2400;
-const TOAST_FADE_BUFFER_MS = 220;
 
 export function ContactPageSection() {
-  const [toastMessage, setToastMessage] = useState("");
-  const [toastVisible, setToastVisible] = useState(false);
-  const [toastCycleKey, setToastCycleKey] = useState(0);
-  const isMobileRef = useRef(false);
-  const toastTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  useEffect(() => {
-    const media = window.matchMedia("(max-width: 768px)");
-    const update = () => {
-      isMobileRef.current = media.matches;
-    };
-    update();
-    media.addEventListener("change", update);
-    return () => media.removeEventListener("change", update);
-  }, []);
-
-  useEffect(
-    () => () => {
-      if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
-    },
-    []
-  );
-
-  const showToast = useCallback((message: string) => {
-    setToastMessage(message);
-    setToastCycleKey((prev) => prev + 1);
-    setToastVisible(true);
-    if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
-    toastTimerRef.current = setTimeout(
-      () => setToastVisible(false),
-      TOAST_DURATION_MS + TOAST_FADE_BUFFER_MS
-    );
-  }, []);
-
-  const copyToClipboard = useCallback(
-    async (value: string, desktopMsg: string, mobileMsg: string) => {
-      try {
-        await navigator.clipboard.writeText(value);
-        showToast(isMobileRef.current ? mobileMsg : desktopMsg);
-      } catch {
-        showToast(isMobileRef.current ? "Copy not available on mobile." : "Failed to copy.");
-      }
-    },
-    [showToast]
-  );
+  const { copyToClipboard, toastProps, closeToast } = useClipboardToast();
 
   return (
     <section
@@ -104,11 +58,11 @@ export function ContactPageSection() {
                   label="Email"
                   iconSrc="/icons/contact/envelope.svg"
                   onClick={() =>
-                    copyToClipboard(
-                      EMAIL_VALUE,
-                      "Email copied to clipboard.",
-                      "Email copied. Tap and hold to paste."
-                    )
+                    copyToClipboard({
+                      value: EMAIL_VALUE,
+                      desktopMessage: "Email copied to clipboard.",
+                      mobileMessage: "Email copied. Tap and hold to paste.",
+                    })
                   }
                 />
               </CursorZone>
@@ -119,11 +73,11 @@ export function ContactPageSection() {
                   label="Call"
                   iconSrc="/icons/contact/telephone.svg"
                   onClick={() =>
-                    copyToClipboard(
-                      PHONE_VALUE,
-                      "Phone copied to clipboard.",
-                      "Phone copied. Tap and hold to paste."
-                    )
+                    copyToClipboard({
+                      value: PHONE_VALUE,
+                      desktopMessage: "Phone copied to clipboard.",
+                      mobileMessage: "Phone copied. Tap and hold to paste.",
+                    })
                   }
                 />
               </CursorZone>
@@ -149,14 +103,11 @@ export function ContactPageSection() {
         </div>
 
         <PortfolioToast
-          message={toastMessage}
-          visible={toastVisible}
-          durationMs={TOAST_DURATION_MS}
-          cycleKey={toastCycleKey}
-          onClose={() => {
-            setToastVisible(false);
-            if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
-          }}
+          message={toastProps.message}
+          visible={toastProps.visible}
+          durationMs={toastProps.durationMs}
+          cycleKey={toastProps.cycleKey}
+          onClose={closeToast}
         />
       </div>
     </section>
