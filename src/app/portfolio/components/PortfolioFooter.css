@@ -1,32 +1,109 @@
 .portfolio-footer {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
-  height: 80px;
+  padding: 30px 0 24px;
+  border-top: 1px solid var(--border-subtle);
 }
 
 .portfolio-footer-inner {
   width: 100%;
+  display: grid;
+  justify-items: center;
+  gap: 14px;
+}
+
+.portfolio-footer-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 18px;
+}
+
+.portfolio-footer-nav-link {
+  font: var(--portfolio-text-b3);
+  color: color-mix(in srgb, var(--text-secondary) 86%, transparent);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.portfolio-footer-nav-link:hover {
+  color: var(--text-primary);
+}
+
+.portfolio-footer-contact {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.portfolio-footer-contact-link {
+  --footer-contact-size: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--footer-contact-size);
+  height: var(--footer-contact-size);
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--text-secondary) 34%, transparent);
+  color: color-mix(in srgb, var(--text-secondary) 76%, transparent);
+  background: transparent;
+  text-decoration: none;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.portfolio-footer-contact-link:hover {
+  color: var(--text-primary);
+  border-color: color-mix(in srgb, var(--text-secondary) 52%, transparent);
+  background: color-mix(in srgb, var(--text-secondary) 8%, transparent);
+}
+
+.portfolio-footer-contact-icon {
+  width: 16px;
+  height: 16px;
+  display: block;
+  background: currentColor;
+  mask: var(--footer-contact-icon) center / contain no-repeat;
+  -webkit-mask: var(--footer-contact-icon) center / contain no-repeat;
 }
 
 .portfolio-footer-text {
   display: block;
   text-align: center;
   font: var(--portfolio-text-b3);
+  color: color-mix(in srgb, var(--text-secondary) 72%, transparent);
   width: 100%;
+  margin: 0;
 }
 
-/* Tablet */
 @media (max-width: 1024px) {
   .portfolio-footer {
-    height: 80px;
+    padding: 24px 0 20px;
+  }
+
+  .portfolio-footer-nav {
+    gap: 14px;
   }
 }
 
-/* Mobile */
 @media (max-width: 768px) {
   .portfolio-footer {
-    height: 80px;
+    padding: 20px 0 18px;
+  }
+
+  .portfolio-footer-inner {
+    gap: 12px;
+  }
+
+  .portfolio-footer-nav {
+    gap: 10px 14px;
+  }
+
+  .portfolio-footer-contact-link {
+    --footer-contact-size: 32px;
   }
 }
 
