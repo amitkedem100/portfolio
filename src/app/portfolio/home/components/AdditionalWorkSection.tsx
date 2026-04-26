@@ -66,7 +66,7 @@ const ADDITIONAL_WORK_ITEMS: AdditionalWorkItem[] = [
     description:
       "A custom internal system designed for a construction company to manage large-scale projects and complex workflows.\n\nThe platform addresses the challenge of fragmented information and poor coordination across teams. By centralizing data, improving visibility, and enabling structured collaboration, it transforms an otherwise chaotic process into a controlled and efficient operation.\n\nThe result is better tracking, clearer decision-making, and more effective teamwork across ongoing projects.",
     mediaType: "image",
-    mediaSrcLight: encodeURI("/images/Additional work/Project Management cover light.png"),
+    mediaSrcLight: encodeURI("/images/Additional work/project_management_cover_light.png"),
     mediaSrcDark: encodeURI("/images/Additional work/Project Management cover dark.png"),
     thumbnailAlt: "Construction project planning cover image",
     slides: [
@@ -80,7 +80,7 @@ const ADDITIONAL_WORK_ITEMS: AdditionalWorkItem[] = [
         id: "project-management-system-main",
         mediaType: "image",
         src: encodeURI("/images/Additional work/Project Management system v3 cb1.png"),
-        modalSrc: encodeURI("/images/Additional work/efrati tasks.png"),
+        modalSrc: encodeURI("/images/Additional work/efrati_tasks.png"),
         alt: "Project management system task table interface",
       },
     ],
