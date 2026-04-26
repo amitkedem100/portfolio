@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import "./PortfolioToast.css";
 
 type PortfolioToastProps = {
@@ -17,7 +19,17 @@ export function PortfolioToast({
   durationMs = 2400,
   cycleKey = 0,
 }: PortfolioToastProps) {
-  return (
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    return null;
+  }
+
+  return createPortal(
     <div
       className={`portfolio-toast${visible ? " portfolio-toast--visible" : ""}`}
       role="status"
@@ -43,6 +55,7 @@ export function PortfolioToast({
           />
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
