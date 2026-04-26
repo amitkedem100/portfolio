@@ -1,5 +1,6 @@
 "use client";
 
+import type { CSSProperties } from "react";
 import "./ContactPageSection.css";
 import { CursorZone } from "@/app/portfolio/components/CursorZone";
 import { PortfolioToast } from "@/app/portfolio/components/PortfolioToast";
@@ -14,9 +15,27 @@ const EMAIL_HREF = "mailto:kedemami2@gmail.com";
 const PHONE_HREF = "tel:+972546338868";
 const EMAIL_VALUE = "kedemami2@gmail.com";
 const PHONE_VALUE = "+972546338868";
+const WHATSAPP_VALUE = "+972546338868";
+const LINKEDIN_VALUE = "amitkedemuiux";
 
 export function ContactPageSection() {
   const { copyToClipboard, toastProps, closeToast } = useClipboardToast();
+  const visualKeywords = (
+    <>
+      <span className="contact-page-contact__visual-keyword contact-page-contact__visual-keyword--lets">
+        <HeroKeywordBadge tone="yellow">Let&apos;s</HeroKeywordBadge>
+      </span>
+      <span className="contact-page-contact__visual-keyword contact-page-contact__visual-keyword--connect">
+        <HeroKeywordBadge tone="orange">Connect</HeroKeywordBadge>
+      </span>
+      <span className="contact-page-contact__visual-keyword contact-page-contact__visual-keyword--and">
+        <HeroKeywordBadge tone="red">And</HeroKeywordBadge>
+      </span>
+      <span className="contact-page-contact__visual-keyword contact-page-contact__visual-keyword--build">
+        <HeroKeywordBadge tone="orange">Build</HeroKeywordBadge>
+      </span>
+    </>
+  );
 
   return (
     <section
@@ -33,7 +52,89 @@ export function ContactPageSection() {
               Open to opportunities within product teams. Happy to connect.
             </p>
 
-            <div className="contact-page-contact__actions" aria-label="Contact actions">
+            <div
+              className="contact-page-contact__actions contact-page-contact__actions--desktop"
+              aria-label="Contact actions"
+            >
+              <a
+                className="contact-page-contact__action-card"
+                href={WHATSAPP_HREF}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Message me on WhatsApp"
+              >
+                <span
+                  className="contact-page-contact__action-icon"
+                  aria-hidden
+                  style={{ "--contact-icon": "url(/icons/contact/whatsapp.svg)" } as CSSProperties}
+                />
+                <span className="contact-page-contact__action-label">WhatsApp</span>
+                <span className="contact-page-contact__action-detail">{WHATSAPP_VALUE}</span>
+              </a>
+
+              <a
+                className="contact-page-contact__action-card"
+                href={LINKEDIN_HREF}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="LinkedIn"
+              >
+                <span
+                  className="contact-page-contact__action-icon"
+                  aria-hidden
+                  style={{ "--contact-icon": "url(/icons/contact/linkedin.svg)" } as CSSProperties}
+                />
+                <span className="contact-page-contact__action-label">LinkedIn</span>
+                <span className="contact-page-contact__action-detail">{LINKEDIN_VALUE}</span>
+              </a>
+
+              <button
+                type="button"
+                className="contact-page-contact__action-card"
+                aria-label="Email"
+                onClick={() =>
+                  copyToClipboard({
+                    value: EMAIL_VALUE,
+                    desktopMessage: "Email copied to clipboard.",
+                    mobileMessage: "Email copied. Tap and hold to paste.",
+                  })
+                }
+              >
+                <span
+                  className="contact-page-contact__action-icon"
+                  aria-hidden
+                  style={{ "--contact-icon": "url(/icons/contact/envelope.svg)" } as CSSProperties}
+                />
+                <span className="contact-page-contact__action-label">Email</span>
+                <span className="contact-page-contact__action-detail">{EMAIL_VALUE}</span>
+              </button>
+
+              <button
+                type="button"
+                className="contact-page-contact__action-card"
+                aria-label="Call"
+                onClick={() =>
+                  copyToClipboard({
+                    value: PHONE_VALUE,
+                    desktopMessage: "Phone copied to clipboard.",
+                    mobileMessage: "Phone copied. Tap and hold to paste.",
+                  })
+                }
+              >
+                <span
+                  className="contact-page-contact__action-icon"
+                  aria-hidden
+                  style={{ "--contact-icon": "url(/icons/contact/telephone.svg)" } as CSSProperties}
+                />
+                <span className="contact-page-contact__action-label">Phone</span>
+                <span className="contact-page-contact__action-detail">{PHONE_VALUE}</span>
+              </button>
+            </div>
+
+            <div
+              className="contact-page-contact__actions contact-page-contact__actions--mobile"
+              aria-label="Contact actions"
+            >
               <CursorZone variant="hidden">
                 <HomeContactIconButton
                   href={WHATSAPP_HREF}
@@ -85,19 +186,11 @@ export function ContactPageSection() {
           </div>
 
           <aside className="contact-page-contact__visual" aria-hidden>
-            <div className="contact-page-contact__visual-keywords">
-              <span className="contact-page-contact__visual-keyword contact-page-contact__visual-keyword--lets">
-                <HeroKeywordBadge tone="yellow">Let&apos;s</HeroKeywordBadge>
-              </span>
-              <span className="contact-page-contact__visual-keyword contact-page-contact__visual-keyword--connect">
-                <HeroKeywordBadge tone="orange">Connect</HeroKeywordBadge>
-              </span>
-              <span className="contact-page-contact__visual-keyword contact-page-contact__visual-keyword--and">
-                <HeroKeywordBadge tone="red">And</HeroKeywordBadge>
-              </span>
-              <span className="contact-page-contact__visual-keyword contact-page-contact__visual-keyword--build">
-                <HeroKeywordBadge tone="orange">Build</HeroKeywordBadge>
-              </span>
+            <div className="contact-page-contact__visual-keywords contact-page-contact__visual-keywords--desktop">
+              {visualKeywords}
+            </div>
+            <div className="contact-page-contact__visual-keywords contact-page-contact__visual-keywords--mobile">
+              {visualKeywords}
             </div>
           </aside>
         </div>
