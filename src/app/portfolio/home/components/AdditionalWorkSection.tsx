@@ -80,7 +80,7 @@ const ADDITIONAL_WORK_ITEMS: AdditionalWorkItem[] = [
         id: "project-management-system-main",
         mediaType: "image",
         src: encodeURI("/images/Additional work/project-management-system-v3-cb1.png"),
-        modalSrc: encodeURI("/images/Additional work/efrati_tasks.png"),
+        modalSrc: encodeURI("/images/Additional work/efrati-tasks.png"),
         alt: "Project management system task table interface",
       },
     ],
