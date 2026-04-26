@@ -151,7 +151,6 @@
   width: max-content;
   align-items: center;
   gap: 18px;
-  animation: about-tools-scroll 42s linear infinite;
   will-change: transform;
 }
 
@@ -211,21 +210,6 @@
 
 .about-tools__group--code {
   --about-tools-group-color: var(--hero-keyword-code);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .about-tools__marquee:hover .about-tools__track {
-    animation-play-state: paused;
-  }
-}
-
-@keyframes about-tools-scroll {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
 }
 
 @media (max-width: 1024px) {
@@ -314,7 +298,4 @@
     display: none;
   }
 
-  .about-tools__track {
-    animation: none;
-  }
 }

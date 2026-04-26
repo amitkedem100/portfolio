@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import AboutToolsMarquee from "./components/AboutToolsMarquee";
 import "./page.css";
 
 type ToolCategory = "ux" | "systems" | "ai" | "code";
@@ -57,8 +58,6 @@ export const metadata: Metadata = {
 };
 
 export default function PortfolioAboutPage() {
-  const marqueeGroups = [...TOOL_GROUPS, ...TOOL_GROUPS];
-
   return (
     <div className="about-page portfolio-page-inner-grid">
       <div className="about-left-column">
@@ -123,32 +122,10 @@ export default function PortfolioAboutPage() {
 
         <section className="about-section about-tools" aria-labelledby="about-tools-title">
           <p className="about-section__label">Tools &amp; Workflow</p>
-        <h2 id="about-tools-title" className="about-section__title sr-only">
+          <h2 id="about-tools-title" className="about-section__title sr-only">
             Tools &amp; Workflow
           </h2>
-          <div className="about-tools__marquee" aria-label="Tools marquee">
-            <div className="about-tools__track">
-                <span
-                  className="about-tools__sequence"
-                >
-                {marqueeGroups.map((group, groupIndex) => (
-                  <span
-                    className={`about-tools__group about-tools__group--${group.category}`}
-                    key={`${group.category}-${groupIndex}`}
-                  >
-                    {group.items.map((tool, toolIndex) => (
-                      <span
-                        className="about-tools__item"
-                        key={`${group.category}-${tool.label}-${toolIndex}`}
-                      >
-                        {tool.label}
-                      </span>
-                    ))}
-                  </span>
-                ))}
-                </span>
-            </div>
-          </div>
+          <AboutToolsMarquee groups={TOOL_GROUPS} />
         </section>
       </div>
 
