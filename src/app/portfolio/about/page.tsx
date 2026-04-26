@@ -51,9 +51,9 @@ const TOOL_GROUPS: ToolGroup[] = [
 ] as const;
 
 export const metadata: Metadata = {
-  title: "About | Portfolio",
+  title: "Amit Kedem | About",
   description:
-    "About Amit — product designer working across UX, systems, AI, and code.",
+    "About Amit Kedem — product designer working across UX, systems, AI, and code.",
 };
 
 export default function PortfolioAboutPage() {

@@ -3,7 +3,7 @@ import "./page.css";
 import { ContactPageSection } from "./components/ContactPageSection";
 
 export const metadata: Metadata = {
-  title: "Contact | Portfolio",
+  title: "Amit Kedem | Contact",
   description: "Contact Amit for collaborations, product opportunities, and consulting.",
 };
 

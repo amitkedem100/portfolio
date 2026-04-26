@@ -27,9 +27,9 @@ import { ProjectVideoHero } from "@/app/portfolio/components/ProjectVideoHero";
 import { ViewOtherProjectSection } from "@/app/portfolio/components/ViewOtherProjectSection";
 
 export const metadata: Metadata = {
-  title: "Basilar | Portfolio",
+  title: "Amit Kedem | Basilar",
   description:
-    "Basilar — mobile UX for multi-day music festival logistics and real-time updates.",
+    "Basilar case study by Amit Kedem — mobile UX for multi-day music festival logistics and real-time updates.",
 };
 
 const BASILAR_BG_VIDEO = "/videos/basilar/background.mp4";

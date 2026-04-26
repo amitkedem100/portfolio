@@ -18,9 +18,9 @@ import { ViewOtherProjectSection } from "@/app/portfolio/components/ViewOtherPro
 import "./page.css";
 
 export const metadata: Metadata = {
-  title: "Astra | Portfolio",
+  title: "Amit Kedem | Astra",
   description:
-    "A safety intelligence platform for construction site safety — AI-driven insights and real-time reporting.",
+    "Astra case study by Amit Kedem — a safety intelligence platform for construction with AI-driven insights and real-time reporting.",
 };
 
 export default function SaasProjectPage() {
