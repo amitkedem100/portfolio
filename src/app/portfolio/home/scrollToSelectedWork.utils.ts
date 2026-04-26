@@ -2,21 +2,28 @@
 
 export const SELECTED_WORK_ID = "selected-work";
 export const MORE_PROJECTS_ID = "more-projects";
+const SCROLL_HEADER_CLEARANCE_PX = 88;
 
 export function scrollToSelectedWorkWithAnimation(durationMs = 1050) {
-  scrollToElementWithAnimation(SELECTED_WORK_ID, durationMs);
+  scrollToElementWithAnimation(SELECTED_WORK_ID, durationMs, getHeaderOffsetPx());
 }
 
 export function scrollToMoreProjectsWithAnimation(durationMs = 1050) {
-  scrollToElementWithAnimation(MORE_PROJECTS_ID, durationMs);
+  scrollToElementWithAnimation(MORE_PROJECTS_ID, durationMs, 0);
 }
 
-function scrollToElementWithAnimation(targetId: string, durationMs: number) {
+function getHeaderOffsetPx() {
+  const rootStyles = window.getComputedStyle(document.documentElement);
+  const headerBar = Number.parseFloat(rootStyles.getPropertyValue("--portfolio-header-bar")) || 0;
+  return headerBar + SCROLL_HEADER_CLEARANCE_PX;
+}
+
+function scrollToElementWithAnimation(targetId: string, durationMs: number, offsetPx: number) {
   const target = document.getElementById(targetId);
   if (!target) return;
 
   const startY = window.scrollY;
-  const targetY = window.scrollY + target.getBoundingClientRect().top;
+  const targetY = window.scrollY + target.getBoundingClientRect().top - offsetPx;
   const distance = targetY - startY;
   const startTime = performance.now();
 
