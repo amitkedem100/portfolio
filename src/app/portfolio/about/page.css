@@ -286,6 +286,12 @@
     overflow: hidden;
   }
 
+  .about-hero__media--mobile .about-hero__portrait-image {
+    width: calc(100% - 4px);
+    height: calc(100% - 4px);
+    margin: 2px;
+  }
+
   .about-tools__marquee {
     overflow-x: auto;
     overflow-y: hidden;
