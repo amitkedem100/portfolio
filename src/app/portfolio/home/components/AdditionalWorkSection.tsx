@@ -3,6 +3,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
+import { createPortal } from "react-dom";
 import { BadgeList } from "@/app/portfolio/components/BadgeList";
 import { CursorZone } from "@/app/portfolio/components/CursorZone";
 import "./AdditionalWorkSection.css";
@@ -253,6 +254,148 @@ export function AdditionalWorkSection() {
     await target.requestFullscreen();
   };
 
+  const canUsePortal = typeof document !== "undefined";
+  const modalNode =
+    activeItem && canUsePortal
+      ? createPortal(
+          <div
+            className="additional-work-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-label={activeItem.title}
+            onClick={() => setActiveId(null)}
+          >
+            <div className="additional-work-modal__panel" onClick={(event) => event.stopPropagation()}>
+              <div className="additional-work-modal__topbar">
+                <button
+                  type="button"
+                  className="additional-work-modal__close"
+                  aria-label="Close additional work modal"
+                  onClick={() => setActiveId(null)}
+                >
+                  ×
+                </button>
+              </div>
+
+              <div className="additional-work-modal__body">
+                <div className="additional-work-modal__content">
+                  <h3 className="additional-work-modal__title">{activeItem.title}</h3>
+                  {activeItem.description.trim() ? (
+                    <p className="additional-work-modal__description">{activeItem.description}</p>
+                  ) : null}
+                  {activeItem.tags && activeItem.tags.length > 0 ? (
+                    <BadgeList items={activeItem.tags} className="additional-work-modal__tags" />
+                  ) : null}
+                </div>
+
+                <div className="additional-work-modal__media-area">
+                  <div
+                    className="additional-work-modal__media-carousel"
+                    ref={mediaFrameRef}
+                    onTouchStart={onMediaTouchStart}
+                    onTouchEnd={onMediaTouchEnd}
+                  >
+                    <div className="additional-work-modal__media">
+                      {activeSlide?.mediaType === "image" ? (
+                        <Image
+                          src={activeSlide.src}
+                          alt={activeSlide.alt}
+                          fill
+                          sizes="(max-width: 1200px) 90vw, 72vw"
+                          quality={100}
+                          unoptimized
+                          className="additional-work-modal__media-item"
+                        />
+                      ) : activeSlide ? (
+                        <video
+                          className="additional-work-modal__media-item"
+                          src={activeSlide.src}
+                          controls
+                          muted
+                          playsInline
+                          preload="metadata"
+                          autoPlay
+                        />
+                      ) : null}
+                    </div>
+
+                    {showFullscreenButton ? (
+                      <button
+                        type="button"
+                        className="additional-work-modal__fullscreen"
+                        onClick={toggleFullscreen}
+                        aria-label={isFullscreen ? "Exit fullscreen" : "Open fullscreen"}
+                      >
+                        <span className="additional-work-modal__fullscreen-label">
+                          {isFullscreen ? "Exit Full Screen" : "Full Screen"}
+                        </span>
+                        <img
+                          className="additional-work-modal__fullscreen-icon"
+                          src="/arrows-angle-expand.svg"
+                          alt=""
+                          aria-hidden
+                        />
+                      </button>
+                    ) : null}
+
+                    {isMobileViewport ? (
+                      <button
+                        type="button"
+                        className="additional-work-modal__fullscreen-close"
+                        onClick={toggleFullscreen}
+                        aria-label="Exit fullscreen"
+                      >
+                        ×
+                      </button>
+                    ) : null}
+
+                    {activeSlides.length > 1 ? (
+                      <>
+                        <button
+                          type="button"
+                          className="additional-work-modal__media-nav additional-work-modal__media-nav--prev"
+                          aria-label="Previous media"
+                          onClick={goToPrevSlide}
+                        >
+                          ‹
+                        </button>
+                        <button
+                          type="button"
+                          className="additional-work-modal__media-nav additional-work-modal__media-nav--next"
+                          aria-label="Next media"
+                          onClick={goToNextSlide}
+                        >
+                          ›
+                        </button>
+                      </>
+                    ) : null}
+                  </div>
+
+                  {activeSlides.length > 1 ? (
+                    <div className="additional-work-modal__dots" role="tablist" aria-label="Media slides">
+                      {activeSlides.map((slide, index) => (
+                        <button
+                          key={slide.id}
+                          type="button"
+                          role="tab"
+                          aria-label={`Go to media ${index + 1}`}
+                          aria-selected={index === safeSlideIndex}
+                          className={`additional-work-modal__dot${
+                            index === safeSlideIndex ? " additional-work-modal__dot--active" : ""
+                          }`}
+                          onClick={() => setActiveSlideIndex(index)}
+                        />
+                      ))}
+                    </div>
+                  ) : null}
+                </div>
+              </div>
+            </div>
+          </div>,
+          document.body,
+        )
+      : null;
+
   return (
     <section
       id="more-projects"
@@ -319,142 +462,7 @@ export function AdditionalWorkSection() {
         </div>
       </div>
 
-      {activeItem ? (
-        <div
-          className="additional-work-modal"
-          role="dialog"
-          aria-modal="true"
-          aria-label={activeItem.title}
-          onClick={() => setActiveId(null)}
-        >
-          <div className="additional-work-modal__panel" onClick={(event) => event.stopPropagation()}>
-            <div className="additional-work-modal__topbar">
-              <button
-                type="button"
-                className="additional-work-modal__close"
-                aria-label="Close additional work modal"
-                onClick={() => setActiveId(null)}
-              >
-                ×
-              </button>
-            </div>
-
-            <div className="additional-work-modal__body">
-              <div className="additional-work-modal__content">
-                <h3 className="additional-work-modal__title">{activeItem.title}</h3>
-                {activeItem.description.trim() ? (
-                  <p className="additional-work-modal__description">{activeItem.description}</p>
-                ) : null}
-                {activeItem.tags && activeItem.tags.length > 0 ? (
-                  <BadgeList items={activeItem.tags} className="additional-work-modal__tags" />
-                ) : null}
-              </div>
-
-              <div className="additional-work-modal__media-area">
-                <div
-                  className="additional-work-modal__media-carousel"
-                  ref={mediaFrameRef}
-                  onTouchStart={onMediaTouchStart}
-                  onTouchEnd={onMediaTouchEnd}
-                >
-                  <div className="additional-work-modal__media">
-                    {activeSlide?.mediaType === "image" ? (
-                      <Image
-                        src={activeSlide.src}
-                        alt={activeSlide.alt}
-                        fill
-                        sizes="(max-width: 1200px) 90vw, 72vw"
-                        quality={100}
-                        unoptimized
-                        className="additional-work-modal__media-item"
-                      />
-                    ) : activeSlide ? (
-                      <video
-                        className="additional-work-modal__media-item"
-                        src={activeSlide.src}
-                        controls
-                        muted
-                        playsInline
-                        preload="metadata"
-                        autoPlay
-                      />
-                    ) : null}
-                  </div>
-
-                  {showFullscreenButton ? (
-                    <button
-                      type="button"
-                      className="additional-work-modal__fullscreen"
-                      onClick={toggleFullscreen}
-                      aria-label={isFullscreen ? "Exit fullscreen" : "Open fullscreen"}
-                    >
-                      <span className="additional-work-modal__fullscreen-label">
-                        {isFullscreen ? "Exit Full Screen" : "Full Screen"}
-                      </span>
-                      <img
-                        className="additional-work-modal__fullscreen-icon"
-                        src="/arrows-angle-expand.svg"
-                        alt=""
-                        aria-hidden
-                      />
-                    </button>
-                  ) : null}
-
-                  {isMobileViewport ? (
-                    <button
-                      type="button"
-                      className="additional-work-modal__fullscreen-close"
-                      onClick={toggleFullscreen}
-                      aria-label="Exit fullscreen"
-                    >
-                      ×
-                    </button>
-                  ) : null}
-
-                  {activeSlides.length > 1 ? (
-                    <>
-                      <button
-                        type="button"
-                        className="additional-work-modal__media-nav additional-work-modal__media-nav--prev"
-                        aria-label="Previous media"
-                        onClick={goToPrevSlide}
-                      >
-                        ‹
-                      </button>
-                      <button
-                        type="button"
-                        className="additional-work-modal__media-nav additional-work-modal__media-nav--next"
-                        aria-label="Next media"
-                        onClick={goToNextSlide}
-                      >
-                        ›
-                      </button>
-                    </>
-                  ) : null}
-                </div>
-
-                {activeSlides.length > 1 ? (
-                  <div className="additional-work-modal__dots" role="tablist" aria-label="Media slides">
-                    {activeSlides.map((slide, index) => (
-                      <button
-                        key={slide.id}
-                        type="button"
-                        role="tab"
-                        aria-label={`Go to media ${index + 1}`}
-                        aria-selected={index === safeSlideIndex}
-                        className={`additional-work-modal__dot${
-                          index === safeSlideIndex ? " additional-work-modal__dot--active" : ""
-                        }`}
-                        onClick={() => setActiveSlideIndex(index)}
-                      />
-                    ))}
-                  </div>
-                ) : null}
-              </div>
-            </div>
-          </div>
-        </div>
-      ) : null}
+      {modalNode}
     </section>
   );
 }
