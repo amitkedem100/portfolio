@@ -2,9 +2,10 @@
 
 .basilar-thanks {
   grid-column: 1 / -1;
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-  max-width: 100vw;
+  width: auto;
+  max-width: none;
+  margin-left: calc(var(--portfolio-shell-inline, 64px) * -1);
+  margin-right: calc(var(--portfolio-shell-inline, 64px) * -1);
   padding-block: clamp(32px, 5vw, 52px);
   padding-inline: clamp(20px, 4vw, 32px);
   box-sizing: border-box;
@@ -14,6 +15,13 @@
   justify-content: center;
   background: var(--basilar-background);
   color: var(--text-primary);
+}
+
+@media (min-width: 1025px) {
+  .basilar-thanks {
+    margin-left: calc(clamp(64px, 5vw + 40px, 180px) * -1);
+    margin-right: calc(clamp(64px, 5vw + 40px, 180px) * -1);
+  }
 }
 
 .basilar-thanks__text {
@@ -28,10 +36,6 @@
 
 @media (max-width: 768px) {
   .basilar-thanks {
-    width: 100%;
-    max-width: 100%;
-    margin-left: 0;
-    margin-right: 0;
     padding-block: clamp(28px, 4vw, 40px);
   }
 
