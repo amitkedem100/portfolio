@@ -188,3 +188,34 @@ html[data-theme="dark"] .hero-rulers__indicator--y {
     padding-bottom: 12px;
   }
 }
+
+@media (min-width: 769px) {
+  .home-hero-title,
+  .home-hero-subtitle {
+    transition:
+      opacity 380ms ease,
+      transform 380ms ease;
+  }
+
+  html[data-home-intro-active] .home-hero-title,
+  html[data-home-intro-active] .home-hero-subtitle {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  html[data-home-hero-reveal="title"] .home-hero-title {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  html[data-home-hero-reveal="title"] .home-hero-subtitle {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  html[data-home-hero-reveal="subtitle"] .home-hero-title,
+  html[data-home-hero-reveal="subtitle"] .home-hero-subtitle {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

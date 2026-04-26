@@ -5,16 +5,17 @@ import { HomeHeroFullBleed } from "./components/HomeHeroFullBleed";
 import { ScrollToSelectedWork } from "./ScrollToSelectedWork";
 import { AdditionalWorkSection } from "./components/AdditionalWorkSection";
 import { HomeContactSection } from "./components/HomeContactSection";
+import { HomeIntroGate } from "./components/HomeIntroGate";
 
 export default function PortfolioHomePage() {
   return (
-    <>
+    <HomeIntroGate>
       <HomeHeroFullBleed />
       <div className="home-page portfolio-page-inner-grid">
         <ScrollToSelectedWork />
         <section
           id="selected-work"
-          className="home-page-section home-page-selected-work"
+          className="home-page-section home-page-selected-work home-page-reveal-item home-page-reveal-item--selected"
           aria-label="Selected Work"
         >
           <CursorZone variant="viewProject">
@@ -40,10 +41,14 @@ export default function PortfolioHomePage() {
             />
           </CursorZone>
         </section>
-        <AdditionalWorkSection />
-        <HomeContactSection />
+        <div className="home-page-reveal-item home-page-reveal-item--additional">
+          <AdditionalWorkSection />
+        </div>
+        <div className="home-page-reveal-item home-page-reveal-item--contact">
+          <HomeContactSection />
+        </div>
       </div>
-    </>
+    </HomeIntroGate>
   );
 }
 

@@ -1,0 +1,92 @@
+.home-intro-gate {
+  position: relative;
+}
+
+.home-intro-gate__content {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.home-intro-gate--intro .home-intro-gate__content {
+  opacity: 0;
+  transform: translateY(6px);
+}
+
+.home-intro-gate--reveal .home-intro-gate__content {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 420ms ease,
+    transform 420ms ease;
+}
+
+.home-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: var(--background);
+  pointer-events: none;
+  opacity: 1;
+}
+
+.home-intro-gate--reveal .home-intro {
+  opacity: 0;
+  transition: opacity 420ms ease;
+}
+
+.home-intro__hero {
+  margin-top: var(--portfolio-header-bar, 80px);
+  min-height: calc(100svh - var(--portfolio-header-bar, 80px));
+  max-height: calc(100svh - var(--portfolio-header-bar, 80px));
+}
+
+.home-page-reveal-item {
+  display: block;
+  grid-column: 1 / -1;
+  min-width: 0;
+  opacity: 0;
+  transform: translateY(6px);
+}
+
+.home-intro-gate--reveal .home-page-reveal-item,
+.home-intro-gate--done .home-page-reveal-item {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 420ms ease,
+    transform 420ms ease;
+}
+
+.home-intro-gate--reveal .home-page-reveal-item--selected,
+.home-intro-gate--done .home-page-reveal-item--selected {
+  transition-delay: 80ms;
+}
+
+.home-intro-gate--reveal .home-page-reveal-item--additional,
+.home-intro-gate--done .home-page-reveal-item--additional {
+  transition-delay: 170ms;
+}
+
+.home-intro-gate--reveal .home-page-reveal-item--contact,
+.home-intro-gate--done .home-page-reveal-item--contact {
+  transition-delay: 250ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-intro-gate__content,
+  .home-page-reveal-item,
+  .home-intro {
+    transition: none !important;
+    animation: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .home-intro__hero {
+    margin-top: var(--portfolio-header-bar, 56px);
+    min-height: calc(100svh - var(--portfolio-header-bar, 56px));
+    max-height: calc(100svh - var(--portfolio-header-bar, 56px));
+  }
+}
