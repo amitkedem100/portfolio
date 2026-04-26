@@ -16,6 +16,7 @@ export function SaasIncidentsSection() {
             label="INCIDENTS"
             title="A Visual Record of Safety Events"
             titleId="saas-incidents-title"
+            revealText
             paragraphs={[
               "A structured, filterable gallery that centralizes all recorded incidents in one place.",
               "By combining visual evidence with clear categorization and search tools, users can quickly scan, review, and access relevant events without disrupting their workflow.",

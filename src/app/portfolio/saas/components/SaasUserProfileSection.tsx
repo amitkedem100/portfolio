@@ -15,6 +15,7 @@ export function SaasUserProfileSection() {
           label="User Profile"
           title="Managing user identity within a structured system."
           titleId="saas-user-profile-title"
+          revealText
           paragraphs={[
             "The User Profile centralizes personal details, role definition, and site associations within a clear and predictable structure.",
             "Designed for quick updates while maintaining consistency across a multi-role, multi-site environment.",

@@ -15,6 +15,7 @@ export function SaasDashboardOverviewSection() {
           label="Dashboard"
           title="Operational Awareness, Reimagined"
           titleId="saas-dashboard-overview-title"
+          revealText
           paragraphs={[
             "The dashboard presents real-time and historical safety data through a structured yet flexible layout.",
             "By combining key metrics, alerts, and contextual insights, it enables both executives and site teams to quickly understand the current state, identify risks, and take action.",

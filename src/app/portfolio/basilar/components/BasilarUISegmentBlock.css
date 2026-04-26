@@ -188,34 +188,24 @@
   }
 }
 
-/* Desktop only: copy slides in from the side of the column (ease-out after delay) */
+/* Desktop only: subtle vertical reveal from below (Apple-like) */
 @media (min-width: 769px) {
-  .basilar-ui-segment:not(.basilar-ui-segment--reverse)
-    .basilar-ui-segment__body.basilar-ui-segment__body--reveal-pending {
+  .basilar-ui-segment .basilar-ui-segment__body.basilar-ui-segment__body--reveal-pending {
     opacity: 0;
-    transform: translateX(-3rem);
-  }
-
-  .basilar-ui-segment.basilar-ui-segment--reverse
-    .basilar-ui-segment__body.basilar-ui-segment__body--reveal-pending {
-    opacity: 0;
-    transform: translateX(3rem);
+    transform: translateY(24px) scale(0.985);
   }
 
   .basilar-ui-segment__body.basilar-ui-segment__body--entered {
     opacity: 1;
-    transform: translateX(0);
+    transform: translateY(0) scale(1);
     transition:
-      opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.86s,
-      transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.86s;
+      opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.18s,
+      transform 0.52s cubic-bezier(0.16, 1, 0.3, 1) 0.18s;
   }
 }
 
 @media (min-width: 769px) and (prefers-reduced-motion: reduce) {
-  .basilar-ui-segment:not(.basilar-ui-segment--reverse)
-    .basilar-ui-segment__body.basilar-ui-segment__body--reveal-pending,
-  .basilar-ui-segment.basilar-ui-segment--reverse
-    .basilar-ui-segment__body.basilar-ui-segment__body--reveal-pending {
+  .basilar-ui-segment .basilar-ui-segment__body.basilar-ui-segment__body--reveal-pending {
     opacity: 1;
     transform: none;
   }

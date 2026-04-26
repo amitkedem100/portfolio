@@ -1,5 +1,6 @@
 import Image from "next/image";
 import "@/app/portfolio/components/ProjectTextSection.css";
+import { SaasSegmentRevealBody } from "@/app/portfolio/saas/components/SaasSegmentRevealBody";
 import "./SaasSiteAssociationSection.css";
 
 const SITE_ASSOCIATION_IMG = "/images/SaaS/site-association-card.png";
@@ -13,7 +14,7 @@ export function SaasSiteAssociationSection() {
     >
       <div className="project-text-section-inner">
         <article className="saas-site-association-segment">
-          <div className="saas-site-association__body">
+          <SaasSegmentRevealBody className="saas-site-association__body">
             <p className="saas-site-association__label">Site Association</p>
             <h2 id="saas-site-association-title" className="saas-site-association__title">
               Role-Based Invitation
@@ -28,7 +29,7 @@ export function SaasSiteAssociationSection() {
                 broader view across multiple sites without a fixed association.
               </p>
             </div>
-          </div>
+          </SaasSegmentRevealBody>
 
           <div className="saas-site-association__media">
             <Image

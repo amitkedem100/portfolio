@@ -33,6 +33,7 @@ export function SaasDashboardDualLayoutsSection() {
             label="User-Level Adaptation"
             title="Tailored Views for Different Roles"
             titleId="saas-dashboard-dual-layouts-title"
+            revealText
             paragraphs={[
               "Two distinct layouts support different decision-making needs.",
               "The executive view focuses on cross-site visibility and trends over time, with global filters and comparisons. The site-level view provides a more focused perspective, highlighting real-time activity, operational metrics, and immediate risks within a specific site.",

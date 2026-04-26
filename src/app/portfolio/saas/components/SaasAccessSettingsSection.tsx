@@ -43,6 +43,7 @@ export function SaasAccessSettingsSection() {
             label="User Management"
             title="Control Access & Roles"
             titleId="saas-access-user-mgmt-title"
+            revealText
             paragraphs={[
               "Manage users across the organization with clear role definitions, access levels, and site associations.",
               "The system provides full visibility into user status, activity, and permissions, allowing teams to invite new members, track onboarding progress, and ensure the right people have access to the right data.",
@@ -66,6 +67,7 @@ export function SaasAccessSettingsSection() {
             label="System Configuration"
             title="Organization details, Branding & Notifications"
             titleId="saas-access-system-config-title"
+            revealText
             paragraphs={[
               "Additional settings support the overall system structure and experience — from defining organization details and authentication methods, to managing branding assets and controlling notification preferences.",
               "Together, these elements ensure consistency, security, and clarity across all users and sites.",

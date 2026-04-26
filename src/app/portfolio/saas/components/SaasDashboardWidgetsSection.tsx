@@ -1,5 +1,6 @@
 import Image from "next/image";
 import "@/app/portfolio/components/ProjectTextSection.css";
+import { SaasSegmentRevealBody } from "@/app/portfolio/saas/components/SaasSegmentRevealBody";
 import { SaasStackedMediaBlock } from "@/app/portfolio/saas/components/SaasStackedMediaBlock";
 import "./SaasDashboardWidgetsSection.css";
 
@@ -125,6 +126,7 @@ export function SaasDashboardWidgetsSection() {
                   title={segment.title}
                   titleId={`saas-dashboard-widget-title-${segment.id}`}
                   titleHeadingLevel={3}
+                  revealText
                   paragraphs={[segment.description]}
                   media={
                     <div className="saas-dashboard-widget-live-incident__frame">
@@ -154,6 +156,7 @@ export function SaasDashboardWidgetsSection() {
                   titleId={`saas-dashboard-widget-title-${segment.id}`}
                   titleHeadingLevel={3}
                   align="center"
+                  revealText
                   paragraphs={[segment.description]}
                   media={
                     <div className="saas-dashboard-widget-company-map__frame">
@@ -185,13 +188,13 @@ export function SaasDashboardWidgetsSection() {
                 className={`saas-dashboard-widget-segment${reverse ? " saas-dashboard-widget-segment--reverse" : ""}`}
                 aria-labelledby={`saas-dashboard-widget-title-${segment.id}`}
               >
-                <div className="saas-dashboard-widget-segment__body">
+                <SaasSegmentRevealBody className="saas-dashboard-widget-segment__body">
                   <p className="saas-dashboard-widget-segment__label">{segment.label}</p>
                   <h3 id={`saas-dashboard-widget-title-${segment.id}`} className="saas-dashboard-widget-segment__title">
                     {segment.title}
                   </h3>
                   <p className="saas-dashboard-widget-segment__description">{segment.description}</p>
-                </div>
+                </SaasSegmentRevealBody>
 
                 <div className={`saas-dashboard-widget-segment__media ${mediaLayoutClass}`}>
                   {segment.mediaImage ? (

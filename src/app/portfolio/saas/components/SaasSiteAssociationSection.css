@@ -102,3 +102,29 @@
     line-height: 1.55;
   }
 }
+
+@media (min-width: 769px) {
+  .saas-site-association__body.saas-reveal-body--pending {
+    opacity: 0;
+    transform: translateY(24px) scale(0.985);
+  }
+
+  .saas-site-association__body.saas-reveal-body--entered {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    transition:
+      opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.18s,
+      transform 0.52s cubic-bezier(0.16, 1, 0.3, 1) 0.18s;
+  }
+}
+
+@media (min-width: 769px) and (prefers-reduced-motion: reduce) {
+  .saas-site-association__body.saas-reveal-body--pending {
+    opacity: 1;
+    transform: none;
+  }
+
+  .saas-site-association__body.saas-reveal-body--entered {
+    transition: none;
+  }
+}

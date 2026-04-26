@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { SaasSegmentRevealBody } from "@/app/portfolio/saas/components/SaasSegmentRevealBody";
 import "./SaasStackedMediaBlock.css";
 
 type SaasStackedMediaBlockProps = {
@@ -11,6 +12,7 @@ type SaasStackedMediaBlockProps = {
   titleHeadingLevel?: 2 | 3;
   /** Narrow readable measure + horizontal centering (uses project-text-section-inner--prose) */
   contentProse?: boolean;
+  revealText?: boolean;
 };
 
 /* Shared Astra block: label + title + description above media */
@@ -23,6 +25,7 @@ export function SaasStackedMediaBlock({
   align = "start",
   titleHeadingLevel = 2,
   contentProse = true,
+  revealText = false,
 }: SaasStackedMediaBlockProps) {
   const proseClass = contentProse ? " project-text-section-inner--prose" : "";
   const rootClass =
@@ -43,16 +46,33 @@ export function SaasStackedMediaBlock({
 
   return (
     <article className={rootClass} aria-labelledby={titleId}>
-      <header className={`saas-stacked-media-block__header${proseClass}`}>
-        <p className="saas-stacked-media-block__label">{label}</p>
-        {titleEl}
-      </header>
+      {revealText ? (
+        <>
+          <SaasSegmentRevealBody as="header" className={`saas-stacked-media-block__header${proseClass}`}>
+            <p className="saas-stacked-media-block__label">{label}</p>
+            {titleEl}
+          </SaasSegmentRevealBody>
 
-      <div className={`saas-stacked-media-block__description${proseClass}`}>
-        {paragraphs.map((paragraph) => (
-          <p key={paragraph}>{paragraph}</p>
-        ))}
-      </div>
+          <SaasSegmentRevealBody className={`saas-stacked-media-block__description${proseClass}`}>
+            {paragraphs.map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
+          </SaasSegmentRevealBody>
+        </>
+      ) : (
+        <>
+          <header className={`saas-stacked-media-block__header${proseClass}`}>
+            <p className="saas-stacked-media-block__label">{label}</p>
+            {titleEl}
+          </header>
+
+          <div className={`saas-stacked-media-block__description${proseClass}`}>
+            {paragraphs.map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
+          </div>
+        </>
+      )}
 
       <div className="saas-stacked-media-block__media-wrap">{media}</div>
     </article>
