@@ -283,6 +283,7 @@
     max-width: 220px;
     margin-inline: 0;
     margin-bottom: 0;
+    overflow: hidden;
   }
 
   .about-tools__marquee {
