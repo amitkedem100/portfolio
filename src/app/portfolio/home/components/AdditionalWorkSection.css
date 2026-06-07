@@ -278,7 +278,7 @@ html[data-theme="dark"] .additional-work-modal__media-carousel::before {
 }
 
 .additional-work-modal__media-item--video {
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .additional-work-modal__media-item--image {
@@ -317,14 +317,10 @@ html[data-theme="dark"] .additional-work-modal__media-carousel::before {
 
 .additional-work-modal__media-carousel:fullscreen .additional-work-modal__media-item {
   object-fit: contain;
-  image-rendering: -webkit-optimize-contrast;
-  image-rendering: crisp-edges;
 }
 
 .additional-work-modal__media-carousel--pseudo-fullscreen .additional-work-modal__media-item {
   object-fit: contain;
-  image-rendering: -webkit-optimize-contrast;
-  image-rendering: crisp-edges;
 }
 
 .additional-work-modal__media-carousel:fullscreen .additional-work-modal__fullscreen {
@@ -360,8 +356,6 @@ html[data-theme="dark"] .additional-work-modal__media-carousel::before {
 
 .additional-work-modal__media-carousel:-webkit-full-screen .additional-work-modal__media-item {
   object-fit: contain;
-  image-rendering: -webkit-optimize-contrast;
-  image-rendering: crisp-edges;
 }
 
 .additional-work-modal__media-carousel:-webkit-full-screen .additional-work-modal__fullscreen {
