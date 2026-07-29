@@ -6,6 +6,7 @@ import { useCursorContext } from "@/app/portfolio/context/CursorContext";
 import { HeroRulers } from "./HeroRulers";
 import { scrollToSelectedWorkWithAnimation } from "../scrollToSelectedWork.utils";
 import { HeroKeywordBadge } from "./HeroKeywordBadge";
+import { ENABLE_HERO_MAGNIFIER } from "./heroMagnifier.flag";
 
 export function HomeHero() {
   const { setVariant } = useCursorContext();
@@ -19,18 +20,32 @@ export function HomeHero() {
       <HeroRulers hostRef={heroRef} />
       <div
         className="home-hero-inner"
-        onMouseEnter={() => setVariant("heroGiant")}
-        onMouseLeave={() => setVariant("default")}
+        onMouseEnter={
+          ENABLE_HERO_MAGNIFIER ? () => setVariant("heroGiant") : undefined
+        }
+        onMouseLeave={
+          ENABLE_HERO_MAGNIFIER ? () => setVariant("default") : undefined
+        }
       >
         <div className="home-hero-spacer" aria-hidden />
         <div className="home-hero-content">
-          <h1 className="home-hero-title">Hi! I&apos;m Amit</h1>
-          <p className="home-hero-subtitle">
-            Product Designer bridging <HeroKeywordBadge tone="ux">UX</HeroKeywordBadge> and{" "}
-            <HeroKeywordBadge tone="systems">Systems</HeroKeywordBadge>, as a hands-on team member,
-            alongside <HeroKeywordBadge tone="ai">AI</HeroKeywordBadge>.{" "}
-            I design structured, scalable products from concept to{" "}
-            <HeroKeywordBadge tone="code">Code</HeroKeywordBadge>.
+          <h1 className="home-hero-title">
+            Product design for complex, real-world systems.
+          </h1>
+          <p className="home-hero-supporting">
+            I work hands-on from discovery to delivery, combining{" "}
+            <HeroKeywordBadge tone="ui" variant="inline">
+              UX UI
+            </HeroKeywordBadge>
+            ,{" "}
+            <HeroKeywordBadge tone="systems" variant="inline">
+              Systems
+            </HeroKeywordBadge>{" "}
+            thinking, and{" "}
+            <HeroKeywordBadge tone="ai" variant="inline">
+              AI
+            </HeroKeywordBadge>{" "}
+            to shape clear, scalable product experiences.
           </p>
         </div>
         <div className="home-hero-spacer" aria-hidden />

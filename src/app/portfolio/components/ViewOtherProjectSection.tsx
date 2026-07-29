@@ -19,7 +19,7 @@ const FEATURED_PROJECTS: FeaturedProjectEntry[] = [
     description:
       "Designing an AI-powered command center that helps distributed operations teams turn real-time detections into faster, more reliable decisions.",
     keywords: "AI Operations · Complex System · Operational UX · 2026",
-    imageSrc: "/images/AI-Command-Center/ai-command-center-card-cover.png",
+    imageSrc: "/images/AI-Command-Center/ai-command-center-card-cover-v2.png",
     imageAlt: "AI-powered operational command center interface",
     href: "/portfolio/ai-command-center",
     imagePosition: "right",

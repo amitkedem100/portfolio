@@ -34,6 +34,19 @@
   --hero-keyword-accent: var(--hero-keyword-ai);
 }
 
+/* Combined UX UI frame reuses UI emphasis (stronger hatch + former UI accent) */
+.hero-keyword-badge--ui {
+  --hero-keyword-accent: var(--hero-keyword-code);
+}
+
+.hero-keyword-badge--ui::before {
+  background-image: repeating-linear-gradient(
+    -55deg,
+    color-mix(in srgb, var(--hero-keyword-accent) 24%, transparent) 0 2px,
+    transparent 2px 6px
+  );
+}
+
 .hero-keyword-badge--code {
   --hero-keyword-accent: var(--hero-keyword-code);
 }
@@ -76,6 +89,23 @@
   pointer-events: none;
 }
 
+/* Scoped inline variant for Hero supporting sentence */
+.hero-keyword-badge--inline {
+  height: 1.55em;
+  margin-inline: 0.14em 0.1em;
+  padding-inline: 0.36em;
+  vertical-align: -0.32em;
+}
+
+.hero-keyword-badge--inline::after {
+  inset: -1px;
+  background:
+    linear-gradient(var(--hero-keyword-corner-color) 0 0) top left / 3px 3px no-repeat,
+    linear-gradient(var(--hero-keyword-corner-color) 0 0) top right / 3px 3px no-repeat,
+    linear-gradient(var(--hero-keyword-corner-color) 0 0) bottom left / 3px 3px no-repeat,
+    linear-gradient(var(--hero-keyword-corner-color) 0 0) bottom right / 3px 3px no-repeat;
+}
+
 @media (max-width: 768px) {
   .hero-keyword-badge {
     height: 24px;
@@ -89,5 +119,11 @@
       linear-gradient(var(--hero-keyword-corner-color) 0 0) bottom left / 3px 3px no-repeat,
       linear-gradient(var(--hero-keyword-corner-color) 0 0) bottom right / 3px 3px no-repeat;
   }
-}
 
+  .hero-keyword-badge--inline {
+    height: 1.5em;
+    margin-inline: 0.1em 0.08em;
+    padding-inline: 0.32em;
+    vertical-align: -0.28em;
+  }
+}

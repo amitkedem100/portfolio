@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import "./page.css";
 
-const CV_PDF_PATH = "/resume/amit-kedem-product-designer-cv.pdf";
-const CV_PREVIEW_PATH = "/images/cv/amit-kedem-cv-preview.png";
+const CV_PDF_PATH = "/resume/amit-kedem-ux-product-designer-cv-v2.pdf";
+const CV_DOWNLOAD_NAME = "Amit-Kedem-UX-Product-Designer-CV.pdf";
+const CV_PREVIEW_PATH = "/images/cv/amit-kedem-cv-preview-v2.png";
 
 export const metadata: Metadata = {
   title: "Amit Kedem | CV",
@@ -18,7 +19,11 @@ export default function PortfolioCvPage() {
             Resume
           </h1>
 
-          <a className="cv-page-download" href={CV_PDF_PATH} download>
+          <a
+            className="cv-page-download"
+            href={CV_PDF_PATH}
+            download={CV_DOWNLOAD_NAME}
+          >
             Get Resume
           </a>
 

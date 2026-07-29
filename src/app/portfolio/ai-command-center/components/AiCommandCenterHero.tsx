@@ -2,7 +2,7 @@ import Image from "next/image";
 import { BadgeList, splitBadges } from "@/app/portfolio/components/BadgeList";
 import "./AiCommandCenterHero.css";
 
-const HERO_COVER = "/images/AI-Command-Center/ai-command-center-card-cover.png";
+const HERO_COVER = "/images/AI-Command-Center/ai-command-center-card-cover-v2.png";
 const HERO_KEYWORDS = "AI Operations · Complex System · Operational UX · 2026";
 
 type AiCommandCenterHeroProps = {

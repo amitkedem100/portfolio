@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { useCursorContext } from "../context/CursorContext";
+import { ENABLE_HERO_MAGNIFIER } from "../home/components/heroMagnifier.flag";
 import "./PortfolioCursor.css";
 
 const DESKTOP_MEDIA = "(min-width: 769px)";
@@ -104,9 +105,10 @@ export function PortfolioCursor() {
   }, [isDesktop]);
 
   const isViewProject = variant === "viewProject";
-  const isHeroGiant = variant === "heroGiant";
+  const isHeroGiant = ENABLE_HERO_MAGNIFIER && variant === "heroGiant";
   const isHomePath = pathname === HOME_PATH;
-  const isMobileHeroLensActive = isMobile && isHomePath && mobileHeroPosition !== null;
+  const isMobileHeroLensActive =
+    ENABLE_HERO_MAGNIFIER && isMobile && isHomePath && mobileHeroPosition !== null;
   const isHeroLensActive = isHeroGiant || isMobileHeroLensActive;
 
   const updateHeroLensCssVars = (localPosition: { x: number; y: number } | null) => {
@@ -172,6 +174,7 @@ export function PortfolioCursor() {
   }, [isHomePath]);
 
   useEffect(() => {
+    if (!ENABLE_HERO_MAGNIFIER) return;
     if (!isMobile || !isHomePath) return;
 
     let rafId = 0;
@@ -237,6 +240,7 @@ export function PortfolioCursor() {
   }, [isMobile, isHomePath]);
 
   useEffect(() => {
+    if (!ENABLE_HERO_MAGNIFIER) return;
     if (!isMobile || !isHomePath) return;
     let mountedHero: HTMLElement | null = null;
     let rafId = 0;
@@ -277,6 +281,7 @@ export function PortfolioCursor() {
   }, [isMobile, isHomePath]);
 
   useEffect(() => {
+    if (!ENABLE_HERO_MAGNIFIER) return;
     if (!isMobile || !mobileHeroTarget) return;
 
     let rafId = 0;
