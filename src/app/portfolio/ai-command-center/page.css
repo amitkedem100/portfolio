@@ -1,0 +1,255 @@
+.ai-cc-page {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+  min-width: 0;
+}
+
+/*
+  Real wrapper box (not display:contents) so lock-state filter:blur can paint.
+  Root cause of missing backdrop blur: body { position:fixed } scroll-lock +
+  display:contents content wrapper made backdrop-filter ineffective in Chrome;
+  filter on this box is the reliable project-area blur.
+*/
+.ai-cc-page__content {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 0;
+}
+
+.ai-cc-page--locked {
+  pointer-events: none;
+  user-select: none;
+}
+
+.ai-cc-page--locked .ai-cc-page__content {
+  filter: blur(12px);
+  transform: scale(1.015);
+  transform-origin: center top;
+}
+
+.ai-cc-page--locked .ai-cc-access-gate {
+  pointer-events: auto;
+  filter: none;
+  transform: none;
+}
+
+.ai-cc-page-section {
+  display: block;
+  grid-column: 1 / -1;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Full-bleed hero — same shell cancel pattern as Astra / Basilar */
+.ai-cc-page-hero {
+  width: auto;
+  max-width: none;
+  margin-left: calc(var(--portfolio-shell-inline, 64px) * -1);
+  margin-right: calc(var(--portfolio-shell-inline, 64px) * -1);
+}
+
+@media (min-width: 1025px) {
+  .ai-cc-page-hero {
+    margin-left: calc(clamp(64px, 5vw + 40px, 180px) * -1);
+    margin-right: calc(clamp(64px, 5vw + 40px, 180px) * -1);
+  }
+}
+
+.ai-cc-page-access,
+.ai-cc-page-overview {
+  padding-block: 56px;
+}
+
+.ai-cc-page-band {
+  padding-block: 24px 56px;
+}
+
+.ai-cc-access-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 120px;
+}
+
+.ai-cc-access-panel__title {
+  margin: 0;
+  font: var(--portfolio-text-h2);
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.ai-cc-access-panel__message {
+  margin: 0;
+  font: var(--portfolio-text-b1);
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.ai-cc-access-panel__open-link {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start;
+  margin: 0;
+  padding: 12px 20px;
+  border: 2px solid var(--ai-cc-accent, #5d778d);
+  border-radius: 12px;
+  background: var(--ai-cc-accent, #5d778d);
+  color: #ffffff;
+  font: var(--portfolio-text-b2);
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 160ms ease;
+}
+
+.ai-cc-access-panel__open-link:hover {
+  opacity: 0.92;
+}
+
+.ai-cc-access-panel__open-link:focus-visible {
+  outline: 2px solid var(--ai-cc-accent, #5d778d);
+  outline-offset: 3px;
+}
+
+/* Locked-state public-safe skeletons (no confidential copy) */
+.ai-cc-placeholder-prose {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.ai-cc-placeholder-heading {
+  width: min(220px, 48%);
+  height: 28px;
+  border-radius: 8px;
+  background: var(--surface);
+}
+
+.ai-cc-placeholder-subheading {
+  width: min(140px, 32%);
+  height: 16px;
+  margin-top: 12px;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--ai-cc-accent, #5d778d) 18%, var(--surface));
+}
+
+.ai-cc-placeholder-line {
+  width: 100%;
+  height: 14px;
+  border-radius: 6px;
+  background: var(--surface-subtle);
+}
+
+.ai-cc-placeholder-line--lead {
+  height: 18px;
+  width: 92%;
+}
+
+.ai-cc-placeholder-line--short {
+  width: 64%;
+}
+
+.ai-cc-placeholder-block {
+  width: 100%;
+  height: 72px;
+  margin-top: 8px;
+  border-radius: 12px;
+  border: 1px solid var(--border-subtle);
+  background: var(--surface);
+}
+
+.ai-cc-placeholder-band__frame {
+  width: 100%;
+  aspect-ratio: 2 / 1;
+  border-radius: var(--radius-8);
+  border: 1px solid var(--border-subtle);
+  background: linear-gradient(
+    135deg,
+    var(--surface) 0%,
+    color-mix(in srgb, var(--ai-cc-accent, #5d778d) 16%, var(--surface-subtle)) 100%
+  );
+}
+
+.ai-cc-placeholder-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.ai-cc-placeholder-card {
+  min-height: 120px;
+  border-radius: 12px;
+  border: 1px solid var(--border-subtle);
+  background: var(--surface);
+}
+
+.ai-cc-page--unlocked {
+  animation: ai-cc-reveal 420ms ease;
+}
+
+@keyframes ai-cc-reveal {
+  from {
+    opacity: 0.72;
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ai-cc-page--unlocked {
+    animation: none;
+  }
+
+  .ai-cc-page--locked .ai-cc-page__content {
+    /* Keep privacy blur; only drop the scale edge treatment */
+    transform: none;
+  }
+
+  .ai-cc-access-panel__open-link {
+    transition: none;
+  }
+}
+
+@media (max-width: 1024px) {
+  .ai-cc-page-access,
+  .ai-cc-page-overview {
+    padding-block: 48px;
+  }
+
+  .ai-cc-placeholder-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .ai-cc-page-access,
+  .ai-cc-page-overview {
+    padding-block: 40px 32px;
+  }
+
+  .ai-cc-page-band {
+    padding-block: 16px 40px;
+  }
+
+  .ai-cc-access-panel__open-link {
+    width: 100%;
+  }
+
+  .ai-cc-placeholder-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ai-cc-placeholder-band__frame {
+    aspect-ratio: 16 / 10;
+  }
+}

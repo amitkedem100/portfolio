@@ -1,0 +1,225 @@
+/* Overlay starts below the shared header bar so the global top nav stays interactive. */
+
+.ai-cc-access-gate {
+  position: fixed;
+  top: var(--portfolio-header-bar, 80px);
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 90;
+  display: grid;
+  place-items: center;
+  padding: 24px 20px;
+  box-sizing: border-box;
+  pointer-events: auto;
+}
+
+/*
+  Dark translucent scrim over the project area.
+  Visible blur of page content is applied on .ai-cc-page__content when locked
+  (backdrop-filter alone is unreliable here — see page.css).
+*/
+.ai-cc-access-gate__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 14, 18, 0.52);
+  -webkit-backdrop-filter: blur(14px) saturate(108%) contrast(1.04);
+  backdrop-filter: blur(14px) saturate(108%) contrast(1.04);
+}
+
+.ai-cc-access-gate__dialog {
+  position: relative;
+  z-index: 1;
+  width: min(380px, 100%);
+  max-height: calc(100% - 16px);
+  overflow: auto;
+  padding: 28px 24px 22px;
+  border-radius: var(--radius-20);
+  border: 1px solid color-mix(in srgb, var(--border-subtle) 70%, rgba(255, 255, 255, 0.18));
+  background: color-mix(in srgb, var(--background) 92%, #ffffff 8%);
+  box-shadow:
+    0 24px 48px rgba(0, 0, 0, 0.34),
+    0 8px 18px rgba(0, 0, 0, 0.18);
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.ai-cc-access-gate__title {
+  margin: 0 0 8px;
+  font: var(--portfolio-text-h2);
+  color: var(--text-primary);
+}
+
+.ai-cc-access-gate__description {
+  margin: 0 0 22px;
+  font: var(--portfolio-text-b2);
+  color: var(--text-secondary);
+}
+
+.ai-cc-access-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: start;
+}
+
+.ai-cc-access-form__fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.ai-cc-access-form__legend {
+  margin: 0 0 10px;
+  padding: 0;
+  font: var(--portfolio-text-b3);
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.ai-cc-access-form__digits {
+  display: grid;
+  grid-template-columns: repeat(4, 52px);
+  gap: 12px;
+  justify-content: center;
+}
+
+.ai-cc-access-form__digit {
+  width: 52px;
+  height: 56px;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-8);
+  background: var(--surface);
+  color: var(--text-primary);
+  font: var(--portfolio-text-h2);
+  text-align: center;
+  caret-color: var(--ai-cc-accent, #5d778d);
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease,
+    box-shadow 160ms ease;
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+.ai-cc-access-form__digit::-webkit-outer-spin-button,
+.ai-cc-access-form__digit::-webkit-inner-spin-button {
+  appearance: none;
+  margin: 0;
+}
+
+.ai-cc-access-form__digit:hover:not(:disabled):not(:focus) {
+  border-color: color-mix(in srgb, var(--ai-cc-accent, #5d778d) 42%, var(--border));
+  background: color-mix(in srgb, var(--surface) 88%, var(--ai-cc-accent, #5d778d));
+}
+
+.ai-cc-access-form__digit--filled {
+  border-color: color-mix(in srgb, var(--ai-cc-accent, #5d778d) 55%, var(--border));
+  background: color-mix(in srgb, var(--surface) 82%, var(--ai-cc-accent, #5d778d));
+}
+
+.ai-cc-access-form__digit--error {
+  border-color: color-mix(in srgb, var(--ai-cc-accent, #5d778d) 70%, #8a3b3b);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--ai-cc-accent, #5d778d) 28%, transparent);
+}
+
+.ai-cc-access-form__digit:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.ai-cc-access-form__digit:focus,
+.ai-cc-access-form__digit:focus-visible {
+  outline: none;
+  border-color: var(--ai-cc-accent, #5d778d);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ai-cc-accent, #5d778d) 28%, transparent);
+}
+
+.ai-cc-access-form__error {
+  margin: 0;
+  min-height: 1.35em;
+  font: var(--portfolio-text-b3);
+  color: transparent;
+  text-align: center;
+}
+
+.ai-cc-access-form__error--visible {
+  color: color-mix(in srgb, var(--ai-cc-accent, #5d778d) 55%, #b42318);
+}
+
+.ai-cc-access-form__submit {
+  appearance: none;
+  align-self: stretch;
+  margin: 4px 0 0;
+  padding: 12px 18px;
+  border: 2px solid var(--ai-cc-accent, #5d778d);
+  border-radius: var(--radius-8);
+  background: var(--ai-cc-accent, #5d778d);
+  color: #ffffff;
+  font: var(--portfolio-text-b2);
+  cursor: pointer;
+  transition: opacity 160ms ease;
+}
+
+.ai-cc-access-form__submit:hover:not(:disabled) {
+  opacity: 0.94;
+}
+
+.ai-cc-access-form__submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ai-cc-access-form__submit:focus-visible {
+  outline: 2px solid var(--ai-cc-accent, #5d778d);
+  outline-offset: 3px;
+}
+
+.ai-cc-access-gate__helper {
+  margin: 16px 0 0;
+  font: var(--portfolio-text-b3);
+  color: var(--text-secondary);
+}
+
+.ai-cc-access-gate__dev-hint {
+  margin: 12px 0 0;
+  padding: 8px 10px;
+  border-radius: var(--radius-8);
+  border: 1px dashed color-mix(in srgb, var(--ai-cc-accent, #5d778d) 35%, var(--border));
+  background: color-mix(in srgb, var(--ai-cc-accent, #5d778d) 8%, var(--surface));
+  font: var(--portfolio-text-b3);
+  color: var(--text-secondary);
+}
+
+@media (max-width: 768px) {
+  .ai-cc-access-gate {
+    padding: 16px 14px;
+    align-items: center;
+  }
+
+  .ai-cc-access-gate__dialog {
+    width: min(360px, 100%);
+    padding: 24px 18px 18px;
+  }
+
+  .ai-cc-access-form__digits {
+    grid-template-columns: repeat(4, 48px);
+    gap: 10px;
+  }
+
+  .ai-cc-access-form__digit {
+    width: 48px;
+    height: 52px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ai-cc-access-form__digit,
+  .ai-cc-access-form__submit {
+    transition: none;
+  }
+}

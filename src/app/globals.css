@@ -142,6 +142,11 @@
   }
 }
 
+html.ai-command-center-project {
+  --cursor-accent: #5D778D;
+  --ai-cc-accent: #5D778D;
+}
+
 /* Basilar: project-scoped tokens (accent + band backgrounds; do not alter global DS tokens) */
 html.basilar-project {
   --cursor-accent: #00ff0a;

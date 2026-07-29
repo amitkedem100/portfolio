@@ -1,6 +1,7 @@
 "use client";
 
 export const SELECTED_WORK_ID = "selected-work";
+/* Kept for restoring AdditionalWorkSection / More Projects on Home */
 export const MORE_PROJECTS_ID = "more-projects";
 const SCROLL_HEADER_CLEARANCE_PX = 88;
 

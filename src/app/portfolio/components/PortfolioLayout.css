@@ -18,6 +18,7 @@
 
 .portfolio-layout:has(.basilar-page),
 .portfolio-layout:has(.saas-page),
+.portfolio-layout:has(.ai-cc-page),
 .portfolio-layout:has(.project-page) {
   --portfolio-header-stack-gap: 0;
 }
@@ -35,6 +36,7 @@
 
   .portfolio-layout:has(.basilar-page),
   .portfolio-layout:has(.saas-page),
+  .portfolio-layout:has(.ai-cc-page),
   .portfolio-layout:has(.project-page) {
     --portfolio-header-stack-gap: 0;
   }
@@ -53,6 +55,7 @@
 
   .portfolio-layout:has(.basilar-page),
   .portfolio-layout:has(.saas-page),
+  .portfolio-layout:has(.ai-cc-page),
   .portfolio-layout:has(.project-page) {
     --portfolio-header-stack-gap: 0;
   }
@@ -99,6 +102,7 @@
 @media (min-width: 1025px) {
   .portfolio-layout:has(.basilar-page) .portfolio-layout-main,
   .portfolio-layout:has(.saas-page) .portfolio-layout-main,
+  .portfolio-layout:has(.ai-cc-page) .portfolio-layout-main,
   .portfolio-layout:has(.project-page) .portfolio-layout-main {
     padding-left: calc(clamp(64px, 5vw + 40px, 180px) - 64px);
     padding-right: calc(clamp(64px, 5vw + 40px, 180px) - 64px);
@@ -108,6 +112,7 @@
 /* Project routes: no row gap between main and footer inside content grid */
 .portfolio-layout-grid.layout-grid:has(.basilar-page),
 .portfolio-layout-grid.layout-grid:has(.saas-page),
+.portfolio-layout-grid.layout-grid:has(.ai-cc-page),
 .portfolio-layout-grid.layout-grid:has(.project-page) {
   row-gap: 0;
 }

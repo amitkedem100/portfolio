@@ -18,6 +18,7 @@ const SCROLL_NEAR_TOP_PX = 12;
 const HOME_PATH = "/portfolio/home";
 
 const WORK_PROJECTS = [
+  { label: "AI Command Center", href: "/portfolio/ai-command-center" },
   { label: "Astra", href: "/portfolio/saas" },
   { label: "Basilar", href: "/portfolio/basilar" },
 ] as const;

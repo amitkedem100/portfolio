@@ -12,16 +12,24 @@ export function CursorRouteReset() {
   useEffect(() => {
     setVariant("default");
 
+    const isAiCommandCenter =
+      pathname === "/portfolio/ai-command-center" ||
+      pathname.startsWith("/portfolio/ai-command-center/");
     const isBasilar =
       pathname === "/portfolio/basilar" ||
       pathname.startsWith("/portfolio/basilar/");
     const isSaas =
       pathname === "/portfolio/saas" ||
       pathname.startsWith("/portfolio/saas/");
+    document.documentElement.classList.toggle(
+      "ai-command-center-project",
+      isAiCommandCenter
+    );
     document.documentElement.classList.toggle("basilar-project", isBasilar);
     document.documentElement.classList.toggle("saas-project", isSaas);
 
     return () => {
+      document.documentElement.classList.remove("ai-command-center-project");
       document.documentElement.classList.remove("basilar-project");
       document.documentElement.classList.remove("saas-project");
     };

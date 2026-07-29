@@ -1,24 +1,66 @@
 "use client";
 
-import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { CursorZone } from "./CursorZone";
 import { ProjectCard } from "./ProjectCard";
-import {
-  MORE_PROJECTS_SCROLL_FLAG_KEY,
-} from "@/app/portfolio/home/ScrollToSelectedWork";
+import type { ProjectCardProps } from "./ProjectCard";
 import "./ViewOtherProjectSection.css";
 
+type FeaturedProjectId = "ai-command-center" | "saas" | "basilar";
+
+type FeaturedProjectEntry = ProjectCardProps & {
+  id: FeaturedProjectId;
+};
+
+/* Local registry for cross-project navigation only — not a global project data layer. */
+const FEATURED_PROJECTS: FeaturedProjectEntry[] = [
+  {
+    id: "ai-command-center",
+    title: "AI Command Center",
+    description:
+      "Designing an AI-powered command center that helps distributed operations teams turn real-time detections into faster, more reliable decisions.",
+    keywords: "AI Operations · Complex System · Operational UX · 2026",
+    imageSrc: "/images/AI-Command-Center/ai-command-center-card-cover.png",
+    imageAlt: "AI-powered operational command center interface",
+    href: "/portfolio/ai-command-center",
+    imagePosition: "right",
+  },
+  {
+    id: "saas",
+    title: "Astra",
+    description:
+      "A safety intelligence platform designed to monitor, analyze, and improve construction site safety through AI-driven insights and real-time reporting.",
+    keywords: "SaaS Platform · Safety Analytics · AI Monitoring · 2026",
+    imageSrc: "/images/SaaS/astra-card-cover-v4.png",
+    imageAlt: "Astra project",
+    href: "/portfolio/saas",
+    imagePosition: "left",
+  },
+  {
+    id: "basilar",
+    title: "Basilar",
+    description:
+      "A mobile product for multi-day festival logistics. Entry, transport, food, navigation, and real-time updates.",
+    keywords: "Mobile UX · Festival Experience · Product",
+    imageSrc: "/images/basilar/basilar-card-cover-v3.png",
+    imageAlt: "Basilar project",
+    href: "/portfolio/basilar",
+    imagePosition: "right",
+  },
+];
+
+const NEXT_PROJECT_ID: Record<FeaturedProjectId, FeaturedProjectId> = {
+  "ai-command-center": "saas",
+  saas: "basilar",
+  basilar: "ai-command-center",
+};
+
 type ViewOtherProjectSectionProps = {
-  currentProject: "saas" | "basilar";
+  currentProject: FeaturedProjectId;
 };
 
 export function ViewOtherProjectSection({
   currentProject,
 }: ViewOtherProjectSectionProps) {
-  const router = useRouter();
-  const isCurrentSaas = currentProject === "saas";
-
   const handleSectionPointerEnter = () => {
     document.documentElement.setAttribute("data-cursor-global-accent", "");
   };
@@ -27,37 +69,9 @@ export function ViewOtherProjectSection({
     document.documentElement.removeAttribute("data-cursor-global-accent");
   };
 
-  const otherProject = isCurrentSaas
-    ? {
-        title: "Basilar",
-        description:
-          "A mobile product for multi-day festival logistics. Entry, transport, food, navigation, and real-time updates.",
-        keywords: "Mobile UX · Festival Experience · Product",
-        imageSrc: "/images/basilar/basilar-card-cover-v3.png",
-        imageAlt: "Basilar project",
-        href: "/portfolio/basilar",
-        imagePosition: "left" as const,
-      }
-    : {
-        title: "Astra",
-        description:
-          "A safety intelligence platform designed to monitor, analyze, and improve construction site safety through AI-driven insights and real-time reporting.",
-        keywords: "SaaS Platform · Safety Analytics · AI Monitoring · 2026",
-        imageSrc: "/images/SaaS/astra-card-cover-v4.png",
-        imageAlt: "Astra project",
-        href: "/portfolio/saas",
-        imagePosition: "right" as const,
-      };
-
-  const handleMoreProjectsClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
-    event.preventDefault();
-    try {
-      sessionStorage.setItem(MORE_PROJECTS_SCROLL_FLAG_KEY, "1");
-    } catch {
-      /* private / blocked storage */
-    }
-    router.push("/portfolio/home");
-  };
+  const nextId = NEXT_PROJECT_ID[currentProject];
+  const otherProject = FEATURED_PROJECTS.find((project) => project.id === nextId);
+  if (!otherProject) return null;
 
   return (
     <section
@@ -70,24 +84,19 @@ export function ViewOtherProjectSection({
         <h2 id="view-other-project-title" className="project-other-work__title">
           View Other <span className="project-other-work__title-suffix">Project</span>
         </h2>
-
-        <CursorZone variant="large">
-          <p className="project-other-work__more-link-wrap">
-            <Link
-              href="/portfolio/home#more-projects"
-              className="project-other-work__more-link"
-              onClick={handleMoreProjectsClick}
-            >
-              More Projects
-            </Link>
-          </p>
-        </CursorZone>
       </div>
 
       <CursorZone variant="viewProject">
-        <ProjectCard {...otherProject} />
+        <ProjectCard
+          title={otherProject.title}
+          description={otherProject.description}
+          keywords={otherProject.keywords}
+          imageSrc={otherProject.imageSrc}
+          imageAlt={otherProject.imageAlt}
+          href={otherProject.href}
+          imagePosition={otherProject.imagePosition}
+        />
       </CursorZone>
     </section>
   );
 }
-

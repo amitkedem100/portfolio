@@ -87,6 +87,10 @@
     object-position: center 70%;
   }
 
+  .project-card-link[href="/portfolio/ai-command-center"] .project-card-image {
+    object-position: center 45%;
+  }
+
   .project-card-title {
     order: 1;
   }
