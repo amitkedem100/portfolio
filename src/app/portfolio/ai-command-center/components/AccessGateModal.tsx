@@ -8,164 +8,155 @@ import {
   useState,
   useTransition,
   type ClipboardEvent,
-  type FormEvent,
   type KeyboardEvent,
 } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { unlockAiCommandCenterAccess } from "../actions";
 import "./AccessGateModal.css";
 
 const DIGIT_COUNT = 4;
-const INCORRECT_MESSAGE = "The access code is incorrect. Please try again.";
+const INCORRECT_MESSAGE = "That code didn't work. Try again.";
 
 type AccessGateModalProps = {
-  /* Compact developer-only hint rendered below the form in development */
+  open: boolean;
   developerHint?: string | null;
+  nextProjectHref: string;
+  nextProjectLabel: string;
+  homeHref: string;
 };
 
 function onlyDigits(value: string) {
   return value.replace(/\D/g, "");
 }
 
-export function AccessGateModal({ developerHint = null }: AccessGateModalProps) {
+export function AccessGateModal({
+  open,
+  developerHint = null,
+  nextProjectHref,
+  nextProjectLabel,
+  homeHref,
+}: AccessGateModalProps) {
   const titleId = useId();
   const descriptionId = useId();
   const errorId = useId();
   const router = useRouter();
-  const panelRef = useRef<HTMLDivElement>(null);
   const inputRefs = useRef<Array<HTMLInputElement | null>>([]);
+  const submitLockRef = useRef(false);
   const [digits, setDigits] = useState<string[]>(() => Array(DIGIT_COUNT).fill(""));
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
-  const code = digits.join("");
-  const canSubmit = code.length === DIGIT_COUNT && !isPending;
+  /* idle → backdrop blur → dialog enter */
+  const [revealPhase, setRevealPhase] = useState<"idle" | "backdrop" | "dialog">("idle");
 
-  /* Scroll lock while the access gate is open — header stays interactive above the overlay */
   useEffect(() => {
-    const scrollY = window.scrollY;
-    const prevHtmlOverflow = document.documentElement.style.overflow;
-    const prevBodyOverflow = document.body.style.overflow;
-    const prevBodyPosition = document.body.style.position;
-    const prevBodyTop = document.body.style.top;
-    const prevBodyWidth = document.body.style.width;
-    const prevBodyPaddingRight = document.body.style.paddingRight;
-    const scrollbarGap = window.innerWidth - document.documentElement.clientWidth;
-
-    document.documentElement.style.overflow = "hidden";
-    document.body.style.overflow = "hidden";
-    document.body.style.position = "fixed";
-    document.body.style.top = `-${scrollY}px`;
-    document.body.style.width = "100%";
-    if (scrollbarGap > 0) {
-      document.body.style.paddingRight = `${scrollbarGap}px`;
+    if (!open) {
+      setRevealPhase("idle");
+      document.querySelector(".ai-cc-page")?.removeAttribute("data-gate-phase");
+      return;
     }
 
-    const blockScrollKeys = (event: globalThis.KeyboardEvent) => {
-      const keys = ["ArrowUp", "ArrowDown", "PageUp", "PageDown", "Home", "End", " "];
-      const target = event.target as HTMLElement | null;
-      const isTyping =
-        target?.tagName === "INPUT" ||
-        target?.tagName === "TEXTAREA" ||
-        target?.isContentEditable;
-      if (keys.includes(event.key) && !isTyping) {
-        event.preventDefault();
-      }
-      if (event.key === "Escape") {
-        event.preventDefault();
-      }
-    };
+    const page = document.querySelector(".ai-cc-page");
+    setRevealPhase("idle");
+    page?.setAttribute("data-gate-phase", "idle");
 
-    document.addEventListener("keydown", blockScrollKeys, true);
+    /* Longer staged reveal: blur settles, then the dialog eases in */
+    const backdropTimer = window.setTimeout(() => {
+      page?.setAttribute("data-gate-phase", "backdrop");
+      setRevealPhase("backdrop");
+    }, 60);
+
+    const dialogTimer = window.setTimeout(() => {
+      page?.setAttribute("data-gate-phase", "dialog");
+      setRevealPhase("dialog");
+    }, 920);
 
     return () => {
-      document.documentElement.style.overflow = prevHtmlOverflow;
-      document.body.style.overflow = prevBodyOverflow;
-      document.body.style.position = prevBodyPosition;
-      document.body.style.top = prevBodyTop;
-      document.body.style.width = prevBodyWidth;
-      document.body.style.paddingRight = prevBodyPaddingRight;
-      window.scrollTo({ top: scrollY, left: 0, behavior: "instant" });
-      document.removeEventListener("keydown", blockScrollKeys, true);
+      window.clearTimeout(backdropTimer);
+      window.clearTimeout(dialogTimer);
+      page?.removeAttribute("data-gate-phase");
     };
-  }, []);
+  }, [open]);
 
-  /* Focus trap inside the dialog; header remains mouse-reachable above the overlay */
+  /* Soft focus on first digit after enter — code is the primary action */
   useEffect(() => {
-    const panel = panelRef.current;
-    if (!panel) return;
-
-    const focusables = () =>
-      Array.from(
-        panel.querySelectorAll<HTMLElement>(
-          'button:not([disabled]), input:not([disabled]), [href], [tabindex]:not([tabindex="-1"])'
-        )
-      ).filter((el) => !el.hasAttribute("disabled"));
+    if (!open || revealPhase !== "dialog") return;
 
     const raf = window.requestAnimationFrame(() => {
-      inputRefs.current[0]?.focus();
+      inputRefs.current[0]?.focus({ preventScroll: true });
     });
 
-    const onKeyDown = (event: globalThis.KeyboardEvent) => {
-      if (event.key !== "Tab") return;
-      const items = focusables();
-      if (items.length === 0) return;
-      const first = items[0];
-      const last = items[items.length - 1];
-      const active = document.activeElement as HTMLElement | null;
-
-      if (!panel.contains(active)) {
-        event.preventDefault();
-        first.focus();
-        return;
-      }
-
-      if (event.shiftKey) {
-        if (active === first) {
-          event.preventDefault();
-          last.focus();
-        }
-      } else if (active === last) {
-        event.preventDefault();
-        first.focus();
-      }
-    };
-
-    document.addEventListener("keydown", onKeyDown);
     return () => {
       window.cancelAnimationFrame(raf);
-      document.removeEventListener("keydown", onKeyDown);
     };
-  }, [isPending]);
+  }, [open, revealPhase]);
 
   const clearDigitsAndFocusFirst = useCallback(() => {
     setDigits(Array(DIGIT_COUNT).fill(""));
+    submitLockRef.current = false;
     window.requestAnimationFrame(() => {
       inputRefs.current[0]?.focus();
     });
   }, []);
 
-  const updateDigit = useCallback((index: number, value: string) => {
-    const digit = onlyDigits(value).slice(-1);
-    setDigits((prev) => {
-      const next = [...prev];
-      next[index] = digit;
-      return next;
-    });
-    setError(null);
-    if (digit && index < DIGIT_COUNT - 1) {
-      inputRefs.current[index + 1]?.focus();
-    }
-  }, []);
+  const submitCode = useCallback(
+    (nextCode: string) => {
+      if (submitLockRef.current || isPending) return;
+      if (!/^\d{4}$/.test(nextCode)) return;
+
+      submitLockRef.current = true;
+      setError(null);
+
+      startTransition(async () => {
+        const result = await unlockAiCommandCenterAccess(nextCode);
+        if (!result.ok) {
+          setError(result.error || INCORRECT_MESSAGE);
+          clearDigitsAndFocusFirst();
+          return;
+        }
+        setDigits(Array(DIGIT_COUNT).fill(""));
+        submitLockRef.current = false;
+        router.refresh();
+      });
+    },
+    [clearDigitsAndFocusFirst, isPending, router],
+  );
+
+  const applyDigits = useCallback(
+    (next: string[]) => {
+      setDigits(next);
+      setError(null);
+      const joined = next.join("");
+      if (joined.length === DIGIT_COUNT && next.every(Boolean)) {
+        submitCode(joined);
+      }
+    },
+    [submitCode],
+  );
+
+  const updateDigit = useCallback(
+    (index: number, value: string) => {
+      const digit = onlyDigits(value).slice(-1);
+      setDigits((prev) => {
+        const next = [...prev];
+        next[index] = digit;
+        const joined = next.join("");
+        if (digit && joined.length === DIGIT_COUNT && next.every(Boolean)) {
+          /* Defer so state commits before unlock */
+          queueMicrotask(() => submitCode(joined));
+        }
+        return next;
+      });
+      setError(null);
+      if (digit && index < DIGIT_COUNT - 1) {
+        inputRefs.current[index + 1]?.focus();
+      }
+    },
+    [submitCode],
+  );
 
   const handleKeyDown = (index: number, event: KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter") {
-      if (code.length === DIGIT_COUNT && !isPending) {
-        event.currentTarget.form?.requestSubmit();
-      }
-      return;
-    }
-
     if (event.key === "Backspace") {
       if (digits[index]) {
         event.preventDefault();
@@ -175,6 +166,7 @@ export function AccessGateModal({ developerHint = null }: AccessGateModalProps) 
           return next;
         });
         setError(null);
+        submitLockRef.current = false;
         return;
       }
       if (index > 0) {
@@ -185,6 +177,7 @@ export function AccessGateModal({ developerHint = null }: AccessGateModalProps) 
           return next;
         });
         setError(null);
+        submitLockRef.current = false;
         inputRefs.current[index - 1]?.focus();
       }
       return;
@@ -211,101 +204,102 @@ export function AccessGateModal({ developerHint = null }: AccessGateModalProps) 
     for (let i = 0; i < pasted.length; i += 1) {
       next[i] = pasted[i];
     }
-    setDigits(next);
-    setError(null);
+    applyDigits(next);
     const focusIndex = Math.min(pasted.length, DIGIT_COUNT - 1);
     inputRefs.current[focusIndex]?.focus();
   };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (isPending) return;
+  if (!open) return null;
 
-    if (!/^\d{4}$/.test(code)) {
-      setError(INCORRECT_MESSAGE);
-      return;
-    }
-
-    setError(null);
-    startTransition(async () => {
-      const result = await unlockAiCommandCenterAccess(code);
-      if (!result.ok) {
-        setError(result.error);
-        clearDigitsAndFocusFirst();
-        return;
-      }
-      setDigits(Array(DIGIT_COUNT).fill(""));
-      router.refresh();
-    });
-  };
+  const gateClass = [
+    "ai-cc-access-gate",
+    revealPhase !== "idle" ? "ai-cc-access-gate--backdrop-ready" : "",
+    revealPhase === "dialog" ? "ai-cc-access-gate--dialog-ready" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   return (
-    <div className="ai-cc-access-gate">
+    <div className={gateClass}>
       <div className="ai-cc-access-gate__backdrop" aria-hidden />
       <div
-        ref={panelRef}
         className="ai-cc-access-gate__dialog"
         role="dialog"
-        aria-modal="true"
+        aria-modal="false"
         aria-labelledby={titleId}
         aria-describedby={descriptionId}
+        aria-hidden={revealPhase !== "dialog" ? true : undefined}
       >
-        <h2 id={titleId} className="ai-cc-access-gate__title">
-          Private case study
-        </h2>
-        <p id={descriptionId} className="ai-cc-access-gate__description">
-          This project contains sensitive operational material. Enter the four-digit access code to
-          continue.
-        </p>
+        <div className="ai-cc-access-gate__top">
+          <div className="ai-cc-access-gate__intro">
+            <h2 id={titleId} className="ai-cc-access-gate__title">
+              Thanks for reading this far
+            </h2>
+            <p id={descriptionId} className="ai-cc-access-gate__description">
+              The deeper walkthrough stays private for confidentiality. Enter a code to unlock it,
+              or continue exploring.
+            </p>
+          </div>
 
-        <form className="ai-cc-access-form" onSubmit={handleSubmit} noValidate>
-          <fieldset className="ai-cc-access-form__fieldset" disabled={isPending}>
-            <legend className="ai-cc-access-form__legend">Access code</legend>
-            <div className="ai-cc-access-form__digits" role="group" aria-label="Four-digit access code">
-              {digits.map((digit, index) => (
-                <input
-                  key={`digit-${index}`}
-                  ref={(el) => {
-                    inputRefs.current[index] = el;
-                  }}
-                  className={`ai-cc-access-form__digit${digit ? " ai-cc-access-form__digit--filled" : ""}${
-                    error ? " ai-cc-access-form__digit--error" : ""
-                  }`}
-                  type="text"
-                  inputMode="numeric"
-                  pattern="[0-9]*"
-                  autoComplete={index === 0 ? "one-time-code" : "off"}
-                  maxLength={1}
-                  value={digit}
-                  aria-label={`Digit ${index + 1} of ${DIGIT_COUNT}`}
-                  aria-invalid={error ? true : undefined}
-                  aria-describedby={error ? errorId : undefined}
-                  onFocus={(event) => event.currentTarget.select()}
-                  onChange={(event) => updateDigit(index, event.target.value)}
-                  onKeyDown={(event) => handleKeyDown(index, event)}
-                  onPaste={handlePaste}
-                />
-              ))}
+          <div className="ai-cc-access-gate__code-block">
+            <p className="ai-cc-access-gate__code-label">Access code</p>
+
+            <div
+              className={`ai-cc-access-form${isPending ? " ai-cc-access-form--pending" : ""}`}
+              role="group"
+              aria-label="Four-digit access code"
+            >
+              <div className="ai-cc-access-form__digits">
+                {digits.map((digit, index) => (
+                  <input
+                    key={`digit-${index}`}
+                    ref={(el) => {
+                      inputRefs.current[index] = el;
+                    }}
+                    className={`ai-cc-access-form__digit${digit ? " ai-cc-access-form__digit--filled" : ""}${
+                      error ? " ai-cc-access-form__digit--error" : ""
+                    }`}
+                    type="text"
+                    inputMode="numeric"
+                    pattern="[0-9]*"
+                    autoComplete={index === 0 ? "one-time-code" : "off"}
+                    maxLength={1}
+                    value={digit}
+                    disabled={isPending}
+                    aria-label={`Digit ${index + 1} of ${DIGIT_COUNT}`}
+                    aria-invalid={error ? true : undefined}
+                    aria-describedby={error ? errorId : undefined}
+                    onFocus={(event) => event.currentTarget.select()}
+                    onChange={(event) => updateDigit(index, event.target.value)}
+                    onKeyDown={(event) => handleKeyDown(index, event)}
+                    onPaste={handlePaste}
+                  />
+                ))}
+              </div>
+
+              <p
+                id={errorId}
+                className={`ai-cc-access-form__error${error ? " ai-cc-access-form__error--visible" : ""}${
+                  isPending ? " ai-cc-access-form__error--pending" : ""
+                }`}
+                role="alert"
+                aria-live="assertive"
+              >
+                {isPending ? "Checking…" : (error ?? "")}
+              </p>
             </div>
-          </fieldset>
+          </div>
+        </div>
 
-          <p
-            id={errorId}
-            className={`ai-cc-access-form__error${error ? " ai-cc-access-form__error--visible" : ""}`}
-            role="alert"
-            aria-live="assertive"
-          >
-            {error ?? ""}
-          </p>
-
-          <button type="submit" className="ai-cc-access-form__submit" disabled={!canSubmit}>
-            {isPending ? "Checking…" : "View case study"}
-          </button>
-        </form>
-
-        <p className="ai-cc-access-gate__helper">
-          Access is shared directly with reviewers and hiring teams.
-        </p>
+        <div className="ai-cc-access-gate__nav">
+          <p className="ai-cc-access-gate__nav-prompt">Enter the digits, or</p>
+          <Link href={nextProjectHref} className="ai-cc-access-gate__next">
+            {nextProjectLabel}
+          </Link>
+          <Link href={homeHref} className="ai-cc-access-gate__home">
+            Back to home
+          </Link>
+        </div>
 
         {developerHint ? (
           <p className="ai-cc-access-gate__dev-hint" role="status">

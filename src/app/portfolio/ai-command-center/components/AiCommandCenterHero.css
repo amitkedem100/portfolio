@@ -13,7 +13,14 @@
   z-index: 0;
 }
 
-.ai-cc-hero__bg-tone {
+.ai-cc-hero__bg-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ai-cc-hero__bg-fallback {
+  display: none;
   position: absolute;
   inset: 0;
   background: linear-gradient(
@@ -88,29 +95,6 @@
   flex-wrap: wrap;
 }
 
-.ai-cc-hero__role {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  margin: 16px 0 0;
-  font: var(--portfolio-text-b2);
-  color: rgba(255, 255, 255, 0.9);
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
-}
-
-.ai-cc-hero__role-label {
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  font: var(--portfolio-text-b3);
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.72);
-}
-
-.ai-cc-hero__role-value {
-  color: rgba(255, 255, 255, 0.95);
-}
-
 @media (min-width: 769px) {
   .ai-cc-hero__text {
     display: flex;
@@ -131,10 +115,6 @@
     order: 3;
     margin-bottom: 0;
   }
-
-  .ai-cc-hero__role {
-    order: 4;
-  }
 }
 
 .ai-cc-hero__media {
@@ -146,30 +126,43 @@
 .ai-cc-hero__media-frame {
   position: relative;
   width: 100%;
-  aspect-ratio: 2 / 1;
+  /* Slightly shorter container — bottom edge moves up; top framing unchanged */
+  aspect-ratio: 2.11 / 1;
   border-radius: var(--radius-8);
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: color-mix(in srgb, var(--ai-cc-accent, #5d778d) 22%, rgba(255, 255, 255, 0.08));
+  /* Fixed black bed — light + dark — covers any decode gap between playlist clips */
+  background: #000;
   border: 1px solid color-mix(in srgb, var(--border) 64%, transparent);
   box-shadow:
     0 30px 56px rgba(0, 0, 0, 0.38),
     0 12px 22px rgba(0, 0, 0, 0.24);
 }
 
-.ai-cc-hero__media-image,
-.ai-cc-hero__media-video {
-  object-fit: cover;
-  object-position: center center;
-}
-
-.ai-cc-hero__media-image {
+.ai-cc-hero__media-playlist {
   position: absolute;
   inset: 0;
+}
+
+.ai-cc-hero__media-video {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: 100%;
+  /* Keep previous 2.08 framing; overflow clips only the bottom of the frame */
+  height: calc(100% * 2.11 / 2.08);
+  object-fit: cover;
+  object-position: center center;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ai-cc-hero__media-video--active {
+  opacity: 1;
+  z-index: 1;
 }
 
 @media (max-width: 1024px) {
@@ -190,6 +183,11 @@
   }
 
   .ai-cc-hero__media-frame {
-    aspect-ratio: 16 / 10;
+    /* Shorter than 16/9 — mobile-only; desktop stays at 2.11 */
+    aspect-ratio: 2.25 / 1;
+  }
+
+  .ai-cc-hero__media-video {
+    height: calc(100% * 2.25 / 2.08);
   }
 }

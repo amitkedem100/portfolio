@@ -1,0 +1,33 @@
+/* Same strip height as Basilar; image covers full width and crops overflow */
+
+.ai-cc-page-vibe-photo-inner {
+  position: relative;
+  width: 100%;
+  height: clamp(528px, 48vh, 800px);
+}
+
+.ai-cc-page-vibe-photo-img {
+  object-fit: cover;
+  /* Bias left + anchor top so the upper camera isn’t cropped */
+  object-position: 18% 22%;
+}
+
+/* Intersection target a little before the strip’s bottom */
+.ai-cc-access-sentinel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 70%;
+  height: 1px;
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .ai-cc-page-vibe-photo-inner {
+    height: clamp(240px, 36vh, 420px);
+  }
+
+  .ai-cc-page-vibe-photo-img {
+    object-position: 12% top;
+  }
+}

@@ -1,0 +1,145 @@
+/* Overview — same rhythm as Astra/Basilar project-text Overview */
+
+.ai-cc-page-overview {
+  padding-block: 56px;
+}
+
+.ai-cc-overview-header {
+  margin: 0;
+  text-align: start;
+}
+
+.ai-cc-overview-heading {
+  margin: 0 0 16px;
+  font: var(--portfolio-text-h2);
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.ai-cc-overview-prose {
+  text-align: start;
+}
+
+.ai-cc-overview-lead {
+  margin: 0 0 36px;
+  font: var(--portfolio-text-b1);
+  color: var(--text-secondary);
+}
+
+.ai-cc-overview-subheading {
+  margin: 0 0 10px;
+  font: var(--portfolio-text-b3);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.ai-cc-overview-subheading:first-of-type {
+  margin-top: 0;
+}
+
+.ai-cc-overview-problem-list + .ai-cc-overview-subheading {
+  margin-top: 32px;
+}
+
+.ai-cc-overview-problem-list {
+  margin: 0 0 32px;
+  padding: 0;
+  list-style: none;
+  counter-reset: ai-cc-overview-problem;
+}
+
+.ai-cc-overview-problem-list li {
+  counter-increment: ai-cc-overview-problem;
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 2px 14px;
+  margin-bottom: 18px;
+  font: var(--portfolio-text-b2);
+  color: var(--text-primary);
+}
+
+.ai-cc-overview-problem-list li::before {
+  content: counter(ai-cc-overview-problem, decimal-leading-zero);
+  flex-shrink: 0;
+  margin-top: 0.12em;
+  font: var(--portfolio-text-b3);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--cursor-accent, var(--ai-cc-accent, var(--accent)));
+}
+
+.ai-cc-overview-problem-list__title {
+  flex: 1 1 calc(100% - 42px);
+  min-width: 0;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.ai-cc-overview-problem-list__text {
+  flex: 1 1 calc(100% - 42px);
+  min-width: 0;
+  margin-left: calc(14px + 2ch);
+  color: var(--text-primary);
+}
+
+.ai-cc-overview-problem-list li:last-child {
+  margin-bottom: 0;
+}
+
+.ai-cc-overview-solution {
+  margin: 0;
+  font: var(--portfolio-text-b2);
+  color: var(--text-primary);
+}
+
+.ai-cc-overview-lead strong,
+.ai-cc-overview-solution strong {
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+@media (max-width: 1024px) {
+  .ai-cc-page-overview {
+    padding-block: 48px;
+  }
+}
+
+@media (max-width: 768px) {
+  .ai-cc-page-overview {
+    padding-block: 40px;
+  }
+
+  .ai-cc-overview-heading {
+    font-size: 1.375rem;
+    margin-bottom: 12px;
+  }
+
+  .ai-cc-overview-lead {
+    margin-bottom: 28px;
+    font-size: 1rem;
+    line-height: 1.55;
+  }
+
+  .ai-cc-overview-problem-list {
+    margin-bottom: 28px;
+  }
+
+  .ai-cc-overview-problem-list li {
+    font-size: 0.9375rem;
+    line-height: 1.55;
+    gap: 12px;
+  }
+
+  .ai-cc-overview-problem-list__text {
+    margin-left: calc(12px + 2ch);
+  }
+
+  .ai-cc-overview-solution {
+    font-size: 0.9375rem;
+    line-height: 1.55;
+  }
+}

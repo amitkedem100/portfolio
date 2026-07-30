@@ -21,23 +21,23 @@ export default function PortfolioHomePage() {
         >
           <CursorZone variant="viewProject">
             <ProjectCard
-              title="AI Command Center"
-              description="Designing an AI-powered command center that helps distributed operations teams turn real-time detections into faster, more reliable decisions."
-              keywords="AI Operations · Complex System · Operational UX · 2026"
-              imageSrc="/images/AI-Command-Center/ai-command-center-card-cover-v2.png"
-              imageAlt="AI-powered operational command center interface"
-              href="/portfolio/ai-command-center"
-              imagePosition="right"
-            />
-          </CursorZone>
-          <CursorZone variant="viewProject">
-            <ProjectCard
               title="Astra"
               description="A safety intelligence platform designed to monitor, analyze, and improve construction site safety through AI-driven insights and real-time reporting."
               keywords="SaaS Platform · Safety Analytics · AI Monitoring · 2026"
               imageSrc="/images/SaaS/astra-card-cover-v4.png"
               imageAlt="Astra project"
               href="/portfolio/saas"
+              imagePosition="right"
+            />
+          </CursorZone>
+          <CursorZone variant="viewProject">
+            <ProjectCard
+              title="AI Command Center"
+              description="Designing an AI-powered command center that helps distributed operations teams turn real-time detections into faster, more reliable decisions."
+              keywords="AI Operations · Complex System · Operational UX · 2026"
+              imageSrc="/images/AI-Command-Center/ai-command-center-card-cover-v2.png"
+              imageAlt="AI-powered operational command center interface"
+              href="/portfolio/ai-command-center"
               imagePosition="left"
             />
           </CursorZone>

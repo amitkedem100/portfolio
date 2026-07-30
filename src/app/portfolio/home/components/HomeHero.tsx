@@ -30,10 +30,13 @@ export function HomeHero() {
         <div className="home-hero-spacer" aria-hidden />
         <div className="home-hero-content">
           <h1 className="home-hero-title">
-            Product design for complex, real-world systems.
+            I’m Amit, a Product Designer crafting clear{" "}
+            <br className="home-hero-title__break" aria-hidden />
+            <span className="home-hero-title__tail">digital experiences.</span>
           </h1>
+     
           <p className="home-hero-supporting">
-            I work hands-on from discovery to delivery, combining{" "}
+            My work spans discovery through delivery, combining{" "}
             <HeroKeywordBadge tone="ui" variant="inline">
               UX UI
             </HeroKeywordBadge>
@@ -45,7 +48,7 @@ export function HomeHero() {
             <HeroKeywordBadge tone="ai" variant="inline">
               AI
             </HeroKeywordBadge>{" "}
-            to shape clear, scalable product experiences.
+            to create useful, scalable products that work for both businesses and the people who use them.
           </p>
         </div>
         <div className="home-hero-spacer" aria-hidden />

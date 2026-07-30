@@ -14,17 +14,6 @@ type FeaturedProjectEntry = ProjectCardProps & {
 /* Local registry for cross-project navigation only — not a global project data layer. */
 const FEATURED_PROJECTS: FeaturedProjectEntry[] = [
   {
-    id: "ai-command-center",
-    title: "AI Command Center",
-    description:
-      "Designing an AI-powered command center that helps distributed operations teams turn real-time detections into faster, more reliable decisions.",
-    keywords: "AI Operations · Complex System · Operational UX · 2026",
-    imageSrc: "/images/AI-Command-Center/ai-command-center-card-cover-v2.png",
-    imageAlt: "AI-powered operational command center interface",
-    href: "/portfolio/ai-command-center",
-    imagePosition: "right",
-  },
-  {
     id: "saas",
     title: "Astra",
     description:
@@ -33,6 +22,17 @@ const FEATURED_PROJECTS: FeaturedProjectEntry[] = [
     imageSrc: "/images/SaaS/astra-card-cover-v4.png",
     imageAlt: "Astra project",
     href: "/portfolio/saas",
+    imagePosition: "right",
+  },
+  {
+    id: "ai-command-center",
+    title: "AI Command Center",
+    description:
+      "Designing an AI-powered command center that helps distributed operations teams turn real-time detections into faster, more reliable decisions.",
+    keywords: "AI Operations · Complex System · Operational UX · 2026",
+    imageSrc: "/images/AI-Command-Center/ai-command-center-card-cover-v2.png",
+    imageAlt: "AI-powered operational command center interface",
+    href: "/portfolio/ai-command-center",
     imagePosition: "left",
   },
   {
@@ -49,9 +49,9 @@ const FEATURED_PROJECTS: FeaturedProjectEntry[] = [
 ];
 
 const NEXT_PROJECT_ID: Record<FeaturedProjectId, FeaturedProjectId> = {
-  "ai-command-center": "saas",
-  saas: "basilar",
-  basilar: "ai-command-center",
+  saas: "ai-command-center",
+  "ai-command-center": "basilar",
+  basilar: "saas",
 };
 
 type ViewOtherProjectSectionProps = {
