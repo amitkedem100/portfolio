@@ -30,9 +30,11 @@
   margin-top: 32px;
 }
 
-.home-page-section {
+.home-page-section,
+.home-page-reveal-item {
   display: block;
   grid-column: 1 / -1;
+  min-width: 0;
 }
 
 .home-page-heading {
