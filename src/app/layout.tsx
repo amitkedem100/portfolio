@@ -15,6 +15,7 @@ const figtree = Figtree({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://amitkedem.com"),
   title: "Amit Kedem | Portfolio",
   description: "Product Designer portfolio by Amit Kedem",
 };

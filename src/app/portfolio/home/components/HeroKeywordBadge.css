@@ -92,6 +92,7 @@
 /* Scoped inline variant for Hero supporting sentence */
 .hero-keyword-badge--inline {
   height: 1.55em;
+  max-width: 100%;
   margin-inline: 0.14em 0.1em;
   padding-inline: 0.36em;
   vertical-align: -0.32em;

@@ -6,16 +6,8 @@ import { usePathname, useRouter } from "next/navigation";
 import "./PortfolioFooter.css";
 import { PortfolioToast } from "./PortfolioToast";
 import { useClipboardToast } from "./useClipboardToast";
-import { SELECTED_WORK_SCROLL_FLAG_KEY } from "@/app/portfolio/home/ScrollToSelectedWork";
 import { scrollToSelectedWorkWithAnimation } from "@/app/portfolio/home/scrollToSelectedWork.utils";
-
-const FOOTER_NAV_LINKS = [
-  { label: "Home", href: "/portfolio/home" },
-  { label: "Work", href: "/portfolio/home#selected-work" },
-  { label: "About", href: "/portfolio/about" },
-  { label: "Contact", href: "/portfolio/contact" },
-  { label: "CV", href: "/portfolio/cv" },
-] as const;
+import { useJourneyHomeHref, useJourneyHref, useJourneyWorkHref } from "@/app/portfolio/journey/useJourneyHref";
 
 type FooterContactLink = {
   label: string;
@@ -65,30 +57,39 @@ const FOOTER_CONTACT_LINKS = [
 export function PortfolioFooter() {
   const pathname = usePathname();
   const router = useRouter();
+  const homeHref = useJourneyHomeHref();
+  const workHref = useJourneyWorkHref();
+  const aboutHref = useJourneyHref("/portfolio/about");
+  const contactHref = useJourneyHref("/portfolio/contact");
+  const cvHref = useJourneyHref("/portfolio/cv");
   const { copyToClipboard, toastProps, closeToast } = useClipboardToast();
 
   const handleWorkNavClick = useCallback(() => {
-    const homePath = "/portfolio/home";
-
-    if (pathname === homePath) {
+    if (pathname === homeHref) {
       scrollToSelectedWorkWithAnimation(1050);
+      if (typeof window !== "undefined") {
+        const currentHash = window.location.hash.replace(/^#/, "");
+        if (currentHash !== "work" && currentHash !== "selected-work") {
+          window.history.replaceState(null, "", `${pathname}#work`);
+        }
+      }
       return;
     }
 
-    try {
-      sessionStorage.setItem(SELECTED_WORK_SCROLL_FLAG_KEY, "1");
-    } catch {
-      /* private / blocked storage */
-    }
-
-    router.push(homePath);
-  }, [pathname, router]);
+    router.push(workHref);
+  }, [homeHref, pathname, router, workHref]);
 
   return (
     <footer className="portfolio-footer">
       <div className="portfolio-footer-inner">
         <nav className="portfolio-footer-nav" aria-label="Footer navigation">
-          {FOOTER_NAV_LINKS.map((link) =>
+          {[
+            { label: "Home", href: homeHref },
+            { label: "Work", href: workHref },
+            { label: "About", href: aboutHref },
+            { label: "Contact", href: contactHref },
+            { label: "CV", href: cvHref },
+          ].map((link) =>
             link.label === "Work" ? (
               <button
                 key={link.label}

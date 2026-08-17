@@ -3,6 +3,7 @@
 import { CursorZone } from "./CursorZone";
 import { ProjectCard } from "./ProjectCard";
 import type { ProjectCardProps } from "./ProjectCard";
+import { useJourneyHref } from "@/app/portfolio/journey/useJourneyHref";
 import "./ViewOtherProjectSection.css";
 
 type FeaturedProjectId = "ai-command-center" | "saas" | "basilar";
@@ -71,6 +72,7 @@ export function ViewOtherProjectSection({
 
   const nextId = NEXT_PROJECT_ID[currentProject];
   const otherProject = FEATURED_PROJECTS.find((project) => project.id === nextId);
+  const nextHref = useJourneyHref(otherProject?.href ?? "/portfolio/home");
   if (!otherProject) return null;
 
   return (
@@ -93,7 +95,7 @@ export function ViewOtherProjectSection({
           keywords={otherProject.keywords}
           imageSrc={otherProject.imageSrc}
           imageAlt={otherProject.imageAlt}
-          href={otherProject.href}
+          href={nextHref}
           imagePosition={otherProject.imagePosition}
         />
       </CursorZone>

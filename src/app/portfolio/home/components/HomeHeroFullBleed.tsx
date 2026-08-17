@@ -3,10 +3,15 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { HomeHero } from "./HomeHero";
+import type { HomeHeroContent } from "./homeHeroContent";
 
 const FULLBLEED_SLOT_ID = "portfolio-fullbleed-slot";
 
-export function HomeHeroFullBleed() {
+type HomeHeroFullBleedProps = {
+  content?: HomeHeroContent;
+};
+
+export function HomeHeroFullBleed({ content }: HomeHeroFullBleedProps) {
   const [slot, setSlot] = useState<HTMLElement | null>(null);
 
   useEffect(() => {
@@ -14,6 +19,6 @@ export function HomeHeroFullBleed() {
   }, []);
 
   if (!slot) return null;
-  return createPortal(<HomeHero />, slot);
+  return createPortal(<HomeHero content={content} />, slot);
 }
 

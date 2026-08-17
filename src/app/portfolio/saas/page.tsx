@@ -15,13 +15,14 @@ import { SaasIncidentsSection } from "@/app/portfolio/saas/components/SaasIncide
 import { SaasDesignSystemSection } from "@/app/portfolio/saas/components/SaasDesignSystemSection";
 import { SaasThanksSection } from "@/app/portfolio/saas/components/SaasThanksSection";
 import { ViewOtherProjectSection } from "@/app/portfolio/components/ViewOtherProjectSection";
+import { pathMetadata } from "@/app/portfolio/journey/pathMetadata";
 import "./page.css";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pathMetadata("/portfolio/saas", {
   title: "Amit Kedem | Astra",
   description:
     "Astra case study by Amit Kedem — a safety intelligence platform for construction with AI-driven insights and real-time reporting.",
-};
+});
 
 export default function SaasProjectPage() {
   return (

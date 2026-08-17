@@ -2,16 +2,17 @@
 
 import { useEffect, useLayoutEffect } from "react";
 import { usePathname } from "next/navigation";
+import { isJourneyHomePath } from "@/app/portfolio/journey/portfolioJourney";
 import {
   MORE_PROJECTS_ID,
   SELECTED_WORK_ID,
+  WORK_SECTION_ID,
   scrollToMoreProjectsWithAnimation,
   scrollToSelectedWorkWithAnimation,
 } from "./scrollToSelectedWork.utils";
 
 export const SELECTED_WORK_SCROLL_FLAG_KEY = "portfolio-scroll-to-selected-work-v1";
 export const MORE_PROJECTS_SCROLL_FLAG_KEY = "portfolio-scroll-to-more-projects-v1";
-const HOME_PATH = "/portfolio/home";
 
 /* Pause at top of home before scrolling so orientation is visible, then one smooth scroll. */
 const SCROLL_TO_CARDS_AFTER_MS = 450;
@@ -58,17 +59,21 @@ function clearMoreProjectsScrollFlag() {
   }
 }
 
+function isWorkHash(raw: string) {
+  return raw === WORK_SECTION_ID || raw === SELECTED_WORK_ID;
+}
+
 /*
- * #selected-work — deep link / hashchange.
+ * #work and legacy #selected-work — deep link / hashchange on generic home and niche landings.
  */
 export function ScrollToSelectedWork() {
-  const pathname = usePathname();
+  const pathname = usePathname() ?? "";
 
   useLayoutEffect(() => {
-    if (pathname !== HOME_PATH) return;
+    if (!isJourneyHomePath(pathname)) return;
     if (readWorkNavScrollFlag() || readMoreProjectsScrollFlag()) return;
     if (
-      [SELECTED_WORK_ID, MORE_PROJECTS_ID].includes(
+      [WORK_SECTION_ID, SELECTED_WORK_ID, MORE_PROJECTS_ID].includes(
         window.location.hash.replace(/^#/, "")
       )
     )
@@ -76,19 +81,19 @@ export function ScrollToSelectedWork() {
     window.scrollTo({ top: 0, left: 0, behavior: "instant" });
   }, [pathname]);
 
-  /* Drop stale flag when leaving home (user navigated away before delayed scroll). */
+  /* Drop stale flag when leaving a home-style page. */
   useEffect(() => {
-    if (pathname === HOME_PATH) return;
+    if (isJourneyHomePath(pathname)) return;
     clearWorkNavScrollFlag();
     clearMoreProjectsScrollFlag();
   }, [pathname]);
 
   useEffect(() => {
-    if (pathname !== HOME_PATH) return;
+    if (!isJourneyHomePath(pathname)) return;
 
     const tryScrollFromHash = () => {
       const raw = window.location.hash.replace(/^#/, "");
-      if (raw === SELECTED_WORK_ID) {
+      if (isWorkHash(raw)) {
         scrollSelectedWorkIntoViewSmooth();
         return;
       }
@@ -103,12 +108,11 @@ export function ScrollToSelectedWork() {
   }, [pathname]);
 
   /*
-   * Work nav: snap to top before paint, then after delay smooth-scroll to cards.
-   * Do NOT clear sessionStorage until the timeout runs — Strict Mode cancels the first timeout
-   * on remount; the flag must stay "1" so the second mount schedules a new timeout.
+   * Legacy Work-nav scroll flag (sessionStorage) — still honored on home routes.
+   * Primary Work navigation now uses #{work} hashes.
    */
   useLayoutEffect(() => {
-    if (pathname !== HOME_PATH) return;
+    if (!isJourneyHomePath(pathname)) return;
     const shouldScrollSelectedWork = readWorkNavScrollFlag();
     const shouldScrollMoreProjects = readMoreProjectsScrollFlag();
     if (!shouldScrollSelectedWork && !shouldScrollMoreProjects) return;

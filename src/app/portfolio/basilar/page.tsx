@@ -25,12 +25,13 @@ import { BasilarWaveAFriendSection } from "@/app/portfolio/basilar/components/Ba
 import { BasilarProductShowcase } from "@/app/portfolio/components/BasilarProductShowcase";
 import { ProjectVideoHero } from "@/app/portfolio/components/ProjectVideoHero";
 import { ViewOtherProjectSection } from "@/app/portfolio/components/ViewOtherProjectSection";
+import { pathMetadata } from "@/app/portfolio/journey/pathMetadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pathMetadata("/portfolio/basilar", {
   title: "Amit Kedem | Basilar",
   description:
     "Basilar case study by Amit Kedem — mobile UX for multi-day music festival logistics and real-time updates.",
-};
+});
 
 const BASILAR_BG_VIDEO = "/videos/basilar/background.mp4";
 const BASILAR_DEVICE_VIDEO = "/videos/basilar/device.mp4";

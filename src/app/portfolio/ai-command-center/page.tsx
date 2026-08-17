@@ -10,12 +10,13 @@ import { AiCommandCenterAccessGateFlow } from "./components/AiCommandCenterAcces
 import { AiCommandCenterHero } from "./components/AiCommandCenterHero";
 import { AiCommandCenterOverviewSection } from "./components/AiCommandCenterOverviewSection";
 import { AiCommandCenterVibePhotoSection } from "./components/AiCommandCenterVibePhotoSection";
+import { pathMetadata } from "@/app/portfolio/journey/pathMetadata";
 import "./page.css";
 
 /* Cookie-gated preview must evaluate access on every request */
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pathMetadata("/portfolio/ai-command-center", {
   title: "AI Command Center — Amit Kedem",
   description:
     "A private product design case study about an AI-powered operational command center.",
@@ -23,7 +24,7 @@ export const metadata: Metadata = {
     index: false,
     follow: false,
   },
-};
+});
 
 const PROJECT_TITLE = "AI Command Center";
 const PROJECT_DESCRIPTION =

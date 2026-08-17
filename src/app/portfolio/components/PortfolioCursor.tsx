@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { useCursorContext } from "../context/CursorContext";
 import { ENABLE_HERO_MAGNIFIER } from "../home/components/heroMagnifier.flag";
+import { isJourneyHomePath } from "@/app/portfolio/journey/portfolioJourney";
 import "./PortfolioCursor.css";
 
 const DESKTOP_MEDIA = "(min-width: 769px)";
@@ -23,7 +24,6 @@ const MOBILE_HERO_AUTOPLAY_POINTS = [
   { x: 290, y: 273 }, // second
   { x: 345, y: 100 }, // third (last)
 ] as const;
-const HOME_PATH = "/portfolio/home";
 
 export function PortfolioCursor() {
   const { variant } = useCursorContext();
@@ -106,7 +106,7 @@ export function PortfolioCursor() {
 
   const isViewProject = variant === "viewProject";
   const isHeroGiant = ENABLE_HERO_MAGNIFIER && variant === "heroGiant";
-  const isHomePath = pathname === HOME_PATH;
+  const isHomePath = isJourneyHomePath(pathname ?? "");
   const isMobileHeroLensActive =
     ENABLE_HERO_MAGNIFIER && isMobile && isHomePath && mobileHeroPosition !== null;
   const isHeroLensActive = isHeroGiant || isMobileHeroLensActive;

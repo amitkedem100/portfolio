@@ -7,21 +7,13 @@ import { usePathname, useRouter } from "next/navigation";
 import "./PortfolioHeader.css";
 import { CursorZone } from "./CursorZone";
 import { ThemeToggle } from "./ThemeToggle";
-import { SELECTED_WORK_SCROLL_FLAG_KEY } from "@/app/portfolio/home/ScrollToSelectedWork";
 import { scrollToSelectedWorkWithAnimation } from "@/app/portfolio/home/scrollToSelectedWork.utils";
+import { useJourneyHomeHref, useJourneyHref, useJourneyWorkHref } from "@/app/portfolio/journey/useJourneyHref";
 
 /* Cumulative scroll deltas — short downward burst hides bar; shorter upward burst shows (any page depth). */
 const SCROLL_DOWN_TO_HIDE_PX = 56;
 const SCROLL_UP_TO_SHOW_PX = 28;
 const SCROLL_NEAR_TOP_PX = 12;
-
-const HOME_PATH = "/portfolio/home";
-
-const WORK_PROJECTS = [
-  { label: "Astra", href: "/portfolio/saas" },
-  { label: "AI Command Center", href: "/portfolio/ai-command-center" },
-  { label: "Basilar", href: "/portfolio/basilar" },
-] as const;
 
 function isWorkProjectPathActive(pathname: string, projectHref: string) {
   return pathname === projectHref || pathname.startsWith(`${projectHref}/`);
@@ -39,6 +31,19 @@ function workProjectLinkClass(pathname: string, projectHref: string) {
 export function PortfolioHeader() {
   const pathname = usePathname();
   const router = useRouter();
+  const homeHref = useJourneyHomeHref();
+  const workHref = useJourneyWorkHref();
+  const aboutHref = useJourneyHref("/portfolio/about");
+  const contactHref = useJourneyHref("/portfolio/contact");
+  const cvHref = useJourneyHref("/portfolio/cv");
+  const saasHref = useJourneyHref("/portfolio/saas");
+  const commandHref = useJourneyHref("/portfolio/ai-command-center");
+  const basilarHref = useJourneyHref("/portfolio/basilar");
+  const workProjects = [
+    { label: "Astra", path: "/portfolio/saas", href: saasHref },
+    { label: "AI Command Center", path: "/portfolio/ai-command-center", href: commandHref },
+    { label: "Basilar", path: "/portfolio/basilar", href: basilarHref },
+  ] as const;
   const [menuOpen, setMenuOpen] = useState(false);
   const [workDropdownOpen, setWorkDropdownOpen] = useState(false);
   const [retracted, setRetracted] = useState(false);
@@ -105,16 +110,17 @@ export function PortfolioHeader() {
   }, [workDropdownOpen, closeWorkDropdown]);
 
   const handleWorkNavClick = () => {
-    if (pathname === HOME_PATH) {
+    if (pathname === homeHref) {
       scrollToSelectedWorkWithAnimation(1050);
+      if (typeof window !== "undefined") {
+        const currentHash = window.location.hash.replace(/^#/, "");
+        if (currentHash !== "work" && currentHash !== "selected-work") {
+          window.history.replaceState(null, "", `${pathname}#work`);
+        }
+      }
       return;
     }
-    try {
-      sessionStorage.setItem(SELECTED_WORK_SCROLL_FLAG_KEY, "1");
-    } catch {
-      /* private / blocked storage */
-    }
-    router.push(HOME_PATH);
+    router.push(workHref);
   };
 
   /* Portal keeps fixed overlay/panel under the viewport; header transform would otherwise clip fixed to the bar. */
@@ -259,14 +265,14 @@ export function PortfolioHeader() {
           </button>
         </CursorZone>
         <div className="portfolio-header-work-dropdown" role="menu" aria-label="Projects">
-          {WORK_PROJECTS.map((p) => (
-            <CursorZone variant="large" key={p.href}>
+          {workProjects.map((p) => (
+            <CursorZone variant="large" key={p.path}>
               <Link
                 href={p.href}
-                className={workProjectLinkClass(pathname, p.href)}
+                className={workProjectLinkClass(pathname, p.path)}
                 role="menuitem"
                 onClick={(e) => {
-                  if (isWorkProjectPathActive(pathname, p.href)) {
+                  if (isWorkProjectPathActive(pathname, p.path)) {
                     e.preventDefault();
                     window.scrollTo({ top: 0, behavior: "smooth" });
                   }
@@ -286,21 +292,21 @@ export function PortfolioHeader() {
     <>
       <li className="portfolio-header-nav-item">
         <CursorZone variant="large">
-          <Link href="/portfolio/about" onClick={closeMenu}>
+          <Link href={aboutHref} onClick={closeMenu}>
             About
           </Link>
         </CursorZone>
       </li>
       <li className="portfolio-header-nav-item">
         <CursorZone variant="large">
-          <Link href="/portfolio/contact" onClick={closeMenu}>
+          <Link href={contactHref} onClick={closeMenu}>
             Contact
           </Link>
         </CursorZone>
       </li>
       <li className="portfolio-header-nav-item">
         <CursorZone variant="large">
-          <Link href="/portfolio/cv" onClick={closeMenu}>
+          <Link href={cvHref} onClick={closeMenu}>
             CV
           </Link>
         </CursorZone>
@@ -313,7 +319,7 @@ export function PortfolioHeader() {
       <li className="portfolio-header-nav-item">
         <CursorZone variant="large">
           <Link
-            href="/portfolio/home"
+            href={homeHref}
             onClick={() => {
               closeMenu();
               closeWorkDropdown();
@@ -335,14 +341,14 @@ export function PortfolioHeader() {
           Work
         </button>
         <ul className="portfolio-header-menu-work-list" aria-label="Projects">
-          {WORK_PROJECTS.map((p) => (
-            <li key={p.href} className="portfolio-header-menu-work-item">
+          {workProjects.map((p) => (
+            <li key={p.path} className="portfolio-header-menu-work-item">
               <CursorZone variant="large">
                 <Link
                   href={p.href}
-                  className={workProjectLinkClass(pathname, p.href)}
+                  className={workProjectLinkClass(pathname, p.path)}
                   onClick={(e) => {
-                    if (isWorkProjectPathActive(pathname, p.href)) {
+                    if (isWorkProjectPathActive(pathname, p.path)) {
                       e.preventDefault();
                       window.scrollTo({ top: 0, behavior: "smooth" });
                     }
@@ -359,21 +365,21 @@ export function PortfolioHeader() {
       </li>
       <li className="portfolio-header-nav-item">
         <CursorZone variant="large">
-          <Link href="/portfolio/about" onClick={closeMenu}>
+          <Link href={aboutHref} onClick={closeMenu}>
             About
           </Link>
         </CursorZone>
       </li>
       <li className="portfolio-header-nav-item">
         <CursorZone variant="large">
-          <Link href="/portfolio/contact" onClick={closeMenu}>
+          <Link href={contactHref} onClick={closeMenu}>
             Contact
           </Link>
         </CursorZone>
       </li>
       <li className="portfolio-header-nav-item">
         <CursorZone variant="large">
-          <Link href="/portfolio/cv" onClick={closeMenu}>
+          <Link href={cvHref} onClick={closeMenu}>
             CV
           </Link>
         </CursorZone>
@@ -390,7 +396,7 @@ export function PortfolioHeader() {
       <div className="portfolio-header-inner">
         <div className="portfolio-header-brand">
           <CursorZone variant="large">
-            <Link href="/portfolio/home" className="portfolio-header-logo-link" aria-label="Home">
+            <Link href={homeHref} className="portfolio-header-logo-link" aria-label="Home">
               <svg
                 className="portfolio-header-logo"
                 width={40}

@@ -1,12 +1,14 @@
 "use client";
 
+export const WORK_SECTION_ID = "work";
 export const SELECTED_WORK_ID = "selected-work";
 /* Kept for restoring AdditionalWorkSection / More Projects on Home */
 export const MORE_PROJECTS_ID = "more-projects";
 const SCROLL_HEADER_CLEARANCE_PX = 88;
 
 export function scrollToSelectedWorkWithAnimation(durationMs = 1050) {
-  scrollToElementWithAnimation(SELECTED_WORK_ID, durationMs, getHeaderOffsetPx());
+  const targetId = document.getElementById(WORK_SECTION_ID) ? WORK_SECTION_ID : SELECTED_WORK_ID;
+  scrollToElementWithAnimation(targetId, durationMs, getHeaderOffsetPx());
 }
 
 export function scrollToMoreProjectsWithAnimation(durationMs = 1050) {

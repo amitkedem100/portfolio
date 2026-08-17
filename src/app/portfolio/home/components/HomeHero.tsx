@@ -1,14 +1,22 @@
 "use client";
 
-import { useRef } from "react";
+import { Fragment, useRef } from "react";
 import "./HomeHero.css";
 import { useCursorContext } from "@/app/portfolio/context/CursorContext";
 import { HeroRulers } from "./HeroRulers";
 import { scrollToSelectedWorkWithAnimation } from "../scrollToSelectedWork.utils";
 import { HeroKeywordBadge } from "./HeroKeywordBadge";
 import { ENABLE_HERO_MAGNIFIER } from "./heroMagnifier.flag";
+import {
+  DEFAULT_HOME_HERO_CONTENT,
+  type HomeHeroContent,
+} from "./homeHeroContent";
 
-export function HomeHero() {
+type HomeHeroProps = {
+  content?: HomeHeroContent;
+};
+
+export function HomeHero({ content = DEFAULT_HOME_HERO_CONTENT }: HomeHeroProps) {
   const { setVariant } = useCursorContext();
   const heroRef = useRef<HTMLElement | null>(null);
   const handleArrowClick = () => {
@@ -30,25 +38,32 @@ export function HomeHero() {
         <div className="home-hero-spacer" aria-hidden />
         <div className="home-hero-content">
           <h1 className="home-hero-title">
-            I’m Amit, a Product Designer crafting clear{" "}
-            <br className="home-hero-title__break" aria-hidden />
-            <span className="home-hero-title__tail">digital experiences.</span>
+            {content.headlineLead}
+            {content.headlineTail ? (
+              <>
+                {" "}
+                <br className="home-hero-title__break" aria-hidden />
+                <span className="home-hero-title__tail">
+                  {content.headlineTail}
+                </span>
+              </>
+            ) : null}
           </h1>
-     
+
           <p className="home-hero-supporting">
-            My work spans discovery through delivery, combining{" "}
-            <HeroKeywordBadge tone="ui" variant="inline">
-              UX UI
-            </HeroKeywordBadge>
-            ,{" "}
-            <HeroKeywordBadge tone="systems" variant="inline">
-              Systems
-            </HeroKeywordBadge>{" "}
-            thinking, and{" "}
-            <HeroKeywordBadge tone="ai" variant="inline">
-              AI
-            </HeroKeywordBadge>{" "}
-            to create useful, scalable products that work for both businesses and the people who use them.
+            {content.supporting.map((part, index) =>
+              part.type === "keyword" ? (
+                <HeroKeywordBadge
+                  key={`${part.value}-${index}`}
+                  tone={part.tone}
+                  variant="inline"
+                >
+                  {part.value}
+                </HeroKeywordBadge>
+              ) : (
+                <Fragment key={`text-${index}`}>{part.value}</Fragment>
+              ),
+            )}
           </p>
         </div>
         <div className="home-hero-spacer" aria-hidden />

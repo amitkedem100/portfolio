@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useJourneyHomeHref, useJourneyHref } from "@/app/portfolio/journey/useJourneyHref";
 import { AccessGateModal } from "./AccessGateModal";
 import { AiCommandCenterPreviewBanner } from "./AiCommandCenterPreviewBanner";
 import { AiCommandCenterVibePhotoSection } from "./AiCommandCenterVibePhotoSection";
@@ -15,6 +16,8 @@ export function AiCommandCenterAccessGateFlow({
 }: AiCommandCenterAccessGateFlowProps) {
   const sentinelRef = useRef<HTMLDivElement | null>(null);
   const [gateOpen, setGateOpen] = useState(false);
+  const homeHref = useJourneyHomeHref();
+  const nextProjectHref = useJourneyHref("/portfolio/basilar");
 
   useEffect(() => {
     const sentinel = sentinelRef.current;
@@ -46,9 +49,9 @@ export function AiCommandCenterAccessGateFlow({
       <AccessGateModal
         open={gateOpen}
         developerHint={developerHint}
-        nextProjectHref="/portfolio/basilar"
+        nextProjectHref={nextProjectHref}
         nextProjectLabel="Continue to next project 🚀"
-        homeHref="/portfolio/home"
+        homeHref={homeHref}
       />
     </>
   );

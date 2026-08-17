@@ -1,9 +1,19 @@
 import type { ReactNode } from "react";
 import "./HeroKeywordBadge.css";
 
+export type HeroKeywordTone =
+  | "ux"
+  | "systems"
+  | "ai"
+  | "ui"
+  | "code"
+  | "yellow"
+  | "orange"
+  | "red";
+
 type HeroKeywordBadgeProps = {
   children: ReactNode;
-  tone?: "ux" | "systems" | "ai" | "ui" | "code" | "yellow" | "orange" | "red";
+  tone?: HeroKeywordTone;
   /** Inline sentence use (Hero supporting copy). Default keeps contact/workspace sizing. */
   variant?: "default" | "inline";
 };

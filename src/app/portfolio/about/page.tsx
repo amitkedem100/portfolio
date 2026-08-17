@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import AboutToolsMarquee from "./components/AboutToolsMarquee";
+import { pathMetadata } from "@/app/portfolio/journey/pathMetadata";
 import "./page.css";
 
 type ToolCategory = "ux" | "systems" | "ai" | "code";
@@ -51,11 +52,11 @@ const TOOL_GROUPS: ToolGroup[] = [
   },
 ] as const;
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pathMetadata("/portfolio/about", {
   title: "Amit Kedem | About",
   description:
     "About Amit Kedem — product designer working across UX, systems, AI, and code.",
-};
+});
 
 export default function PortfolioAboutPage() {
   return (

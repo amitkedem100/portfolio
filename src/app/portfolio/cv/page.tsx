@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
 import "./page.css";
+import { pathMetadata } from "@/app/portfolio/journey/pathMetadata";
 
 const CV_PDF_PATH = "/resume/amit-kedem-ux-product-designer-cv-v2.pdf";
 const CV_DOWNLOAD_NAME = "Amit-Kedem-UX-Product-Designer-CV.pdf";
 const CV_PREVIEW_PATH = "/images/cv/amit-kedem-cv-preview-v2.png";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pathMetadata("/portfolio/cv", {
   title: "Amit Kedem | CV",
   description: "Download Amit Kedem's resume.",
-};
+});
 
 export default function PortfolioCvPage() {
   return (
