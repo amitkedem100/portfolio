@@ -31,14 +31,12 @@ export const DEFAULT_JOURNEY_CONTACT: JourneyContactConfig = {
 
 /*
  * Berlin / EU job-search contact overrides (journey id: product-design).
- * Add the final German number to phoneE164 / phoneDisplay below.
- * Optionally set whatsappE164 only if that number is WhatsApp-compatible.
  */
 export const PRODUCT_DESIGN_JOURNEY_CONTACT: JourneyContactConfig = {
   location: "Berlin, Germany",
-  phoneDisplay: null,
-  phoneE164: null,
-  whatsappE164: null,
+  phoneDisplay: "+49 177 6845728",
+  phoneE164: "+491776845728",
+  whatsappE164: "+491776845728",
   email: "kedemami2@gmail.com",
   linkedInUrl: "https://www.linkedin.com/in/amitkedemuiux/",
   linkedInHandle: "amitkedemuiux",

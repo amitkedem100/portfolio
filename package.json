@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test:journey": "npx --yes tsx src/app/portfolio/journey/portfolioJourney.test.ts"
+    "test:journey": "npx --yes tsx src/app/portfolio/journey/portfolioJourney.test.ts && npx --yes tsx src/app/portfolio/journey/journeyContact.test.ts"
   },
   "dependencies": {
     "next": "16.1.6",
