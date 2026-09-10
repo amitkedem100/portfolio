@@ -28,26 +28,21 @@ export const DEFAULT_JOURNEY_CV_ASSETS: JourneyCvAssets = {
 
 /*
  * Upload targets for the product-design (Berlin / EU) journey.
- * After files exist in public/, set pdfPath / previewPath on PRODUCT_DESIGN_JOURNEY_CV_ASSETS.
  */
 export const PRODUCT_DESIGN_CV_UPLOAD_TARGETS = {
-  pdfPublicPath: "/resume/amit-kedem-product-designer-cv-eu.pdf",
-  pdfDiskPath: "public/resume/amit-kedem-product-designer-cv-eu.pdf",
-  previewPublicPath: "/images/cv/amit-kedem-cv-preview-eu.png",
-  previewDiskPath: "public/images/cv/amit-kedem-cv-preview-eu.png",
+  pdfPublicPath: "/resume/amit-kedem-product-designer--cv.pdf",
+  pdfDiskPath: "public/resume/amit-kedem-product-designer--cv.pdf",
+  previewPublicPath: "/images/cv/amit-kedem-cv-preview-product-design.png",
+  previewDiskPath: "public/images/cv/amit-kedem-cv-preview-product-design.png",
   downloadFilename: "Amit-Kedem-Product-Designer-CV.pdf",
 } as const;
 
-/*
- * Paths stay null until the EU PDF/preview are uploaded to the targets above.
- * Do not point at the default CV — it may include Israeli contact details.
- */
 export const PRODUCT_DESIGN_JOURNEY_CV_ASSETS: JourneyCvAssets = {
-  pdfPath: null,
+  pdfPath: PRODUCT_DESIGN_CV_UPLOAD_TARGETS.pdfPublicPath,
   downloadFilename: PRODUCT_DESIGN_CV_UPLOAD_TARGETS.downloadFilename,
-  previewPath: null,
+  previewPath: PRODUCT_DESIGN_CV_UPLOAD_TARGETS.previewPublicPath,
   label: "Resume",
-  version: "eu-v1",
+  version: "product-design-v1",
 };
 
 const JOURNEY_CV_ASSETS: Partial<Record<JourneyOrigin, JourneyCvAssets>> = {
