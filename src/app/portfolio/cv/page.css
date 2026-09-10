@@ -36,6 +36,14 @@
   font: var(--portfolio-text-b2);
 }
 
+.cv-page-unavailable {
+  margin: 0;
+  max-width: 42ch;
+  text-align: center;
+  font: var(--portfolio-text-b2);
+  color: var(--text-secondary);
+}
+
 .cv-page-preview-wrap {
   width: 100%;
   background: var(--surface-subtle);

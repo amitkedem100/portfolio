@@ -5,26 +5,37 @@ import "./ContactPageSection.css";
 import { CursorZone } from "@/app/portfolio/components/CursorZone";
 import { PortfolioToast } from "@/app/portfolio/components/PortfolioToast";
 import { useClipboardToast } from "@/app/portfolio/components/useClipboardToast";
+import {
+  journeyContactMetaLine,
+  journeyEmailHref,
+  journeyPhoneCopyValue,
+  journeyPhoneTelHref,
+  journeyWhatsAppHref,
+  hasJourneyPhone,
+  hasJourneyWhatsApp,
+} from "@/app/portfolio/journey/journeyContact";
+import { useJourneyContact } from "@/app/portfolio/journey/useJourneyContact";
 import { HeroKeywordBadge } from "@/app/portfolio/home/components/HeroKeywordBadge";
 import { HomeContactIconButton } from "@/app/portfolio/home/components/HomeContactIconButton";
 
-const WHATSAPP_HREF =
-  "https://wa.me/972546338868?text=Hi%20Amit%2C%20saw%20your%20portfolio%20%E2%80%94%20would%20love%20to%20connect.";
-const LINKEDIN_HREF = "https://www.linkedin.com/in/amitkedemuiux/";
-const EMAIL_HREF = "mailto:kedemami2@gmail.com";
-const PHONE_HREF = "tel:+972546338868";
-const EMAIL_VALUE = "kedemami2@gmail.com";
-const PHONE_VALUE = "+972546338868";
-const WHATSAPP_VALUE = "+972546338868";
-const LINKEDIN_VALUE = "amitkedemuiux";
 const COPIED_STATE_MS = 1800;
 
 type CopiedAction = "email" | "phone" | null;
 
 export function ContactPageSection() {
+  const contact = useJourneyContact();
   const { copyToClipboard, toastProps, closeToast } = useClipboardToast();
   const [copiedAction, setCopiedAction] = useState<CopiedAction>(null);
   const copiedTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const whatsappHref = journeyWhatsAppHref(contact);
+  const phoneHref = journeyPhoneTelHref(contact);
+  const phoneCopyValue = journeyPhoneCopyValue(contact);
+  const showWhatsApp = hasJourneyWhatsApp(contact) && Boolean(whatsappHref);
+  const showPhone =
+    hasJourneyPhone(contact) && Boolean(phoneHref) && Boolean(phoneCopyValue);
+  const metaLine = journeyContactMetaLine(contact);
+  const whatsappDetail = contact.whatsappE164?.trim() ?? "";
 
   useEffect(
     () => () => {
@@ -32,7 +43,7 @@ export function ContactPageSection() {
         clearTimeout(copiedTimeoutRef.current);
       }
     },
-    []
+    [],
   );
 
   const activateCopiedState = (action: Exclude<CopiedAction, null>) => {
@@ -48,7 +59,7 @@ export function ContactPageSection() {
 
   const handleEmailCopy = () => {
     copyToClipboard({
-      value: EMAIL_VALUE,
+      value: contact.email,
       desktopMessage: "Email copied to clipboard.",
       mobileMessage: "Email copied. Tap and hold to paste.",
     });
@@ -56,8 +67,9 @@ export function ContactPageSection() {
   };
 
   const handlePhoneCopy = () => {
+    if (!phoneCopyValue) return;
     copyToClipboard({
-      value: PHONE_VALUE,
+      value: phoneCopyValue,
       desktopMessage: "Phone copied to clipboard.",
       mobileMessage: "Phone copied. Tap and hold to paste.",
     });
@@ -95,32 +107,45 @@ export function ContactPageSection() {
               Let&apos;s talk
             </h1>
             <p className="contact-page-contact__subtitle">
-              Open to opportunities within product teams. Happy to connect.
+              {contact.availabilityCopy}
             </p>
+            {metaLine ? (
+              <p className="contact-page-contact__meta">{metaLine}</p>
+            ) : null}
 
             <div
               className="contact-page-contact__actions contact-page-contact__actions--desktop"
               aria-label="Contact actions"
             >
-              <a
-                className="contact-page-contact__action-card"
-                href={WHATSAPP_HREF}
-                target="_blank"
-                rel="noreferrer"
-                aria-label="Message me on WhatsApp"
-              >
-                <span
-                  className="contact-page-contact__action-icon"
-                  aria-hidden
-                  style={{ "--contact-icon": "url(/icons/contact/whatsapp.svg)" } as CSSProperties}
-                />
-                <span className="contact-page-contact__action-label">WhatsApp</span>
-                <span className="contact-page-contact__action-detail">{WHATSAPP_VALUE}</span>
-              </a>
+              {showWhatsApp && whatsappHref ? (
+                <a
+                  className="contact-page-contact__action-card"
+                  href={whatsappHref}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Message me on WhatsApp"
+                >
+                  <span
+                    className="contact-page-contact__action-icon"
+                    aria-hidden
+                    style={
+                      {
+                        "--contact-icon": "url(/icons/contact/whatsapp.svg)",
+                      } as CSSProperties
+                    }
+                  />
+                  <span className="contact-page-contact__action-label">
+                    WhatsApp
+                  </span>
+                  <span className="contact-page-contact__action-detail">
+                    {whatsappDetail}
+                  </span>
+                </a>
+              ) : null}
 
               <a
                 className="contact-page-contact__action-card"
-                href={LINKEDIN_HREF}
+                href={contact.linkedInUrl}
                 target="_blank"
                 rel="noreferrer"
                 aria-label="LinkedIn"
@@ -128,10 +153,18 @@ export function ContactPageSection() {
                 <span
                   className="contact-page-contact__action-icon"
                   aria-hidden
-                  style={{ "--contact-icon": "url(/icons/contact/linkedin.svg)" } as CSSProperties}
+                  style={
+                    {
+                      "--contact-icon": "url(/icons/contact/linkedin.svg)",
+                    } as CSSProperties
+                  }
                 />
-                <span className="contact-page-contact__action-label">LinkedIn</span>
-                <span className="contact-page-contact__action-detail">{LINKEDIN_VALUE}</span>
+                <span className="contact-page-contact__action-label">
+                  LinkedIn
+                </span>
+                <span className="contact-page-contact__action-detail">
+                  {contact.linkedInHandle}
+                </span>
               </a>
 
               <button
@@ -155,52 +188,56 @@ export function ContactPageSection() {
                   {isEmailCopied ? "Copied" : "Email"}
                 </span>
                 <span className="contact-page-contact__action-detail">
-                  {isEmailCopied ? "Email copied." : EMAIL_VALUE}
+                  {isEmailCopied ? "Email copied." : contact.email}
                 </span>
               </button>
 
-              <button
-                type="button"
-                className={`contact-page-contact__action-card${isPhoneCopied ? " contact-page-contact__action-card--copied" : ""}`}
-                aria-label="Call"
-                onClick={handlePhoneCopy}
-              >
-                <span
-                  className="contact-page-contact__action-icon"
-                  aria-hidden
-                  style={
-                    {
-                      "--contact-icon": isPhoneCopied
-                        ? "url(/icons/contact/check-circle-fill.svg)"
-                        : "url(/icons/contact/telephone.svg)",
-                    } as CSSProperties
-                  }
-                />
-                <span className="contact-page-contact__action-label">
-                  {isPhoneCopied ? "Copied" : "Phone"}
-                </span>
-                <span className="contact-page-contact__action-detail">
-                  {isPhoneCopied ? "Phone copied." : PHONE_VALUE}
-                </span>
-              </button>
+              {showPhone ? (
+                <button
+                  type="button"
+                  className={`contact-page-contact__action-card${isPhoneCopied ? " contact-page-contact__action-card--copied" : ""}`}
+                  aria-label="Call"
+                  onClick={handlePhoneCopy}
+                >
+                  <span
+                    className="contact-page-contact__action-icon"
+                    aria-hidden
+                    style={
+                      {
+                        "--contact-icon": isPhoneCopied
+                          ? "url(/icons/contact/check-circle-fill.svg)"
+                          : "url(/icons/contact/telephone.svg)",
+                      } as CSSProperties
+                    }
+                  />
+                  <span className="contact-page-contact__action-label">
+                    {isPhoneCopied ? "Copied" : "Phone"}
+                  </span>
+                  <span className="contact-page-contact__action-detail">
+                    {isPhoneCopied ? "Phone copied." : phoneCopyValue}
+                  </span>
+                </button>
+              ) : null}
             </div>
 
             <div
               className="contact-page-contact__actions contact-page-contact__actions--mobile"
               aria-label="Contact actions"
             >
-              <CursorZone variant="hidden">
-                <HomeContactIconButton
-                  href={WHATSAPP_HREF}
-                  label="Message me on WhatsApp"
-                  iconSrc="/icons/contact/whatsapp.svg"
-                  openInNewTab
-                />
-              </CursorZone>
+              {showWhatsApp && whatsappHref ? (
+                <CursorZone variant="hidden">
+                  <HomeContactIconButton
+                    href={whatsappHref}
+                    label="Message me on WhatsApp"
+                    iconSrc="/icons/contact/whatsapp.svg"
+                    openInNewTab
+                  />
+                </CursorZone>
+              ) : null}
 
               <CursorZone variant="hidden">
                 <HomeContactIconButton
-                  href={LINKEDIN_HREF}
+                  href={contact.linkedInUrl}
                   label="LinkedIn"
                   iconSrc="/icons/contact/linkedin.svg"
                   openInNewTab
@@ -209,12 +246,12 @@ export function ContactPageSection() {
 
               <CursorZone variant="hidden">
                 <HomeContactIconButton
-                  href={EMAIL_HREF}
+                  href={journeyEmailHref(contact)}
                   label="Email"
                   iconSrc="/icons/contact/envelope.svg"
                   onClick={() =>
                     copyToClipboard({
-                      value: EMAIL_VALUE,
+                      value: contact.email,
                       desktopMessage: "Email copied to clipboard.",
                       mobileMessage: "Email copied. Tap and hold to paste.",
                     })
@@ -222,20 +259,22 @@ export function ContactPageSection() {
                 />
               </CursorZone>
 
-              <CursorZone variant="hidden">
-                <HomeContactIconButton
-                  href={PHONE_HREF}
-                  label="Call"
-                  iconSrc="/icons/contact/telephone.svg"
-                  onClick={() =>
-                    copyToClipboard({
-                      value: PHONE_VALUE,
-                      desktopMessage: "Phone copied to clipboard.",
-                      mobileMessage: "Phone copied. Tap and hold to paste.",
-                    })
-                  }
-                />
-              </CursorZone>
+              {showPhone && phoneHref && phoneCopyValue ? (
+                <CursorZone variant="hidden">
+                  <HomeContactIconButton
+                    href={phoneHref}
+                    label="Call"
+                    iconSrc="/icons/contact/telephone.svg"
+                    onClick={() =>
+                      copyToClipboard({
+                        value: phoneCopyValue,
+                        desktopMessage: "Phone copied to clipboard.",
+                        mobileMessage: "Phone copied. Tap and hold to paste.",
+                      })
+                    }
+                  />
+                </CursorZone>
+              ) : null}
             </div>
           </div>
 

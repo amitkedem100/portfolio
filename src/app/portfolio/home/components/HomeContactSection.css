@@ -31,6 +31,13 @@
   color: var(--text-secondary);
 }
 
+.home-contact__meta {
+  margin: 8px 0 0;
+  max-width: 62ch;
+  font: var(--portfolio-text-b2);
+  color: var(--text-secondary);
+}
+
 .home-contact__actions {
   margin-top: 20px;
   display: flex;
@@ -38,6 +45,10 @@
   flex-wrap: nowrap;
   gap: 14px;
   align-items: flex-start;
+}
+
+.home-contact__meta + .home-contact__actions {
+  margin-top: 16px;
 }
 
 .home-contact__visual {

@@ -7,7 +7,20 @@ import "./PortfolioFooter.css";
 import { PortfolioToast } from "./PortfolioToast";
 import { useClipboardToast } from "./useClipboardToast";
 import { scrollToSelectedWorkWithAnimation } from "@/app/portfolio/home/scrollToSelectedWork.utils";
-import { useJourneyHomeHref, useJourneyHref, useJourneyWorkHref } from "@/app/portfolio/journey/useJourneyHref";
+import {
+  journeyEmailHref,
+  journeyPhoneCopyValue,
+  journeyPhoneTelHref,
+  journeyWhatsAppHref,
+  hasJourneyPhone,
+  hasJourneyWhatsApp,
+} from "@/app/portfolio/journey/journeyContact";
+import { useJourneyContact } from "@/app/portfolio/journey/useJourneyContact";
+import {
+  useJourneyHomeHref,
+  useJourneyHref,
+  useJourneyWorkHref,
+} from "@/app/portfolio/journey/useJourneyHref";
 
 type FooterContactLink = {
   label: string;
@@ -19,41 +32,6 @@ type FooterContactLink = {
   mobileCopyMessage?: string;
 };
 
-const FOOTER_CONTACT_LINKS = [
-  {
-    label: "WhatsApp",
-    href: "https://wa.me/972546338868?text=Hi%20Amit%2C%20saw%20your%20portfolio%20%E2%80%94%20would%20love%20to%20connect.",
-    iconSrc: "/icons/contact/whatsapp.svg",
-    openInNewTab: true,
-    copyValue: undefined,
-  },
-  {
-    label: "LinkedIn",
-    href: "https://www.linkedin.com/in/amitkedemuiux/",
-    iconSrc: "/icons/contact/linkedin.svg",
-    openInNewTab: true,
-    copyValue: undefined,
-  },
-  {
-    label: "Email",
-    href: "mailto:kedemami2@gmail.com",
-    iconSrc: "/icons/contact/envelope.svg",
-    openInNewTab: false,
-    copyValue: "kedemami2@gmail.com",
-    desktopCopyMessage: "Email copied to clipboard.",
-    mobileCopyMessage: "Email copied. Tap and hold to paste.",
-  },
-  {
-    label: "Phone",
-    href: "tel:+972546338868",
-    iconSrc: "/icons/contact/telephone.svg",
-    openInNewTab: false,
-    copyValue: "+972546338868",
-    desktopCopyMessage: "Phone copied to clipboard.",
-    mobileCopyMessage: "Phone copied. Tap and hold to paste.",
-  },
-] as const satisfies readonly FooterContactLink[];
-
 export function PortfolioFooter() {
   const pathname = usePathname();
   const router = useRouter();
@@ -62,7 +40,47 @@ export function PortfolioFooter() {
   const aboutHref = useJourneyHref("/portfolio/about");
   const contactHref = useJourneyHref("/portfolio/contact");
   const cvHref = useJourneyHref("/portfolio/cv");
+  const contact = useJourneyContact();
   const { copyToClipboard, toastProps, closeToast } = useClipboardToast();
+
+  const footerContactLinks: FooterContactLink[] = [];
+  const whatsappHref = journeyWhatsAppHref(contact);
+  if (hasJourneyWhatsApp(contact) && whatsappHref) {
+    footerContactLinks.push({
+      label: "WhatsApp",
+      href: whatsappHref,
+      iconSrc: "/icons/contact/whatsapp.svg",
+      openInNewTab: true,
+    });
+  }
+  footerContactLinks.push({
+    label: "LinkedIn",
+    href: contact.linkedInUrl,
+    iconSrc: "/icons/contact/linkedin.svg",
+    openInNewTab: true,
+  });
+  footerContactLinks.push({
+    label: "Email",
+    href: journeyEmailHref(contact),
+    iconSrc: "/icons/contact/envelope.svg",
+    openInNewTab: false,
+    copyValue: contact.email,
+    desktopCopyMessage: "Email copied to clipboard.",
+    mobileCopyMessage: "Email copied. Tap and hold to paste.",
+  });
+  const phoneHref = journeyPhoneTelHref(contact);
+  const phoneCopyValue = journeyPhoneCopyValue(contact);
+  if (hasJourneyPhone(contact) && phoneHref && phoneCopyValue) {
+    footerContactLinks.push({
+      label: "Phone",
+      href: phoneHref,
+      iconSrc: "/icons/contact/telephone.svg",
+      openInNewTab: false,
+      copyValue: phoneCopyValue,
+      desktopCopyMessage: "Phone copied to clipboard.",
+      mobileCopyMessage: "Phone copied. Tap and hold to paste.",
+    });
+  }
 
   const handleWorkNavClick = useCallback(() => {
     if (pathname === homeHref) {
@@ -103,12 +121,12 @@ export function PortfolioFooter() {
               <Link key={link.label} href={link.href} className="portfolio-footer-nav-link">
                 {link.label}
               </Link>
-            )
+            ),
           )}
         </nav>
 
         <div className="portfolio-footer-contact" aria-label="Footer contact actions">
-          {FOOTER_CONTACT_LINKS.map((link) => (
+          {footerContactLinks.map((link) =>
             link.copyValue ? (
               <button
                 key={link.label}
@@ -140,8 +158,8 @@ export function PortfolioFooter() {
               >
                 <span className="portfolio-footer-contact-icon" aria-hidden />
               </a>
-            )
-          ))}
+            ),
+          )}
         </div>
 
         <p className="portfolio-footer-text">
@@ -159,4 +177,3 @@ export function PortfolioFooter() {
     </footer>
   );
 }
-

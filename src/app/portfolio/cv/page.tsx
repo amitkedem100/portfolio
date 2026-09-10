@@ -1,10 +1,7 @@
 import type { Metadata } from "next";
 import "./page.css";
 import { pathMetadata } from "@/app/portfolio/journey/pathMetadata";
-
-const CV_PDF_PATH = "/resume/amit-kedem-ux-product-designer-cv-v2.pdf";
-const CV_DOWNLOAD_NAME = "Amit-Kedem-UX-Product-Designer-CV.pdf";
-const CV_PREVIEW_PATH = "/images/cv/amit-kedem-cv-preview-v2.png";
+import { CvPageSection } from "./components/CvPageSection";
 
 export const metadata: Metadata = pathMetadata("/portfolio/cv", {
   title: "Amit Kedem | CV",
@@ -14,25 +11,7 @@ export const metadata: Metadata = pathMetadata("/portfolio/cv", {
 export default function PortfolioCvPage() {
   return (
     <div className="cv-page portfolio-page-inner-grid">
-      <section className="cv-page-section" aria-labelledby="cv-title">
-        <div className="cv-page-inner">
-          <h1 id="cv-title" className="cv-page-title">
-            Resume
-          </h1>
-
-          <a
-            className="cv-page-download"
-            href={CV_PDF_PATH}
-            download={CV_DOWNLOAD_NAME}
-          >
-            Get Resume
-          </a>
-
-          <div className="cv-page-preview-wrap" aria-hidden>
-            <img className="cv-page-preview" src={CV_PREVIEW_PATH} alt="" />
-          </div>
-        </div>
-      </section>
+      <CvPageSection />
     </div>
   );
 }

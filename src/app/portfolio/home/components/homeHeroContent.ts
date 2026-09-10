@@ -33,7 +33,9 @@ export const DEFAULT_HOME_HERO_CONTENT: HomeHeroContent = {
   ],
 };
 
-export const NICHE_HOME_HERO_CONTENT: Record<JourneyOrigin, HomeHeroContent> = {
+export const NICHE_HOME_HERO_CONTENT: Partial<
+  Record<JourneyOrigin, HomeHeroContent>
+> = {
   "product-operations": {
     headlineLead: "Product thinking for better",
     headlineTail: "systems and ways of working.",

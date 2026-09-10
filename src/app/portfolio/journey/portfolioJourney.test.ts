@@ -110,15 +110,44 @@ check(
   { origin: null, sessionAction: "keep" }
 );
 
+check(
+  "product-design path writes origin",
+  resolveOrigin({
+    pathname: "/product-design",
+    fromPresent: false,
+    fromValue: "",
+    sessionOrigin: null,
+  }),
+  { origin: "product-design", sessionAction: "write" }
+);
+
+check(
+  "product-design from writes origin",
+  resolveOrigin({
+    pathname: "/portfolio/about",
+    fromPresent: true,
+    fromValue: "product-design",
+    sessionOrigin: null,
+  }),
+  { origin: "product-design", sessionAction: "write" }
+);
+
 check("home href with origin", journeyHomeHref("product-operations"), "/product-operations");
+check("home href product-design", journeyHomeHref("product-design"), "/product-design");
 check("home href generic", journeyHomeHref(null), GENERIC_HOME_PATH);
 check("work href niche", journeyWorkHref("ai-workflows"), "/ai-workflows#work");
+check("work href product-design", journeyWorkHref("product-design"), "/product-design#work");
 check("work href generic", journeyWorkHref(null), `${GENERIC_HOME_PATH}#work`);
 
 check(
   "appends from to eligible path",
   withJourneyFrom("/portfolio/about", "product-operations"),
   "/portfolio/about?from=product-operations"
+);
+check(
+  "appends product-design from",
+  withJourneyFrom("/portfolio/cv", "product-design"),
+  "/portfolio/cv?from=product-design"
 );
 check(
   "does not append from to generic home",

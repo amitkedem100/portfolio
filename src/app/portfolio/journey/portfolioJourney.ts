@@ -8,6 +8,8 @@ export const JOURNEY_ORIGINS = [
   "product-operations",
   "customer-operations",
   "ai-workflows",
+  /* Berlin / EU job-search journey — public path stays /product-design */
+  "product-design",
 ] as const;
 
 export type JourneyOrigin = (typeof JOURNEY_ORIGINS)[number];
@@ -16,12 +18,14 @@ export const JOURNEY_HOME_PATH: Record<JourneyOrigin, string> = {
   "product-operations": "/product-operations",
   "customer-operations": "/customer-operations",
   "ai-workflows": "/ai-workflows",
+  "product-design": "/product-design",
 };
 
 const NICHE_PATH_TO_ORIGIN: Record<string, JourneyOrigin> = {
   "/product-operations": "product-operations",
   "/customer-operations": "customer-operations",
   "/ai-workflows": "ai-workflows",
+  "/product-design": "product-design",
 };
 
 const ELIGIBLE_FROM_PATHS = new Set([
@@ -48,7 +52,12 @@ export type ResolveOriginResult = {
 };
 
 export function isJourneyOrigin(value: string | null | undefined): value is JourneyOrigin {
-  return value === "product-operations" || value === "customer-operations" || value === "ai-workflows";
+  return (
+    value === "product-operations" ||
+    value === "customer-operations" ||
+    value === "ai-workflows" ||
+    value === "product-design"
+  );
 }
 
 export function originFromPathname(pathname: string): JourneyOrigin | null {

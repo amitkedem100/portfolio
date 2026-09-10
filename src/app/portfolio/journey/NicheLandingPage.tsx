@@ -28,13 +28,24 @@ const LANDING_COPY: Record<
     description:
       "AI workflow design work by Amit Kedem — selected case studies for this professional context.",
   },
+  "product-design": {
+    title: "Amit Kedem | Product Designer",
+    description:
+      "Product Designer working across UX, complex systems, AI, and code. Based in Berlin and available for opportunities across Europe.",
+  },
 };
 
 export function nicheLandingMetadata(origin: JourneyOrigin): Metadata {
   const copy = LANDING_COPY[origin];
-  return pathMetadata(`/${origin}`, {
+  const path = `/${origin}`;
+  return pathMetadata(path, {
     title: copy.title,
     description: copy.description,
+    openGraph: {
+      title: copy.title,
+      description: copy.description,
+      url: path,
+    },
   });
 }
 
@@ -43,9 +54,11 @@ type NicheLandingPageProps = {
 };
 
 export function NicheLandingPage({ origin }: NicheLandingPageProps) {
+  const heroContent = NICHE_HOME_HERO_CONTENT[origin];
+
   return (
     <PortfolioShell>
-      <HomeHeroFullBleed content={NICHE_HOME_HERO_CONTENT[origin]} />
+      <HomeHeroFullBleed content={heroContent} />
       <div className="home-page portfolio-page-inner-grid">
         <ScrollToSelectedWork />
         <SelectedWorkSection />

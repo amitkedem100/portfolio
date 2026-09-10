@@ -34,6 +34,13 @@
   color: var(--text-secondary);
 }
 
+.contact-page-contact__meta {
+  margin: 8px 0 0;
+  max-width: 62ch;
+  font: var(--portfolio-text-b2);
+  color: var(--text-secondary);
+}
+
 .contact-page-contact__actions {
   margin-top: 20px;
   display: flex;
@@ -41,6 +48,10 @@
   flex-wrap: nowrap;
   gap: 14px;
   align-items: flex-start;
+}
+
+.contact-page-contact__meta + .contact-page-contact__actions {
+  margin-top: 16px;
 }
 
 .contact-page-contact__actions--desktop {
